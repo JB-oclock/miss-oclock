@@ -14,4 +14,9 @@ class Player extends Model
     {
         return $this->hasMany('App\Answer');
     }
+
+    public function voted()
+    {
+        return $this->hasMany('App\Vote', 'voted_player_id');
+    }
 }
