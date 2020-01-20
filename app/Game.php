@@ -19,4 +19,14 @@ class Game extends Model
     {
         return $this->hasMany('App\Vote');
     }
+
+    public function questions()
+    {
+        return $this->belongsToMany('App\Question');
+    }
+
+    public function performances()
+    {
+        return $this->belongsToMany('App\Performance');
+    }
 }
