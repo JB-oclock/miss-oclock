@@ -34,7 +34,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "NODE_ENV=development webpack-dev-server",
     "clean": "rm -rf dist",
     "clean:all": "rm -rf dist node_modules",
     "build:dev": "NODE_ENV=development webpack",
@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@babel/register": "^7.7.7",
+    "dotenv": "^8.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"

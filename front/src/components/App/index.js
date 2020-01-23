@@ -5,7 +5,7 @@ import React from 'react';
 import './app.scss';
 
 // == Composant
-const App = () => (
+const App = () => (  
   <div id="app">
     App React
   </div>

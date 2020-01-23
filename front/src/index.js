@@ -9,6 +9,7 @@ import 'src/styles/index.scss';
 // Composant racine
 import App from 'src/components/App';
 
+console.log(process.env.TRUC);
 
 // == Render
 // 1. Le composant racine (celui qui contient l'ensemble de l'app)
