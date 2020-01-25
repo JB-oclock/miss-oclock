@@ -2,18 +2,20 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 
 // == Import : local
-// Styles de base
 import 'src/styles/index.scss';
-// Composant racine
 import App from 'src/components/App';
+import store from 'src/store';
 
 const rootComponent = (
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
 );
 
 const target = document.getElementById('root');
