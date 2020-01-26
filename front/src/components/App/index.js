@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 // == Import : local
 import './app.scss';
 import { Switch, Route } from 'react-router-dom';
-import Code from '../Code';
+import FirstTimeForm from '../FirstTimeForm';
 
 class App extends Component {
   render() {
@@ -13,7 +13,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/">
           Homepage
-          <Code />
+          <FirstTimeForm />
         </Route>
       </Switch>
       // <Footer ? />

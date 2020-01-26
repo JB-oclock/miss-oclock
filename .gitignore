@@ -1,8 +1,8 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
+/front/node_modules
+/api/public/hot
+/api/public/storage
+/api/storage/*.key
+/api/vendor
 .env
 .env.backup
 .phpunit.result.cache
