@@ -1,7 +1,7 @@
 import {createStore, combineReducers } from 'redux';
 
 import reducer, { initialState } from './reducer';
-
+import {reducer as toastrReducer} from 'react-redux-toastr';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancers = composeEnhancers(
@@ -11,7 +11,8 @@ const enhancers = composeEnhancers(
 );
 
 const reducers = {
-    app: reducer
+    app: reducer,
+    toastr: toastrReducer
 };
 
 const initialStates = {

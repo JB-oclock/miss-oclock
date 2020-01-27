@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import Code from './code'
+import Player from './player'
+import { toastr } from 'react-redux-toastr';
 
 class FirstTimeForm extends Component {
     state = {
@@ -16,33 +18,58 @@ class FirstTimeForm extends Component {
  
     handleChange = (event) => {
         const { name, value} = event.target;
-        console.log(name);
         
         this.setState({
             [name]: value
         });
     }
 
+    
+    nextStep = () => {
+        this.setState({
+            step: this.state.step +1
+        })
+    }
 
-    submitCode = (event) => {
+    submitForm = (event) => {
         event.preventDefault();
         
-        // Send to API
         Axios.post(process.env.API_DOMAIN + "login", {
-            code: this.state.code
+            code: this.state.code,
+            name: this.state.name
         })
         .then(function(response){
-            console.log(response.data);
+            localStorage.setItem('token', response.data);
+            // Dispatch to store
+        })
+        .catch(function(error) {
+            if(error.response.data.errors) 
+            {
+                const errors = error.response.data.errors;
+                for (const error in errors){
+                    toastr.error(errors[error]);
+                }
+            }
+           
         });
     }
 
     render() {
-        const { code } = this.state;
+        const { code, name } = this.state;
         switch (this.state.step) {
             case 1:
-                return <Code code={code} handleChange={this.handleChange} />
+                return <Code 
+                    code={code}
+                    handleChange={this.handleChange}
+                    nextStep={this.nextStep} 
+                    />
             case 2:
-                // return <Player />
+                return <Player 
+                        code={code}
+                        name={name}
+                        handleChange={this.handleChange}
+                        submitForm={this.submitForm}
+                         />
         }
     }
 }

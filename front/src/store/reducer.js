@@ -3,7 +3,7 @@
  */
 
  export const initialState = {
-    
+    loggedUser: false,
  };
 
 /**

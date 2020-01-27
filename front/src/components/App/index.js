@@ -5,18 +5,22 @@ import React, { Component } from 'react';
 import './app.scss';
 import { Switch, Route } from 'react-router-dom';
 import FirstTimeForm from '../FirstTimeForm';
+import ReduxToastr from 'react-redux-toastr';
 
 class App extends Component {
   render() {
     return (
-      // <Header />
+      <>
+      {/* <Header /> */}
+      <ReduxToastr />
       <Switch>
         <Route exact path="/">
           Homepage
           <FirstTimeForm />
         </Route>
       </Switch>
-      // <Footer ? />
+      {/* <Footer ? /> */}
+      </>
      );
   }
 }

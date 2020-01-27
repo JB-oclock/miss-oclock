@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('/check-code', 'CodeController@checkCode');
 Route::post('/login', 'CodeController@login');
 Route::get('/test', function (Request $request) {
     return 'coucou';
