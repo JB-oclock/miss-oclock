@@ -1,9 +1,11 @@
 // == Import : npm
 import React, { Component } from 'react';
-import Axios from 'axios';
-import Code from './code'
-import Player from './player'
 import { toastr } from 'react-redux-toastr';
+import Axios from 'axios';
+import Code from './code';
+import Player from './player';
+import store from 'src/store';
+import  { setPlayer } from 'src/store/reducer';
 
 class FirstTimeForm extends Component {
     state = {
@@ -33,17 +35,27 @@ class FirstTimeForm extends Component {
 
     submitForm = (event) => {
         event.preventDefault();
-        
+        const {code, name } = this.state;
         Axios.post(process.env.API_DOMAIN + "login", {
-            code: this.state.code,
-            name: this.state.name
+            code: code,
+            name: name
         })
         .then(function(response){
+            
             localStorage.setItem('token', response.data);
-            // Dispatch to store
+            
+            const player = {
+                token: response.data,
+                name: name,
+                gameCode: code
+            };
+            
+            const action = setPlayer(player);
+            store.dispatch(action);
+
         })
         .catch(function(error) {
-            if(error.response.data.errors) 
+            if(error.response?.data.errors) 
             {
                 const errors = error.response.data.errors;
                 for (const error in errors){

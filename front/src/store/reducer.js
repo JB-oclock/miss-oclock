@@ -3,7 +3,7 @@
  */
 
  export const initialState = {
-    loggedUser: false,
+    player: false
  };
 
 /**
@@ -11,6 +11,7 @@
  */
 
 //   export const TYPE_NAME = 'TYPE_NAME';
+  export const SET_PLAYER = 'SET_PLAYER';
 
 
 /**
@@ -21,7 +22,10 @@
 //     type: TYPE_NAME,
 //     storeElement
 // });
-
+export const setPlayer = (player) => ({
+    type: SET_PLAYER,
+    player
+});
 
 /**
  * Reducer
@@ -34,6 +38,11 @@
         //         ...state,
         //         element: action.storeElement
         //     };
+        case SET_PLAYER:
+            return {
+                ...state,
+                player: action.player
+            };
         default:
             return state;
      }
