@@ -1,4 +1,4 @@
-import {createStore, combineReducers } from 'redux';
+import {createStore, combineReducers, compose } from 'redux';
 
 import reducer, { initialState } from './reducer';
 import {reducer as toastrReducer} from 'react-redux-toastr';
