@@ -2,16 +2,17 @@
  * Initial State
  */
 
- export const initialState = {
-    player: false
- };
+export const initialState = {
+  player: false
+};
 
 /**
  * Types
  */
 
 //   export const TYPE_NAME = 'TYPE_NAME';
-  export const SET_PLAYER = 'SET_PLAYER';
+export const SET_PLAYER = 'SET_PLAYER';
+export const GET_PLAYER_INFOS = 'GET_PLAYER_INFOS';
 
 
 /**
@@ -23,29 +24,34 @@
 //     storeElement
 // });
 export const setPlayer = (player) => ({
-    type: SET_PLAYER,
-    player
+  type: SET_PLAYER,
+  player,
+});
+
+export const getPlayerInfos = () => ({
+  type: GET_PLAYER_INFOS,
 });
 
 /**
  * Reducer
  */
 
- const reducer = (state = initialState, action = {}) => {
-     switch (action.type) {
-        // case TYPE_NAME:
-        //     return {
-        //         ...state,
-        //         element: action.storeElement
-        //     };
-        case SET_PLAYER:
-            return {
-                ...state,
-                player: action.player
-            };
-        default:
-            return state;
-     }
- }
+const reducer = (state = initialState, action = {}) => {
+  switch (action.type) {
+    // case TYPE_NAME:
+    //     return {
+    //         ...state,
+    //         element: action.storeElement
+    //     };
+    case SET_PLAYER:
+      return {
+        ...state,
+        player: action.player,
+      };
 
- export  default reducer;
+    default:
+      return state;
+  }
+};
+
+export default reducer;

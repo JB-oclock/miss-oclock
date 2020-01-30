@@ -9,6 +9,14 @@ import ReduxToastr from 'react-redux-toastr';
 import FirstTimeForm from '../FirstTimeForm';
 
 class App extends Component {
+  componentDidMount() {
+    const { getPlayerInfos } = this.props;
+    const token = localStorage.getItem('token');
+    if (token) {
+      getPlayerInfos();
+    }
+  }
+
   render() {
     const { player } = this.props;
     return (

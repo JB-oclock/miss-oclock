@@ -55,7 +55,7 @@ class CodeController extends Controller
             return response()->json('Aucun code renseigné');
         }
 
-        $game = \App\Game::where('code', $code)->first();
+        $game = Game::where('code', $code)->first();
 
         if($game) {
             return response()->json($game->code);
