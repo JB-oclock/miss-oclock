@@ -1,15 +1,19 @@
 import { connect } from 'react-redux';
 
 import App from 'src/components/App';
-import { getPlayerInfos } from 'src/store/reducer';
+import { getPlayerInfos, stopLoading } from 'src/store/reducer';
 
 const mapStateToProps = (state) => ({
   player: state.app.player,
+  loading: state.app.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getPlayerInfos: () => {
     dispatch(getPlayerInfos());
+  },
+  stopLoading: () => {
+    dispatch(stopLoading());
   },
 });
 

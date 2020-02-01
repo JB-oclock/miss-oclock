@@ -9,16 +9,20 @@ import ReduxToastr from 'react-redux-toastr';
 import FirstTimeForm from '../FirstTimeForm';
 
 class App extends Component {
+
   componentDidMount() {
-    const { getPlayerInfos } = this.props;
+    const { getPlayerInfos, stopLoading } = this.props;
     const token = localStorage.getItem('token');
     if (token) {
       getPlayerInfos();
     }
+    else {
+      stopLoading();
+    }
   }
 
   render() {
-    const { player } = this.props;
+    const { player, loading } = this.props;
     return (
       <>
         {/* <Header /> */}
@@ -26,7 +30,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/">
             Homepage
-            { player === false && <FirstTimeForm /> }
+            { !loading && !player && <FirstTimeForm /> }
           </Route>
         </Switch>
         {/* <Footer ? /> */}

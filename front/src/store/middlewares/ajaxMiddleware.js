@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { GET_PLAYER_INFOS, setPlayer } from '../reducer';
+import { GET_PLAYER_INFOS, setPlayer, stopLoading } from '../reducer';
 
 const ajaxMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -15,6 +15,7 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           ...response.data,
         };
         store.dispatch(setPlayer(player));
+        store.dispatch(stopLoading());
       });
       break;
     default:
