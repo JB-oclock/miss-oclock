@@ -65,4 +65,20 @@ class CodeController extends Controller
         
         
     }
+
+    public function getInfos(Request $request) {
+        
+        $header = $request->header('Authorization');
+        $token = decrypt(str_replace('Bearer ','',  $header));
+        $game = Game::find($token['game']);
+        $player = Player::find($token['player']);
+
+        $data = [
+            'name' => $player->name,
+            'gameCode' => $game->code
+        ];
+
+        return response()->json($data);
+
+    }
 }

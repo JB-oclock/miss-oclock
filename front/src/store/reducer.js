@@ -3,7 +3,10 @@
  */
 
 export const initialState = {
-  player: false
+  player: false,
+  game: {
+    step: 0,
+  },
 };
 
 /**
