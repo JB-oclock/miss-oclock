@@ -7,6 +7,7 @@ import './app.scss';
 import { Switch, Route } from 'react-router-dom';
 import ReduxToastr from 'react-redux-toastr';
 import FirstTimeForm from '../FirstTimeForm';
+import Waiting from '../Waiting';
 
 class App extends Component {
 
@@ -22,15 +23,15 @@ class App extends Component {
   }
 
   render() {
-    const { player, loading } = this.props;
+    const { player, loading, waiting } = this.props;
     return (
       <>
         {/* <Header /> */}
         <ReduxToastr />
         <Switch>
           <Route exact path="/">
-            Homepage
-            { !loading && !player && <FirstTimeForm /> }
+            {!loading && !player && <FirstTimeForm />}
+            {waiting && <Waiting />}
           </Route>
         </Switch>
         {/* <Footer ? /> */}

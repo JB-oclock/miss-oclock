@@ -6,6 +6,7 @@ import { getPlayerInfos, stopLoading } from 'src/store/reducer';
 const mapStateToProps = (state) => ({
   player: state.app.player,
   loading: state.app.loading,
+  waiting: state.app.waiting,
 });
 
 const mapDispatchToProps = (dispatch) => ({
