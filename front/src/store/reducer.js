@@ -17,6 +17,7 @@ export const initialState = {
 
 export const SET_PLAYER = 'SET_PLAYER';
 export const GET_PLAYER_INFOS = 'GET_PLAYER_INFOS';
+export const MERCURE_SUBSCRIBE_STEPS = 'MERCURE_SUBSCRIBE_STEPS';
 const STOP_LOADING = 'STOP_LOADING';
 const WAITING_STEP = 'WAITING_STEP';
 const STOP_WAITING_STEP = 'STOP_WAITING_STEP';
@@ -33,6 +34,10 @@ export const setPlayer = (player) => ({
 
 export const getPlayerInfos = () => ({
   type: GET_PLAYER_INFOS,
+});
+
+export const mercureSubscribeSteps = () => ({
+  type: MERCURE_SUBSCRIBE_STEPS,
 });
 
 export const stopLoading = () => ({

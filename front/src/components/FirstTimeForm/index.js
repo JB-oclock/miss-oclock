@@ -5,86 +5,86 @@ import Axios from 'axios';
 import Code from './code';
 import Player from './player';
 import store from 'src/store';
-import  { setPlayer } from 'src/store/reducer';
+import { setPlayer, mercureSubscribeSteps } from 'src/store/reducer';
 
 class FirstTimeForm extends Component {
     state = {
-        step: 1,
-        code: '',
-        name: ''
+      step: 1,
+      code: '',
+      name: ''
     }
 
-    constructor(props) {
-        super(props);
-    }
- 
     handleChange = (event) => {
-        const { name, value} = event.target;
-        
-        this.setState({
-            [name]: value
-        });
+      const { name, value } = event.target;
+
+      this.setState({
+        [name]: value
+      });
     }
 
-    
+
     nextStep = () => {
-        this.setState({
-            step: this.state.step +1
-        })
+      this.setState({
+        step: this.state.step + 1
+      });
     }
 
     submitForm = (event) => {
-        event.preventDefault();
-        const {code, name } = this.state;
-        Axios.post(process.env.API_DOMAIN + "login", {
-            code: code,
-            name: name
-        })
-        .then(function(response){
-            
-            localStorage.setItem('token', response.data);
-            
-            const player = {
-                token: response.data,
-                name: name,
-                gameCode: code
-            };
-            
-            const action = setPlayer(player);
-            store.dispatch(action);
+      event.preventDefault();
+      const { code, name } = this.state;
+      Axios.post(process.env.API_DOMAIN + "login", {
+        code: code,
+        name: name
+      })
+        .then((response) => {
+
+          localStorage.setItem('token', response.data);
+
+          const player = {
+            token: response.data,
+            name: name,
+            gameCode: code
+          };
+
+          const action = setPlayer(player);
+          store.dispatch(action);
+          store.dispatch(mercureSubscribeSteps());
 
         })
-        .catch(function(error) {
-            if(error.response?.data.errors) 
-            {
-                const errors = error.response.data.errors;
-                for (const error in errors){
-                    toastr.error(errors[error]);
-                }
+        .catch((error) => {
+          if (error.response?.data.errors) {
+            const { errors } = error.response.data;
+            for (const error in errors) {
+              toastr.error(errors[error]);
             }
-           
+          }
+
         });
     }
 
     render() {
-        const { code, name } = this.state;
-        switch (this.state.step) {
-            case 1:
-                return <Code 
-                    code={code}
-                    handleChange={this.handleChange}
-                    nextStep={this.nextStep} 
-                    />
-            case 2:
-                return <Player 
-                        code={code}
-                        name={name}
-                        handleChange={this.handleChange}
-                        submitForm={this.submitForm}
-                         />
-        }
+      const { code, name } = this.state;
+      switch (this.state.step) {
+        case 1:
+        default:
+          return (
+            <Code
+              code={code}
+              handleChange={this.handleChange}
+              nextStep={this.nextStep}
+            />
+          );
+        case 2:
+          return (
+            <Player
+              code={code}
+              name={name}
+              handleChange={this.handleChange}
+              submitForm={this.submitForm}
+            />
+          );
+      }
     }
 }
 // == Export 
 export default FirstTimeForm;
- 
