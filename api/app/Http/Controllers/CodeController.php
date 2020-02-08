@@ -75,7 +75,8 @@ class CodeController extends Controller
 
         $data = [
             'name' => $player->name,
-            'gameCode' => $game->code
+            'gameCode' => $game->code,
+            'gameId' => $game->id
         ];
 
         return response()->json($data);

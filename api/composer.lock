@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e9c132cb15072c8d2aeb9e50e67bd4f",
+    "content-hash": "615e40c5f03845ea8735faf336a8b2b0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -701,6 +701,66 @@
                 "laravel"
             ],
             "time": "2019-12-31T17:28:15+00:00"
+        },
+        {
+            "name": "idplus/laravel-mercure-publisher",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/idplus/laravel-mercure-publisher.git",
+                "reference": "6003fc2daa5374133417ddddc6fdf1a0b62d711c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/idplus/laravel-mercure-publisher/zipball/6003fc2daa5374133417ddddc6fdf1a0b62d711c",
+                "reference": "6003fc2daa5374133417ddddc6fdf1a0b62d711c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/mercure": "^0.1.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^3.0",
+                "orchestra/testbench": "^3.5",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Idplus\\Mercure\\MercureServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Idplus\\Mercure\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jamy",
+                    "email": "hello@idplus-technology.com",
+                    "homepage": "https://www.idplus-technology.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Mercure Publisher",
+            "keywords": [
+                "laravel",
+                "mercure",
+                "protocol",
+                "sse"
+            ],
+            "time": "2019-04-03T15:20:31+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -2513,6 +2573,61 @@
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
             "time": "2019-12-19T16:23:40+00:00"
+        },
+        {
+            "name": "symfony/mercure",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/mercure.git",
+                "reference": "9d2ce3f41ced86942ddcfe4afae267a6d257323c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/mercure/zipball/9d2ce3f41ced86942ddcfe4afae267a6d257323c",
+                "reference": "9d2ce3f41ced86942ddcfe4afae267a6d257323c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^4.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Mercure\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kévin Dunglas",
+                    "email": "dunglas@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Mercure Component",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "mercure",
+                "push",
+                "sse",
+                "updates"
+            ],
+            "time": "2018-10-24T09:32:39+00:00"
         },
         {
             "name": "symfony/mime",
@@ -5470,7 +5585,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "idplus/laravel-mercure-publisher": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
