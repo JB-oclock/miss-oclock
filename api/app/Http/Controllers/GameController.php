@@ -36,4 +36,26 @@ class GameController extends Controller
 
         return back();
     }
+
+    public function gameData(Request $request) {
+        $game = $request->get('game');
+
+        $gameData = [
+            'gameId' => $game->id,
+            'gameStep' => $game->step
+        ];
+
+        if($game->step == 1) {
+            $question = [
+                'questionId' => 0,
+                'question' => '',
+                'answers' => [],
+                'answered' => false
+            ];
+            $gameData['questions'] = $question;
+        }
+
+
+        return response()->json($gameData);
+    }
 }

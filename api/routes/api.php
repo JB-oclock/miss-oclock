@@ -14,5 +14,9 @@ use Illuminate\Http\Request;
 */
 
 Route::post('/check-code', 'CodeController@checkCode');
-Route::get('/get-infos', 'CodeController@getInfos');
 Route::post('/login', 'CodeController@login');
+
+Route::group(['middleware' => 'token'], function () {
+    Route::get('/game-data', 'GameController@gameData');
+    Route::get('/get-infos', 'CodeController@getInfos');
+});

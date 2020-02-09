@@ -72,10 +72,8 @@ class CodeController extends Controller
 
     public function getInfos(Request $request) {
         
-        $header = $request->header('Authorization');
-        $token = decrypt(str_replace('Bearer ','',  $header));
-        $game = Game::find($token['game']);
-        $player = Player::find($token['player']);
+        $game = $request->get('game');
+        $player = $request->get('player');
 
         $data = [
             'name' => $player->name,
