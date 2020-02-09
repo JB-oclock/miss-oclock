@@ -23,7 +23,8 @@ class App extends Component {
   }
 
   render() {
-    const { player, loading, waiting } = this.props;
+    const { player, loading, waiting, step } = this.props;
+    
     return (
       <>
         {/* <Header /> */}
@@ -32,6 +33,7 @@ class App extends Component {
           <Route exact path="/">
             {!loading && !player && <FirstTimeForm />}
             {waiting && <Waiting />}
+            {!waiting &&  step == 1 && <Question />}
           </Route>
         </Switch>
         {/* <Footer ? /> */}

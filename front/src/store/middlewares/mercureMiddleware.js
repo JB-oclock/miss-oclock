@@ -1,4 +1,4 @@
-import {MERCURE_SUBSCRIBE_STEPS, setGameStep } from '../reducer';
+import {MERCURE_SUBSCRIBE_STEPS, setGameStep, stopWaiting } from '../reducer';
 
 const mercureMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -12,6 +12,7 @@ const mercureMiddleware = (store) => (next) => (action) => {
       eventSource.onmessage = (e) => {
         const { step } = JSON.parse(e.data);
         store.dispatch(setGameStep(step));
+        store.dispatch(stopWaiting());
       };
       next(action);
       break;
