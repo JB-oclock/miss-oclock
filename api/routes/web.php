@@ -19,5 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware('auth')->group( function() {
-    Route::get('/game/{game}/next-step', 'GameController@nextStep');
+    Route::get('/game/{game}/next-step', 'GameController@nextStep')->name('next-step');
+    Route::get('/game/{game}', 'GameController@show');
+    Route::get('/game/{game}/reset', 'GameController@reset')->name('reset-game');
 });

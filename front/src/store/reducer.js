@@ -6,9 +6,8 @@ export const initialState = {
   loading: true,
   waiting: false,
   player: false,
-  game: {
-    step: 0,
-  },
+  gameId: 0,
+  gameStep: 0,
 };
 
 /**
@@ -16,6 +15,8 @@ export const initialState = {
  */
 
 export const SET_PLAYER = 'SET_PLAYER';
+export const SET_GAME_ID = 'SET_GAME_ID';
+export const SET_GAME_STEP = 'SET_GAME_STEP';
 export const GET_PLAYER_INFOS = 'GET_PLAYER_INFOS';
 export const MERCURE_SUBSCRIBE_STEPS = 'MERCURE_SUBSCRIBE_STEPS';
 const STOP_LOADING = 'STOP_LOADING';
@@ -30,6 +31,16 @@ const STOP_WAITING_STEP = 'STOP_WAITING_STEP';
 export const setPlayer = (player) => ({
   type: SET_PLAYER,
   player,
+});
+
+export const setGameId = (id) => ({
+  type: SET_GAME_ID,
+  id,
+});
+
+export const setGameStep = (step) => ({
+  type: SET_GAME_STEP,
+  step,
 });
 
 export const getPlayerInfos = () => ({
@@ -62,6 +73,16 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         player: action.player,
+      };
+    case SET_GAME_ID:
+      return {
+        ...state,
+        gameId: action.id,
+      };
+    case SET_GAME_STEP:
+      return {
+        ...state,
+        gameStep: action.step,
       };
     case STOP_LOADING:
       return {

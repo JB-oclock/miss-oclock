@@ -5,7 +5,7 @@ import Axios from 'axios';
 import Code from './code';
 import Player from './player';
 import store from 'src/store';
-import { setPlayer, mercureSubscribeSteps } from 'src/store/reducer';
+import { setPlayer, mercureSubscribeSteps, setGameId, waiting } from 'src/store/reducer';
 
 class FirstTimeForm extends Component {
     state = {
@@ -38,17 +38,20 @@ class FirstTimeForm extends Component {
       })
         .then((response) => {
 
-          localStorage.setItem('token', response.data);
-
+          const { token, id} = response.data;
+          localStorage.setItem('token', token);
           const player = {
-            token: response.data,
-            name: name,
-            gameCode: code
+            token,
+            name,
+            gameCode: code,
+            gameId: id,
           };
 
           const action = setPlayer(player);
           store.dispatch(action);
+          store.dispatch(setGameId(id));
           store.dispatch(mercureSubscribeSteps());
+          store.dispatch(waiting());
 
         })
         .catch((error) => {

@@ -42,7 +42,11 @@ class CodeController extends Controller
             $player->token = $token;
             $player->save();
 
-            return response()->json($token);
+            $data = [
+                'token' => $token,
+                'id' => $game->id
+            ];
+            return response()->json($data);
         }
         
     }
