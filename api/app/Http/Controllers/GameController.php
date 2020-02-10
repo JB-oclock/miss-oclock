@@ -37,6 +37,25 @@ class GameController extends Controller
         return back();
     }
 
+
+    public function nextQuestion (Game $game, Publify $publisher){
+        $nbQuestions = $game->questions->count();
+        if($game->question < $nbQuestions) {
+            $game->question = $game->question +1;
+            $game->save();
+        }
+
+
+        // $data = ['step' => $game->step];
+        // $update = new Update(
+        //     env('MERCURE_DOMAIN') . 'missoclock/steps/'.$game->id.'.jsonld',
+        //     json_encode($data)
+        // );
+        // $publisher($update);
+
+        return back();
+    }
+
     public function gameData(Request $request) {
         $game = $request->get('game');
 

@@ -15,6 +15,17 @@
                     </div>
                 </div>
             </div>
+            @if($game->step == 1)
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Questions</div>
+                        <div class="card-body">
+                            Question actuelle : {{ $game->question }}
+                            <a class="btn btn-primary" href="{{ route('next-question', ['game' => $game->id]) }}" role="button">Question suivante</a>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>

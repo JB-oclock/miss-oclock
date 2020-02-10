@@ -8,6 +8,7 @@ import { Switch, Route } from 'react-router-dom';
 import ReduxToastr from 'react-redux-toastr';
 import FirstTimeForm from '../FirstTimeForm';
 import Waiting from '../Waiting';
+import Question from '../../containers/Question';
 
 class App extends Component {
 

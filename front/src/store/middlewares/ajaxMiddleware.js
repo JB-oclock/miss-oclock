@@ -31,7 +31,9 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         store.dispatch(mercureSubscribeSteps());
 
         store.dispatch(stopLoading());
-        store.dispatch(waiting());
+        if(gameStep == 0 ){
+          store.dispatch(waiting());
+        }
     });
       break;  
     default:

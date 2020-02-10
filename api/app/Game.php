@@ -29,4 +29,8 @@ class Game extends Model
     {
         return $this->belongsToMany('App\Performance');
     }
+
+    public function questionWithOrder($order) {
+        return $this->questions()->wherePivot('order', $order)->first();
+    }
 }
