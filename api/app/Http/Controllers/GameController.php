@@ -65,14 +65,10 @@ class GameController extends Controller
             'gameStep' => $game->step
         ];
 
-        if($game->step == 1) {
-            $question = [
-                'questionId' => 0,
-                'question' => '',
-                'answers' => [],
-                'answered' => false
-            ];
-            $gameData['questions'] = $question;
+        if($game->step == 1 && $game->question != 0) {
+            $question = $game->questionWithOrder($game->question);
+            // TODO : ajouter la gestion de l'attribut answered
+            $gameData['question'] = $question->cleanData();
         }
 
 

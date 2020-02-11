@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, GET_GAME_DATA, setGameStep } from '../reducer';
-
+import { setQuestion } from '../questionsReducer';
 const ajaxMiddleware = (store) => (next) => (action) => {
   const token = `Bearer ${localStorage.getItem('token')}`;
   switch (action.type) {
@@ -24,7 +24,7 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           Authorization: token,
         },
       }).then((response) => {
-          const {gameId, gameStep} = response.data;
+          const {gameId, gameStep, question} = response.data;
           
         store.dispatch(setGameId(gameId));
         store.dispatch(setGameStep(gameStep));
@@ -33,6 +33,9 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         store.dispatch(stopLoading());
         if(gameStep == 0 ){
           store.dispatch(waiting());
+        }
+        if(gameStep == 1 && question) {
+          store.dispatch(setQuestion(question));
         }
     });
       break;  
