@@ -38,20 +38,21 @@ class GameController extends Controller
     }
 
 
-    public function nextQuestion (Game $game, Publify $publisher){
+    public function nextQuestion (Request $request, Game $game, Publify $publisher){
         $nbQuestions = $game->questions->count();
         if($game->question < $nbQuestions) {
             $game->question = $game->question +1;
             $game->save();
         }
 
+        $question = $game->questionWithOrder($game->question);
 
-        // $data = ['step' => $game->step];
-        // $update = new Update(
-        //     env('MERCURE_DOMAIN') . 'missoclock/steps/'.$game->id.'.jsonld',
-        //     json_encode($data)
-        // );
-        // $publisher($update);
+        $data = ['questions' => $question->cleanData()];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/questions/'.$game->id.'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
 
         return back();
     }
