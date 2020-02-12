@@ -19,4 +19,5 @@ Route::post('/login', 'CodeController@login');
 Route::group(['middleware' => 'token'], function () {
     Route::get('/game-data', 'GameController@gameData');
     Route::get('/get-infos', 'CodeController@getInfos');
+    Route::post('/answer-question', 'AnswerController@answerQuestion');
 });

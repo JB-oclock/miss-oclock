@@ -23,7 +23,7 @@ class CodeController extends Controller
                 'errors' => [
                     0 => 'Nom déjà utilisé, veuillez en choisir un autre !',
                 ]
-                ];
+            ];
             return response()->json($errors, 422);
         }
 

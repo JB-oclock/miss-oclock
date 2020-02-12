@@ -1,10 +1,15 @@
 // == Import : npm
 import React, { Component } from 'react';
+import { answerQuestion } from '../../store/questionsReducer';
 
 class Question extends Component {
   componentDidMount() {
     this.eventSource = '';
     this.listenQuestions();
+  }
+
+  state = {
+    answer: '',
   }
 
   listenQuestions = () => {
@@ -21,23 +26,58 @@ class Question extends Component {
   }
 
   componentWillUnmount(){
-
     if(typeof this.eventSource !== 'string') {
         this.eventSource.close();
     }
-}
+  }
 
-  render() {
-    const { questions } = this.props;
+  getAnswers = () => {
+    const {answers} = this.props.question;
+
+    const inputs = [];
+
+    answers.forEach((answer, id) => {
+      inputs.push(<label  key={id} htmlFor={'answer_'+id}><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer} />{answer}</label>);
+    });
+
+    return inputs;
+  }
+  handleInput = (e) => {
+    this.setState({
+      answer: e.target.value,
+    })
+  }
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const {answerQuestion} = this.props;
+    const {answer} = this.state;
+
+    answerQuestion(answer);
     
-    if(!questions.answered) {
-        if(questions.questionId == 0) {
+  }
+  componentWillUpdate(nextProps, nextState){
+    const { newAnswered } = nextProps.question;
+    const { answered } = this.props;
+    if(answered != newAnswered){
+      this.setState({
+        answer: '',
+      })
+    }
+    
+  }
+  render() {
+    const { question } = this.props;
+    
+    if(!question.answered) {
+        if(question.questionId == 0) {
             return "La première question va bientôt arriver !";
         } else {
             return (
-                <form>
-                    <h2>{questions.question}</h2>
-                    
+                <form onSubmit={this.handleSubmit}>
+                    <h2>{question.question}</h2>
+                    { this.getAnswers() }
+                    <button type="submit">Valider la réponse</button>
                 </form>
             );
         }

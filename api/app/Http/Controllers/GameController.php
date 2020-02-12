@@ -17,6 +17,7 @@ class GameController extends Controller
     public function reset(Game $game) {
         $game->step = 0;
         $game->question = 0;
+        $game->answers()->delete();
         $game->save();
 
         return back();
@@ -43,16 +44,16 @@ class GameController extends Controller
         if($game->question < $nbQuestions) {
             $game->question = $game->question +1;
             $game->save();
+            
+            $question = $game->questionWithOrder($game->question);
+            
+            $data = ['questions' => $question->cleanData()];
+            $update = new Update(
+                env('MERCURE_DOMAIN') . 'missoclock/questions/'.$game->id.'.jsonld',
+                json_encode($data)
+            );
+            $publisher($update);
         }
-
-        $question = $game->questionWithOrder($game->question);
-
-        $data = ['questions' => $question->cleanData()];
-        $update = new Update(
-            env('MERCURE_DOMAIN') . 'missoclock/questions/'.$game->id.'.jsonld',
-            json_encode($data)
-        );
-        $publisher($update);
 
         return back();
     }

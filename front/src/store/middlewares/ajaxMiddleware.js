@@ -1,6 +1,9 @@
 import Axios from 'axios';
 import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, GET_GAME_DATA, setGameStep } from '../reducer';
-import { setQuestion } from '../questionsReducer';
+import { setQuestion, setAnswered, ANSWER_QUESTION } from '../questionsReducer';
+import { toastr } from 'react-redux-toastr';
+
+
 const ajaxMiddleware = (store) => (next) => (action) => {
   const token = `Bearer ${localStorage.getItem('token')}`;
   switch (action.type) {
@@ -18,7 +21,8 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         store.dispatch(getGameData());
       });
       break;
-      case GET_GAME_DATA: 
+
+    case GET_GAME_DATA: 
       Axios.get(`${process.env.API_DOMAIN}game-data`, {
         headers: {
           Authorization: token,
@@ -36,9 +40,34 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         }
         if(gameStep == 1 && question) {
           store.dispatch(setQuestion(question));
-        }
-    });
+        }     
+      });
       break;  
+
+    case ANSWER_QUESTION:
+      const state = store.getState();
+      const data = {
+        answer: action.answer,
+        question: state.questions.questionId
+      };
+      
+      Axios.post(`${process.env.API_DOMAIN}answer-question`,data, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(() => {
+        store.dispatch(setAnswered());
+        
+      }).catch((error) => {
+        if (error.response?.data.errors) {
+          const { errors } = error.response.data;
+          for (const error in errors) {
+            toastr.error(errors[error]);
+          }
+        }
+
+      });
+      break;
     default:
       next(action);
   }
