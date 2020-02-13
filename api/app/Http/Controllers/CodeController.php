@@ -31,23 +31,24 @@ class CodeController extends Controller
             $player = new Player();
             $player->name = $request->input('name');
             $player->save();
-            $player->games()->attach($game);
-
-            $token = [
-                'player' => $player->id,
-                'game' => $game->id,
-            ];
-            $token = encrypt($token);
-
-            $player->token = $token;
-            $player->save();
-
-            $data = [
-                'token' => $token,
-                'id' => $game->id
-            ];
-            return response()->json($data);
+            
         }
+        
+        $player->games()->attach($game);
+        $token = [
+            'player' => $player->id,
+            'game' => $game->id,
+        ];
+        $token = encrypt($token);
+
+        $player->token = $token;
+        $player->save();
+
+        $data = [
+            'token' => $token,
+            'id' => $game->id
+        ];
+        return response()->json($data);
         
     }
 

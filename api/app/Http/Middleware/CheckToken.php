@@ -32,7 +32,7 @@ class CheckToken
         $game = Game::find($token['game']);
         $player = Player::find($token['player']);
 
-        if (!$game->id || !$player->id) {
+        if (!$game || !$player) {
             return response(['The token contains wrong data'], 403);
         }
 

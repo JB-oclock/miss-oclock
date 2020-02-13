@@ -19,6 +19,8 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         };
         store.dispatch(setPlayer(player));
         store.dispatch(getGameData());
+      }).catch(() => {
+        store.dispatch(stopLoading());
       });
       break;
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use \App\Game;
+use App\Answer;
 use Idplus\Mercure\Publify;
 use Illuminate\Http\Request;
 use Symfony\Component\Mercure\Update;
@@ -18,6 +19,7 @@ class GameController extends Controller
         $game->step = 0;
         $game->question = 0;
         $game->answers()->delete();
+        $game->players()->delete();
         $game->save();
 
         return back();
@@ -60,6 +62,7 @@ class GameController extends Controller
 
     public function gameData(Request $request) {
         $game = $request->get('game');
+        $player = $request->get('player');
 
         $gameData = [
             'gameId' => $game->id,
@@ -68,8 +71,15 @@ class GameController extends Controller
 
         if($game->step == 1 && $game->question != 0) {
             $question = $game->questionWithOrder($game->question);
-            // TODO : ajouter la gestion de l'attribut answered
             $gameData['question'] = $question->cleanData();
+
+            // Check if the player has already answered this question
+            $answer = Answer::where('game_id', $game->id)
+                        ->where('player_id', $player->id)
+                        ->where('question_id', $question->id)
+                        ->first();
+            
+            $gameData['question']['answered'] = !!$answer;
         }
 
 
