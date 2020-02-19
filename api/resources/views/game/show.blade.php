@@ -23,6 +23,19 @@
                             Question actuelle : {{ $game->question }}
                             <a class="btn btn-primary" href="{{ route('next-question', ['game' => $game->id]) }}" role="button">Question suivante</a>
                         </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                @php
+                                $i = 1
+                                @endphp
+                                @forelse($players as $name => $score)
+                                    <li class="list-group-item @if($i <= $game->winners) list-group-item-success @endif">{{$name}} : {{$score}}</li>
+                                    @php $i++ @endphp
+                                @empty
+                                    <li class="list-group-item">Pas encore de réponses</li>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
                 </div>
             @endif

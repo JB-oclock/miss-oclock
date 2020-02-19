@@ -12,7 +12,11 @@ class GameController extends Controller
 {
 
     public function show(Game $game) {
-        return view('game.show', compact('game'));
+        $players = [];
+        if($game->step == 1) {
+            $players = $game->getPlayersWithScore();
+        }
+        return view('game.show', compact('game', 'players'));
     }
 
     public function reset(Game $game) {

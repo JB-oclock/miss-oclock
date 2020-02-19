@@ -57,9 +57,11 @@ class Question extends Component {
     
   }
   componentWillUpdate(nextProps, nextState){
-    const { newAnswered } = nextProps.question;
-    const { answered } = this.props;
-    if(answered != newAnswered){
+    
+    const { answered } = nextProps.question;
+    const { answer} = this.state;
+    
+    if(answered && answer.length){
       this.setState({
         answer: '',
       })

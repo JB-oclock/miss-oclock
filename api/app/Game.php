@@ -37,4 +37,20 @@ class Game extends Model
     public function lastQuestion() {
         return $this->questions()->orderBy('order', 'desc')->first();
     }
+
+    public function getPlayersWithScore() {
+        $players = []; 
+    
+        foreach($this->answers as $answer) {
+            $player = $answer->player;
+            if(!array_key_exists($player->name, $players)) {
+                $players[$player->name] = $answer->correct_answer;
+            } else {
+                $players[$player->name] += $answer->correct_answer;
+            }
+        }
+        arsort($players);
+
+        return $players;
+    }
 }
