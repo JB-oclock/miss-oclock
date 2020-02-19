@@ -82,6 +82,9 @@ class Question extends Component {
             );
         }
     }
+    else if (question.last) {
+      return "Merci d'avoir répondu ! C'était la dernière question, les résultats vont bientôt arriver !";
+    }
     else {
         return "Merci d'avoir répondu, la prochaine question arrive bientôt !";
     }

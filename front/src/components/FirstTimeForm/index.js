@@ -5,7 +5,7 @@ import Axios from 'axios';
 import Code from './code';
 import Player from './player';
 import store from 'src/store';
-import { setPlayer, mercureSubscribeSteps, setGameId, waiting } from 'src/store/reducer';
+import { setPlayer, mercureSubscribeSteps, setGameId, waiting, getGameData } from 'src/store/reducer';
 
 class FirstTimeForm extends Component {
     state = {
@@ -50,8 +50,9 @@ class FirstTimeForm extends Component {
           const action = setPlayer(player);
           store.dispatch(action);
           store.dispatch(setGameId(id));
-          store.dispatch(mercureSubscribeSteps());
-          store.dispatch(waiting());
+          store.dispatch(getGameData());
+          // store.dispatch(mercureSubscribeSteps());
+          // store.dispatch(waiting());
 
         })
         .catch((error) => {

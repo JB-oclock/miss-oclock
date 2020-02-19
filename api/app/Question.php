@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Game;
 use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
@@ -11,7 +12,10 @@ class Question extends Model
         return $this->belongsToMany('App\Game');
     }
 
-    public function cleanData() {
+    public function cleanData(Game $game = NULL) {
+        if($game) {
+            $last = !!($game->lastQuestion()->id == $this->id);
+        }
         $answers = [
             $this->answer_1,
             $this->answer_2,
@@ -25,6 +29,7 @@ class Question extends Model
             'question' => $this->title,
             'answered' => false,
             'answers' => $answers,
+            'last' => $last,
         ];
     }
 }

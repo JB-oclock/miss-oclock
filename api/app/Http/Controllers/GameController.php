@@ -49,7 +49,10 @@ class GameController extends Controller
             
             $question = $game->questionWithOrder($game->question);
             
-            $data = ['questions' => $question->cleanData()];
+            $question = $question->cleanData($game);
+
+
+            $data = ['questions' => $question];
             $update = new Update(
                 env('MERCURE_DOMAIN') . 'missoclock/questions/'.$game->id.'.jsonld',
                 json_encode($data)
@@ -71,7 +74,7 @@ class GameController extends Controller
 
         if($game->step == 1 && $game->question != 0) {
             $question = $game->questionWithOrder($game->question);
-            $gameData['question'] = $question->cleanData();
+            $gameData['question'] = $question->cleanData($game);
 
             // Check if the player has already answered this question
             $answer = Answer::where('game_id', $game->id)

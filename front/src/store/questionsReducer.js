@@ -4,6 +4,7 @@ export const initialState = {
     question: '',
     answers: [],
     answered: false, 
+    last: false,
   };
   
 

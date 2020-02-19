@@ -33,4 +33,8 @@ class Game extends Model
     public function questionWithOrder($order) {
         return $this->questions()->wherePivot('order', $order)->first();
     }
+
+    public function lastQuestion() {
+        return $this->questions()->orderBy('order', 'desc')->first();
+    }
 }
