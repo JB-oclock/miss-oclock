@@ -13,10 +13,14 @@ class GameController extends Controller
 
     public function show(Game $game) {
         $players = [];
+        $question = '';
+        $gameQuestion = ($game->question == 0)? 1 : $game->question;
         if($game->step == 1) {
             $players = $game->getPlayersWithScore();
+            $question = $game->questionWithOrder($gameQuestion);
+            $question = $question->CleanData($game);
         }
-        return view('game.show', compact('game', 'players'));
+        return view('game.show', compact('game', 'players', 'question'));
     }
 
     public function reset(Game $game) {
@@ -65,6 +69,19 @@ class GameController extends Controller
         }
 
         return back();
+    }
+
+    public function setStep1Winners(Game $game) {
+        $players = $game->getStep1Winners();
+        foreach ($players as $player) {
+            $player = $player['player'];
+            $player->games()->updateExistingPivot($game->id, ['winner' => 1]);
+        }
+
+        //TODO Send to mercure the winners ! 
+        
+        return back();
+
     }
 
     public function gameData(Request $request) {
