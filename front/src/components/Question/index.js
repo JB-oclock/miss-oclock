@@ -1,6 +1,6 @@
 // == Import : npm
 import React, { Component } from 'react';
-import { answerQuestion } from '../../store/questionsReducer';
+import { answerQuestion, endQuestions } from '../../store/questionsReducer';
 
 class Question extends Component {
   componentDidMount() {
@@ -13,7 +13,7 @@ class Question extends Component {
   }
 
   listenQuestions = () => {
-    const {app, setQuestion, setWinner } = this.props;
+    const {app, setQuestion, setWinner, endQuestions } = this.props;
     
     const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
     url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}${process.env.MERCURE_QUESTIONS}${app.gameId}.jsonld`);
@@ -27,6 +27,7 @@ class Question extends Component {
 
       if(winners){
         setWinner(winners);
+        endQuestions();
       }
     };
   }
@@ -75,9 +76,16 @@ class Question extends Component {
     
   }
   render() {
-    const { question } = this.props;
+    const { question, app } = this.props;
     
-    if(!question.answered) {
+    if(question.ended) {
+      if(app.step_1_winner){
+        return "Tu as gagné cette étape ! Mais ne pense pas que tout est fini !";
+      } else {
+        return "Tu n'as pas gagné durant cette étape. Mais reste avec nous, on aura besoin de toi pour la suite !";
+      }
+    }
+    else if(!question.answered) {
         if(question.questionId == 0) {
             return "La première question va bientôt arriver !";
         } else {

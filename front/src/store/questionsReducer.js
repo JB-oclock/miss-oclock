@@ -11,6 +11,7 @@ export const initialState = {
 
 const SET_QUESTION = 'SET_QUESTION';
 export const ANSWER_QUESTION = 'ANSWER_QUESTION';
+export const END_QUESTIONS = 'END_QUESTIONS';
 export const SET_ANSWERED = 'SET_ANSWERED';
 
 /**
@@ -29,6 +30,9 @@ export const answerQuestion = (answer) => ({
 });
 export const setAnswered = () => ({
   type: SET_ANSWERED,
+});
+export const endQuestions = () => ({
+  type: END_QUESTIONS,
 });
 
 
@@ -49,7 +53,13 @@ const reducer = (state = initialState, action = {}) => {
             ...state,
             answered: true,
           }
-          break;
+        break;
+      case END_QUESTIONS: 
+          return {
+            ...state,
+            ended: true,
+          }
+        break;
       default:
         return state;
     }
