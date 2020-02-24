@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Player extends Model
 {
     public function games() {
-        return $this->belongsToMany('App\Game')->withPivot('step', 'winner', 'question');
+        return $this->belongsToMany('App\Game')->withPivot('winner', 'winner2');
     }
 
     public function winnerStep1(Game $game) {

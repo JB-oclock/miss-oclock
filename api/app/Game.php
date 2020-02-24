@@ -42,7 +42,12 @@ class Game extends Model
         return $this->answers()->with('player')->where('correct_answer', 1)->get();
     }
 
-    public function getStep1Winners() {
+    public function getStep1Winners()
+    {
+        return $this->players()->wherePivot('winner', 1)->get();
+    }
+    
+    public function findStep1Winners() {
         
         $answers  = $this->getCorrectAnswers();
         $players = [];

@@ -11,7 +11,7 @@
                             <li>ID: {{ $game->id }}</li>
                             <li>Step: {{ $game->step }}</li>
                         </ul>
-                        <a class="btn btn-primary" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Etape suivante</a>
+                        <a class="btn btn-primary @if(!$stepOver)disabled @endif" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Étape suivante</a>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                         <div class="card-body">
                             Question actuelle : {{ $game->question }} @if($question['last']) Dernière question ! @endif
                             @if($question['last'])
-                                <a class="btn btn-primary" href="{{ route('set-step1-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
+                                <a class="btn btn-primary @if($stepOver)disabled @endif" href="{{ route('set-step1-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
                             @else
                                 <a class="btn btn-primary" href="{{ route('next-question', ['game' => $game->id]) }}" role="button">Question suivante</a>
                             @endif

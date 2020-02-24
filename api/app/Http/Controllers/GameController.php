@@ -14,13 +14,15 @@ class GameController extends Controller
     public function show(Game $game) {
         $players = [];
         $question = '';
+        $stepOver = true;
         $gameQuestion = ($game->question == 0)? 1 : $game->question;
         if($game->step == 1) {
             $players = $game->getPlayersWithScore();
             $question = $game->questionWithOrder($gameQuestion);
             $question = $question->CleanData($game);
+            $stepOver = !!count($game->getStep1Winners());
         }
-        return view('game.show', compact('game', 'players', 'question'));
+        return view('game.show', compact('game', 'players', 'question', 'stepOver'));
     }
 
     public function reset(Game $game) {
@@ -72,7 +74,7 @@ class GameController extends Controller
     }
 
     public function setStep1Winners(Game $game,  Publify $publisher) {
-        $players = $game->getStep1Winners();
+        $players = $game->findStep1Winners();
         foreach ($players as $player) {
             $player = $player['player'];
             $player->games()->updateExistingPivot($game->id, ['winner' => 1]);
