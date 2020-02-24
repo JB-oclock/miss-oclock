@@ -13,15 +13,21 @@ class Question extends Component {
   }
 
   listenQuestions = () => {
-    const {app, setQuestion } = this.props;
+    const {app, setQuestion, setWinner } = this.props;
     
     const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
     url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}${process.env.MERCURE_QUESTIONS}${app.gameId}.jsonld`);
     const eventSource = new EventSource(url, { withCredentials: true });
     
     eventSource.onmessage = (event) => {
-      const { questions } = JSON.parse(event.data);
-      setQuestion(questions);
+      const { questions, winners } = JSON.parse(event.data);
+      if(questions){
+        setQuestion(questions);
+      }
+
+      if(winners){
+        setWinner(winners);
+      }
     };
   }
 
@@ -48,7 +54,7 @@ class Question extends Component {
     })
   }
   handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
 
     const {answerQuestion} = this.props;
     const {answer} = this.state;

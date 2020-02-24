@@ -8,6 +8,7 @@ export const initialState = {
   player: false,
   gameId: 0,
   gameStep: 0,
+  step_1_winner: false,
 };
 
 /**
@@ -22,6 +23,7 @@ export const GET_GAME_DATA = 'GET_GAME_DATA';
 export const MERCURE_SUBSCRIBE_STEPS = 'MERCURE_SUBSCRIBE_STEPS';
 const STOP_LOADING = 'STOP_LOADING';
 const WAITING_STEP = 'WAITING_STEP';
+const SET_STEP_1_WINNER = 'SET_STEP_1_WINNER';
 const STOP_WAITING_STEP = 'STOP_WAITING_STEP';
 
 /**
@@ -44,6 +46,10 @@ export const setGameStep = (step) => ({
   step,
 });
 
+export const setStep1Winner = (winners) => ({
+  type: SET_STEP_1_WINNER,
+  winners,
+});
 export const getPlayerInfos = () => ({
   type: GET_PLAYER_INFOS,
 });
@@ -104,6 +110,12 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         waiting: false,
       };
+    case SET_STEP_1_WINNER:
+      const step_1_winner = !!action.winners.indexOf(state.player.name);
+      return {
+        ...state,
+        step_1_winner
+      }
     default:
       return state;
   }

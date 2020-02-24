@@ -71,15 +71,27 @@ class GameController extends Controller
         return back();
     }
 
-    public function setStep1Winners(Game $game) {
+    public function setStep1Winners(Game $game,  Publify $publisher) {
         $players = $game->getStep1Winners();
         foreach ($players as $player) {
             $player = $player['player'];
             $player->games()->updateExistingPivot($game->id, ['winner' => 1]);
         }
 
-        //TODO Send to mercure the winners ! 
-        
+        $winners = [];
+
+        foreach($players as $player) {
+            $winners[] = $player['player']->name;
+        }
+
+        $data = ['winners' => $winners];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/questions/'.$game->id.'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+
+
         return back();
 
     }
