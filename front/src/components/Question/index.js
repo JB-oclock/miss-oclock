@@ -26,7 +26,8 @@ class Question extends Component {
       }
 
       if(winners){
-        const isWinner = !!(winners.indexOf(app.player.name))
+        const isWinner = winners.indexOf(app.player.name) !== -1;
+        
         setWinner(isWinner);
         endQuestions();
       }
