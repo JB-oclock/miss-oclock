@@ -102,7 +102,8 @@ class GameController extends Controller
 
         $gameData = [
             'gameId' => $game->id,
-            'gameStep' => $game->step
+            'gameStep' => $game->step,
+            'step_1_winner' => !!$player->winnerStep1($game),
         ];
 
         if($game->step == 1 && $game->question != 0) {
@@ -116,6 +117,10 @@ class GameController extends Controller
                         ->first();
             
             $gameData['question']['answered'] = !!$answer;
+
+            // Check if the winners has been set up 
+            $winners = $game->getStep1Winners();
+            $gameData['question']['ended'] = !!$winners;
         }
 
 

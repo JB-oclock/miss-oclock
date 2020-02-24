@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, GET_GAME_DATA, setGameStep } from '../reducer';
+import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, GET_GAME_DATA, setGameStep, setStep1Winner } from '../reducer';
 import { setQuestion, setAnswered, ANSWER_QUESTION } from '../questionsReducer';
 import { toastr } from 'react-redux-toastr';
 
@@ -30,10 +30,11 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           Authorization: token,
         },
       }).then((response) => {
-          const {gameId, gameStep, question} = response.data;
+          const {gameId, gameStep, question, step_1_winner} = response.data;
           
         store.dispatch(setGameId(gameId));
         store.dispatch(setGameStep(gameStep));
+        store.dispatch(setStep1Winner(step_1_winner));
         store.dispatch(mercureSubscribeSteps());
 
         store.dispatch(stopLoading());

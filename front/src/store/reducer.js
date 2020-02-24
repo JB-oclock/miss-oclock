@@ -9,6 +9,8 @@ export const initialState = {
   gameId: 0,
   gameStep: 0,
   step_1_winner: false,
+  step_2_winner: false,
+  step_3_winner: false,
 };
 
 /**
@@ -46,9 +48,9 @@ export const setGameStep = (step) => ({
   step,
 });
 
-export const setStep1Winner = (winners) => ({
+export const setStep1Winner = (winner) => ({
   type: SET_STEP_1_WINNER,
-  winners,
+  winner,
 });
 export const getPlayerInfos = () => ({
   type: GET_PLAYER_INFOS,
@@ -111,10 +113,9 @@ const reducer = (state = initialState, action = {}) => {
         waiting: false,
       };
     case SET_STEP_1_WINNER:
-      const step_1_winner = !!action.winners.indexOf(state.player.name);
       return {
         ...state,
-        step_1_winner
+        step_1_winner: action.winner
       }
     default:
       return state;
