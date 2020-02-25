@@ -2,6 +2,7 @@ import {createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
 import reducer, { initialState } from './reducer';
 import questionsReducer, { initialState as questionsInitialState} from './questionsReducer';
+import performancesReducer, { initialState as performancesInitialState} from './performancesReducer';
 import {reducer as toastrReducer} from 'react-redux-toastr';
 import mercureMiddleware from './middlewares/mercureMiddleware';
 import ajaxMiddleware from './middlewares/ajaxMiddleware';
@@ -18,12 +19,14 @@ const enhancers = composeEnhancers(
 const reducers = {
     app: reducer,
     questions: questionsReducer,
+    performances: performancesReducer,
     toastr: toastrReducer,
 };
 
 const initialStates = {
     app: initialState,
     questions: questionsInitialState,
+    performances: performancesInitialState,
 };
 
 const combinedReducers = combineReducers(reducers);

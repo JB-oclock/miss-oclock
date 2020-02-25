@@ -9,6 +9,7 @@ import ReduxToastr from 'react-redux-toastr';
 import FirstTimeForm from '../FirstTimeForm';
 import Waiting from '../Waiting';
 import Question from '../../containers/Question';
+import Performance from '../../containers/Performance';
 
 class App extends Component {
 
@@ -35,6 +36,7 @@ class App extends Component {
             {!loading && !player && <FirstTimeForm />}
             {waiting && <Waiting />}
             {!waiting &&  step == 1 && <Question />}
+            {!waiting &&  step == 2 && <Performance />}
           </Route>
         </Switch>
         {/* <Footer ? /> */}

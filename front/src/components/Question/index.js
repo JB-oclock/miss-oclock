@@ -48,7 +48,7 @@ class Question extends Component {
     answers.forEach((answer, id) => {
       inputs.push(<label  key={id} htmlFor={'answer_'+id}><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer} />{answer}</label>);
     });
-
+ 
     return inputs;
   }
   handleInput = (e) => {
