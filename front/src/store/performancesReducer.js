@@ -2,7 +2,7 @@
 export const initialState = {
     performanceId: 0,
     performerId:0,
-    performance: '',
+    title: '',
     answers: [],
     answered: false, 
     last: false,

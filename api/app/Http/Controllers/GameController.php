@@ -144,11 +144,12 @@ class GameController extends Controller
     public function gameData(Request $request) {
         $game = $request->get('game');
         $player = $request->get('player');
+        $step1Winner = !!$player->winnerStep1($game);
 
         $gameData = [
             'gameId' => $game->id,
             'gameStep' => $game->step,
-            'step_1_winner' => !!$player->winnerStep1($game),
+            'step_1_winner' => $step1Winner,
         ];
 
         if($game->step == 1 && $game->question != 0) {
@@ -163,9 +164,15 @@ class GameController extends Controller
             
             $gameData['question']['answered'] = !!$answer;
 
-            // Check if the winners has been set up 
+            // Check if the winners have been set up 
             $winners = $game->getStep1Winners();
             $gameData['question']['ended'] = !!$winners;
+        } 
+        if($game->step == 2) {
+            if($step1Winner && $game->performance_player == $player->id && $game->performance_sent) {
+                $performance = Performance::find($game->performance_sent);
+                $gameData['performance'] = $performance->performerData();
+            }
         }
 
 

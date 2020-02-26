@@ -2,6 +2,7 @@ import Axios from 'axios';
 import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, GET_GAME_DATA, setGameStep, setStep1Winner } from '../reducer';
 import { setQuestion, setAnswered, ANSWER_QUESTION } from '../questionsReducer';
 import { toastr } from 'react-redux-toastr';
+import { setPerformance } from '../performancesReducer';
 
 
 const ajaxMiddleware = (store) => (next) => (action) => {
@@ -30,7 +31,7 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           Authorization: token,
         },
       }).then((response) => {
-          const {gameId, gameStep, question, step_1_winner} = response.data;
+          const {gameId, gameStep, question, step_1_winner, performance} = response.data;
           
         store.dispatch(setGameId(gameId));
         store.dispatch(setGameStep(gameStep));
@@ -43,7 +44,10 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         }
         if(gameStep == 1 && question) {
           store.dispatch(setQuestion(question));
-        }     
+        }  
+        if(gameStep == 2 && performance) {
+          store.dispatch(setPerformance(performance));
+        }   
       });
       break;  
 
