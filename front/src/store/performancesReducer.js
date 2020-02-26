@@ -1,6 +1,7 @@
 
 export const initialState = {
     performanceId: 0,
+    performerId:0,
     performance: '',
     answers: [],
     answered: false, 

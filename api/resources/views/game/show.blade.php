@@ -42,6 +42,37 @@
                         </div>
                     </div>
                 </div>
+            @elseif($game->step == 2)
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Performances</div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                            @forelse($players as $key => $player)
+                                <li class="list-group-item">
+                                    <span class="font-weight-bold">
+                                        {{ $player->name }} : 
+                                    </span>
+                                    @php
+                                        $disabled = ($game->performance_player != 0 && $game->performance_player != $player->id);
+                                        $sendDisabled = ($disabled || $game->performance_sent);
+                                        $propsDisabled = ($disabled || !$game->performance_sent || $game->performance_props_sent);
+                                        $validationDisabled = ($disabled || (!$game->performance_sent || !$game->performance_props_sent));
+                                    @endphp
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="#" class="btn btn-secondary @if($sendDisabled)disabled @endif">Envoyer perf.</a>
+                                            <a href="#" class="btn btn-secondary @if($propsDisabled)disabled @endif">Envoyer propositions</a>
+                                            <a href="#" class="btn btn-secondary @if($validationDisabled) disabled @endif">Valider perf.</a>
+                                    </div>
+                                </li>
+                            @empty
+                                
+                            @endforelse
+                            </ul>
+                        </div>
+                       
+                    </div>
+                </div>
             @endif
         </div>
     </div>

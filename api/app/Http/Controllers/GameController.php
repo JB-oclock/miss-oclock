@@ -21,6 +21,10 @@ class GameController extends Controller
             $question = $game->questionWithOrder($gameQuestion);
             $question = $question->CleanData($game);
             $stepOver = !!count($game->getStep1Winners());
+        } else if ($game->step == 2) {
+            $players = $game->getStep1Winners();
+            $stepOver = !!count($game->getStep2Winners());
+
         }
         return view('game.show', compact('game', 'players', 'question', 'stepOver'));
     }
