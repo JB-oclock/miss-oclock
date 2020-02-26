@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use \App\Game;
 use App\Answer;
+use App\Player;
+use App\Performance;
 use Idplus\Mercure\Publify;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\Mercure\Update;
 
 class GameController extends Controller
@@ -32,8 +35,25 @@ class GameController extends Controller
     public function reset(Game $game) {
         $game->step = 0;
         $game->question = 0;
+        $game->performance_sent = 0;
+        $game->performance_props_sent = 0;
+        $game->performance_player = 0;
         $game->answers()->delete();
         $game->players()->delete();
+        $game->save();
+
+        return back();
+    }
+
+    public function resetPerfs(Game $game) {
+        $game->performance_sent = 0;
+        $game->performance_props_sent = 0;
+        $game->performance_player = 0;
+        $perfs = $game->performances;
+
+        foreach ($perfs as $perf) {
+            $perf->games()->updateExistingPivot($game, ['done' => 0]);
+        }
         $game->save();
 
         return back();
@@ -98,6 +118,25 @@ class GameController extends Controller
         $publisher($update);
 
 
+        return back();
+
+    }
+
+    public function sendPerformance(Game $game, Player $player, Publify $publisher)
+    {
+        $performance = $game->performances()->orderBy(DB::raw('RAND()'))->where('done', 0)->first();
+        $game->performances()->updateExistingPivot($performance->id, ['done' => 1]);
+        $game->performance_sent = $performance->id;
+        $game->performance_player = $player->id;
+        $game->save();
+
+        $data = ['performance' => $performance->performerData()];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/performances/'.$game->id.'/performer/'.$player->id.'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+        
         return back();
 
     }

@@ -45,7 +45,7 @@
             @elseif($game->step == 2)
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Performances</div>
+                        <div class="card-header">Performances <a class="btn btn-danger float-right" href="{{ route('reset-perfs', [$game->id]) }}">Reset Perfs</a></div>
                         <div class="card-body">
                             <ul class="list-group">
                             @forelse($players as $key => $player)
@@ -60,7 +60,7 @@
                                         $validationDisabled = ($disabled || (!$game->performance_sent || !$game->performance_props_sent));
                                     @endphp
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="#" class="btn btn-secondary @if($sendDisabled)disabled @endif">Envoyer perf.</a>
+                                            <a href="{{ route('send-performance', ['game' => $game->id, 'player' => $player->id]) }}" class="btn btn-secondary @if($sendDisabled)disabled @endif">Envoyer perf.</a>
                                             <a href="#" class="btn btn-secondary @if($propsDisabled)disabled @endif">Envoyer propositions</a>
                                             <a href="#" class="btn btn-secondary @if($validationDisabled) disabled @endif">Valider perf.</a>
                                     </div>

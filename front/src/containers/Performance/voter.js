@@ -9,7 +9,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
- 
 });
 
 const VoterContainer = connect(

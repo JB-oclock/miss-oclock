@@ -46,7 +46,8 @@ class CodeController extends Controller
 
         $data = [
             'token' => $token,
-            'id' => $game->id
+            'id' => $game->id,
+            'playerId' => $player->id
         ];
         return response()->json($data);
         
@@ -78,6 +79,7 @@ class CodeController extends Controller
 
         $data = [
             'name' => $player->name,
+            'playerId' => $player->id,
             'gameCode' => $game->code,
             'gameId' => $game->id
         ];

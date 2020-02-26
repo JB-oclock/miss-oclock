@@ -10,4 +10,15 @@ class Performance extends Model
     {
         return $this->hasMany('App\Vote');
     }
+
+    public function games()
+    {
+        return $this->belongsToMany('App\Game');
+    }
+    public function performerData()
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
 }

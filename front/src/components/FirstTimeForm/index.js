@@ -38,11 +38,12 @@ class FirstTimeForm extends Component {
       })
         .then((response) => {
 
-          const { token, id} = response.data;
+          const { token, id, playerId} = response.data;
           localStorage.setItem('token', token);
           const player = {
             token,
             name,
+            playerId,
             gameCode: code,
             gameId: id,
           };
