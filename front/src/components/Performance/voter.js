@@ -83,7 +83,7 @@ class Voter extends Component {
     const {performance} = this.props;
     if(!performance.answered) {
         if(performance.performanceId == 0) {
-            return "La première épreuve va bientôt arriver !";
+            return "Vous allez bientôt pouvoir voter !";
         } else {
             return (
                 <form onSubmit={this.handleSubmit}>

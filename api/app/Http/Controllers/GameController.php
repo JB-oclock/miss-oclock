@@ -160,6 +160,37 @@ class GameController extends Controller
 
     }
 
+    public function validatePerformance(Game $game, Publify $publisher)
+    {
+       
+
+       $data = [
+           'performance' => [
+               'title' => '',
+               'answered' => true,
+           ]
+        ];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/performances/'.$game->id.'/props.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/performances/'.$game->id.'/performer/'. $game->performance_player .'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+        
+
+        $game->performance_sent = 0;
+        $game->performance_props_sent = 0;
+        $game->performance_player = 0;
+        $game->save();
+
+        return back();
+    }
+
     public function gameData(Request $request) {
         $game = $request->get('game');
         $player = $request->get('player');
