@@ -8,6 +8,10 @@ class Voter extends Component {
   }
 
 
+  state = {
+    answer: '',
+  }
+
 
   listenProps = () => {
     const {app, setPerformance} = this.props;
@@ -23,6 +27,43 @@ class Voter extends Component {
         setPerformance(performance);
       }
     };
+  }
+
+  componentWillUnmount(){
+    if(typeof this.eventSource !== 'string') {
+        this.eventSource.close();
+    }
+  }
+
+
+  handleInput = (e) => {
+    this.setState({
+      answer: e.target.value,
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault(); 
+
+    const {answerPerformance} = this.props;
+    const {answer} = this.state;
+
+    answerPerformance(answer);
+    
+  }
+
+
+  componentWillUpdate(nextProps, nextState){
+    
+    const { answered } = nextProps.performance;
+    const { answer} = this.state;
+    
+    if(answered && answer.length){
+      this.setState({
+        answer: '',
+      })
+    }
+    
   }
 
   getAnswers = () => {

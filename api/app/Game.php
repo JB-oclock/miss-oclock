@@ -30,6 +30,11 @@ class Game extends Model
         return $this->belongsToMany('App\Performance');
     }
 
+    public function perfVotes()
+    {
+        return $this->hasMany('App\PerfVote');
+    }
+
     public function questionWithOrder($order) {
         return $this->questions()->wherePivot('order', $order)->first();
     }

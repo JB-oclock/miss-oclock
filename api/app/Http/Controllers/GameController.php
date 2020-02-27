@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use \App\Game;
 use App\Answer;
 use App\Player;
+use App\PerfVote;
 use App\Performance;
 use Idplus\Mercure\Publify;
 use Illuminate\Http\Request;
@@ -50,6 +51,7 @@ class GameController extends Controller
         $game->performance_props_sent = 0;
         $game->performance_player = 0;
         $perfs = $game->performances;
+        $game->perfVotes()->delete();
 
         foreach ($perfs as $perf) {
             $perf->games()->updateExistingPivot($game, ['done' => 0]);
@@ -186,9 +188,20 @@ class GameController extends Controller
             $gameData['question']['ended'] = !!$winners;
         } 
         if($game->step == 2) {
-            if($step1Winner && $game->performance_player == $player->id && $game->performance_sent) {
-                $performance = Performance::find($game->performance_sent);
-                $gameData['performance'] = $performance->performerData();
+            $performance = Performance::find($game->performance_sent);
+            if($performance) {
+                if($step1Winner && $game->performance_player == $player->id && $game->performance_sent) {
+                    $gameData['performance'] = $performance->performerData();
+                } else {
+                    $gameData['performance'] = $performance->voterData();
+                    // Check if the player has already answered this performance
+                    $answer = PerfVote::where('game_id', $game->id)
+                    ->where('player_id', $player->id)
+                    ->where('performance_id', $performance->id)
+                    ->first();
+                    $gameData['performance']['answered'] = !!$answer;
+                    
+                }
             }
         }
 
