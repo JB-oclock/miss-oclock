@@ -28,6 +28,7 @@ class GameController extends Controller
         } else if ($game->step == 2) {
             $players = $game->getStep1Winners();
             $stepOver = !!count($game->getStep2Winners());
+            // $disabledButtons = $game->
 
         }
         return view('game.show', compact('game', 'players', 'question', 'stepOver'));
@@ -224,7 +225,8 @@ class GameController extends Controller
                 if($step1Winner && $game->performance_player == $player->id && $game->performance_sent) {
                     $gameData['performance'] = $performance->performerData();
                 } else {
-                    $gameData['performance'] = $performance->voterData();
+                    $gameData['performance'] = $performance->voterData($game);
+
                     // Check if the player has already answered this performance
                     $answer = PerfVote::where('game_id', $game->id)
                     ->where('player_id', $player->id)

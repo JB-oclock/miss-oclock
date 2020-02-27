@@ -44,7 +44,7 @@ class Game extends Model
     }
 
     public function lastPerformance() {
-        return $this->performances()->wherePivot('done', '0')->count();
+        return ($this->performances()->wherePivot('done', '0')->count() == 0);
     }
 
     public function getCorrectAnswers() {

@@ -98,7 +98,7 @@ class Voter extends Component {
       return "Merci d'avoir répondu ! Les résultats vont bientôt arriver !";
     }
     else {
-        return "Merci d'avoir répondu, la prochaine épreuve arrive bientôt !";
+        return "Merci d'avoir répondu !";
     }
   }
 }
