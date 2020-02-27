@@ -16,9 +16,10 @@ class GameController extends Controller
 {
 
     public function show(Game $game) {
-        $players = [];
+        $players = $performersData = [];
         $question = '';
         $stepOver = true;
+        $perfsOver = false;
         $gameQuestion = ($game->question == 0)? 1 : $game->question;
         if($game->step == 1) {
             $players = $game->getPlayersWithScore();
@@ -28,10 +29,14 @@ class GameController extends Controller
         } else if ($game->step == 2) {
             $players = $game->getStep1Winners();
             $stepOver = !!count($game->getStep2Winners());
-            // $disabledButtons = $game->
-
+            $perfsOver = ($game->lastPerformance() && !$game->performance_sent);
+            foreach($players as $player) {
+                $performersData[$player->id]['score'] = $game->performanceScore($player);
+                $performersData[$player->id]['nb_perfs'] = $game->numberOfPerfs($player);
+            }
+      
         }
-        return view('game.show', compact('game', 'players', 'question', 'stepOver'));
+        return view('game.show', compact('game', 'players', 'question', 'stepOver', 'perfsOver', 'performersData'));
     }
 
     public function reset(Game $game) {

@@ -29,7 +29,14 @@ class Game extends Model
     {
         return $this->belongsToMany('App\Performance');
     }
-
+    public function performanceScore($player) 
+    {
+        return $this->hasMany('App\PerfVote')->where('performer_id', $player->id)->get()->sum('correct_answer');
+    }
+    public function numberOfPerfs($player)
+    {
+       return $this->perfVotes()->where('performer_id', $player->id)->distinct('performance_id')->count();
+    }
     public function perfVotes()
     {
         return $this->hasMany('App\PerfVote');
@@ -60,6 +67,8 @@ class Game extends Model
     {
         return $this->players()->wherePivot('winner2', 1)->get();
     }
+
+
     
     public function findStep1Winners() {
         
