@@ -13,9 +13,7 @@ class Question extends Model
     }
 
     public function cleanData(Game $game = NULL) {
-        if($game) {
-            $last = !!($game->lastQuestion()->id == $this->id);
-        }
+        $last = ($game) ? !!($game->lastQuestion()->id == $this->id) : false;
         $answers = [
             $this->answer_1,
             $this->answer_2,

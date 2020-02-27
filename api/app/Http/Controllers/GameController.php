@@ -141,6 +141,23 @@ class GameController extends Controller
 
     }
 
+    public function sendPerformanceProps(Game $game, Publify $publisher)
+    {
+        $performance = Performance::find($game->performance_sent);
+        $game->performance_props_sent = true;
+        $game->save();
+
+        $data = ['performance' => $performance->voterData()];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/performances/'.$game->id.'/props.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+        
+        return back();
+
+    }
+
     public function gameData(Request $request) {
         $game = $request->get('game');
         $player = $request->get('player');

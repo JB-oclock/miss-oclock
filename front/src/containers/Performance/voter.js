@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 
 import Voter from 'src/components/Performance/voter';
+import { setPerformance } from 'src/store/performancesReducer';
+
 
 
 const mapStateToProps = (state) => ({
@@ -9,6 +11,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  setPerformance: (performance) => {
+    dispatch(setPerformance(performance));
+},
 });
 
 const VoterContainer = connect(

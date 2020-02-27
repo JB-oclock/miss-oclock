@@ -38,6 +38,10 @@ class Game extends Model
         return $this->questions()->orderBy('order', 'desc')->first();
     }
 
+    public function lastPerformance() {
+        return $this->performances()->wherePivot('done', '0')->count();
+    }
+
     public function getCorrectAnswers() {
         return $this->answers()->with('player')->where('correct_answer', 1)->get();
     }

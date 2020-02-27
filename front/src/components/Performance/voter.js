@@ -2,6 +2,28 @@
 import React, { Component } from 'react';
 class Voter extends Component {
 
+  componentDidMount() {
+    this.eventSource = '';
+    this.listenProps();
+  }
+
+
+
+  listenProps = () => {
+    const {app, setPerformance} = this.props;
+    
+    const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
+    url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}missoclock/performances/${app.gameId}/props.jsonld`);
+    const eventSource = new EventSource(url, { withCredentials: true });
+    
+    eventSource.onmessage = (event) => {
+      const { performance } = JSON.parse(event.data);
+      
+      if(performance){
+        setPerformance(performance);
+      }
+    };
+  }
 
   getAnswers = () => {
     const {answers} = this.props.performance;
@@ -18,14 +40,7 @@ class Voter extends Component {
   render() {
 
     const {performance} = this.props;
-    if(performance.ended) {
-      if(app.step_2_winner){
-        return "Tu as gagné cette étape ! Mais ne pense pas que tout est fini !";
-      } else {
-        return "Tu n'as pas gagné durant cette étape. Mais reste avec nous, on aura besoin de toi pour la suite !";
-      }
-    }
-    else if(!performance.answered) {
+    if(!performance.answered) {
         if(performance.performanceId == 0) {
             return "La première épreuve va bientôt arriver !";
         } else {
@@ -39,10 +54,10 @@ class Voter extends Component {
         }
     }
     else if (performance.last) {
-      return "Merci d'avoir répondu ! C'était la dernière question, les résultats vont bientôt arriver !";
+      return "Merci d'avoir répondu ! Les résultats vont bientôt arriver !";
     }
     else {
-        return "Merci d'avoir répondu, la prochaine question arrive bientôt !";
+        return "Merci d'avoir répondu, la prochaine épreuve arrive bientôt !";
     }
   }
 }

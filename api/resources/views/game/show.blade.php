@@ -61,7 +61,7 @@
                                     @endphp
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href="{{ route('send-performance', ['game' => $game->id, 'player' => $player->id]) }}" class="btn btn-secondary @if($sendDisabled)disabled @endif">Envoyer perf.</a>
-                                            <a href="#" class="btn btn-secondary @if($propsDisabled)disabled @endif">Envoyer propositions</a>
+                                            <a href="{{ route('send-performance-props', ['game' => $game->id]) }}" class="btn btn-secondary @if($propsDisabled)disabled @endif">Envoyer propositions</a>
                                             <a href="#" class="btn btn-secondary @if($validationDisabled) disabled @endif">Valider perf.</a>
                                     </div>
                                 </li>
