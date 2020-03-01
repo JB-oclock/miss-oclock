@@ -11,25 +11,23 @@ class Performer extends Component {
   }
 
   listenPerformances = () => {
-    const {app, setPerformance} = this.props;
+    const {app, setPerformance, setWinner, endPerformance} = this.props;
     
     const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
     url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}missoclock/performances/${app.gameId}/performer/${app.player.playerId}.jsonld`);
     const eventSource = new EventSource(url, { withCredentials: true });
     
     eventSource.onmessage = (event) => {
-      const { performance, winners } = JSON.parse(event.data);
+      const { performance, winner } = JSON.parse(event.data);
       
       if(performance){
         setPerformance(performance);
       }
 
-      // if(winners){
-      //   const isWinner = winners.indexOf(app.player.name) !== -1;
-        
-      //   setWinner(isWinner);
-      //   endQuestions();
-      // }
+      if(winner){
+        setWinner();
+        endPerformance();
+      }
     };
   }
 
@@ -44,9 +42,17 @@ class Performer extends Component {
     }
   }
   render() {
-    const { performance } = this.props;
+    const { performance, app } = this.props;
     const { mission } = this.state;
-    if(!performance.title) {
+
+    if(performance.ended) {
+      if(app.step_2_winner){
+        return "Tu as gagné cette étape ! Place à la finale !";
+      } else {
+        return "Tu n'as pas gagné durant cette étape. Mais reste avec nous, on aura besoin de toi pour la finale !";
+      }
+    }
+    else if(!performance.title) {
       return (
         "Vos instructions arrivent bientôt !"
       );

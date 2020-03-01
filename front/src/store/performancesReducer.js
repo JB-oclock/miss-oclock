@@ -12,7 +12,7 @@ export const initialState = {
 
 const SET_PERFORMANCE = 'SET_PERFORMANCE';
 export const ANSWER_PERFORMANCE = 'ANSWER_PERFORMANCE';
-// export const END_QUESTIONS = 'END_QUESTIONS';
+export const END_PERFORMANCE = 'END_PERFORMANCE';
 export const SET_ANSWERED = 'SET_ANSWERED';
 
 /**
@@ -32,9 +32,9 @@ export const answerPerformance = (answer) => ({
 export const setAnswered = () => ({
   type: SET_ANSWERED,
 });
-// export const endQuestions = () => ({
-//   type: END_QUESTIONS,
-// });
+export const endPerformance = () => ({
+  type: END_PERFORMANCE,
+});
 
 
 /**
@@ -55,12 +55,12 @@ const reducer = (state = initialState, action = {}) => {
             answered: true,
           }
         break;
-      // case END_QUESTIONS: 
-      //     return {
-      //       ...state,
-      //       ended: true,
-      //     }
-      //   break;
+      case END_PERFORMANCE: 
+          return {
+            ...state,
+            ended: true,
+          }
+        break;
       default:
         return state;
     }

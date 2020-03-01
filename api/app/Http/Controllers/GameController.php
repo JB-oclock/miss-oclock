@@ -130,6 +130,36 @@ class GameController extends Controller
 
     }
 
+    public function setStep2Winners(Game $game,  Publify $publisher) {
+        $players = $game->findStep2Winners();
+
+        foreach ($players as $player) {
+            $player = $player['player'];
+            $player->games()->updateExistingPivot($game->id, ['winner2' => 1]);
+        }
+        foreach($players as $player) {
+            $player = $player['player'];
+            $data = ['winner' => true];
+            $update = new Update(
+                env('MERCURE_DOMAIN') . 'missoclock/performances/'.$game->id.'/performer/'.$player->id.'.jsonld',
+                json_encode($data)
+            );
+            $publisher($update);
+            
+        }
+
+        $data = ['ended' => true];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/performances/'.$game->id.'/props.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+                
+
+        return back();
+
+    }
+
     public function sendPerformance(Game $game, Player $player, Publify $publisher)
     {
         $performance = $game->performances()->orderBy(DB::raw('RAND()'))->where('done', 0)->first();

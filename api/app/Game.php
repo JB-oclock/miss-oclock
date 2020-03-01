@@ -58,6 +58,10 @@ class Game extends Model
         return $this->answers()->with('player')->where('correct_answer', 1)->get();
     }
 
+    public function getCorrectPerfAnswers() {
+        return $this->perfVotes()->with('player')->where('correct_answer', 1)->get();
+    }
+
     public function getStep1Winners()
     {
         return $this->players()->wherePivot('winner', 1)->get();
@@ -77,6 +81,29 @@ class Game extends Model
 
         foreach($answers as $answer ) {
             $player = $answer->player;
+            if(!array_key_exists($player->id, $players)) {
+                $players[$player->id]['player'] = $player;
+                $players[$player->id]['score'] = 1;
+            } else {
+                $players[$player->id]['score'] += $answer->correct_answer;
+            }
+        }
+        usort($players, function ($a, $b){
+            return $b['score'] - $a['score'];
+        });
+
+
+        return array_slice($players, 0, 2);
+    }
+
+    
+    public function findStep2Winners() {
+        
+        $answers  = $this->getCorrectPerfAnswers();
+        $players = [];
+
+        foreach($answers as $answer ) {
+            $player = $answer->performer;
             if(!array_key_exists($player->id, $players)) {
                 $players[$player->id]['player'] = $player;
                 $players[$player->id]['score'] = 1;

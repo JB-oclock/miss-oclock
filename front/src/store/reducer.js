@@ -26,6 +26,7 @@ export const MERCURE_SUBSCRIBE_STEPS = 'MERCURE_SUBSCRIBE_STEPS';
 const STOP_LOADING = 'STOP_LOADING';
 const WAITING_STEP = 'WAITING_STEP';
 const SET_STEP_1_WINNER = 'SET_STEP_1_WINNER';
+const SET_STEP_2_WINNER = 'SET_STEP_2_WINNER';
 const STOP_WAITING_STEP = 'STOP_WAITING_STEP';
 
 /**
@@ -50,6 +51,10 @@ export const setGameStep = (step) => ({
 
 export const setStep1Winner = (winner) => ({
   type: SET_STEP_1_WINNER,
+  winner,
+});
+export const setStep2Winner = (winner) => ({
+  type: SET_STEP_2_WINNER,
   winner,
 });
 export const getPlayerInfos = () => ({
@@ -116,6 +121,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         step_1_winner: action.winner
+      }
+    case SET_STEP_2_WINNER:
+      return {
+        ...state,
+        step_2_winner: true,
       }
     default:
       return state;

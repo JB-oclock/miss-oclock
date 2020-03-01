@@ -14,17 +14,21 @@ class Voter extends Component {
 
 
   listenProps = () => {
-    const {app, setPerformance} = this.props;
+    const {app, setPerformance, endPerformance} = this.props;
     
     const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
     url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}missoclock/performances/${app.gameId}/props.jsonld`);
     const eventSource = new EventSource(url, { withCredentials: true });
     
     eventSource.onmessage = (event) => {
-      const { performance } = JSON.parse(event.data);
+      const { performance, ended } = JSON.parse(event.data);
       
       if(performance){
         setPerformance(performance);
+      }
+
+      if(ended) {
+        endPerformance();
       }
     };
   }
@@ -81,7 +85,10 @@ class Voter extends Component {
   render() {
 
     const {performance} = this.props;
-    if(!performance.answered) {
+    if(performance.ended) {
+      return "Merci d'avoir participé ! On a encore besoin de toi pour la finale !";
+    }
+    else if(!performance.answered) {
         if(performance.performanceId == 0) {
             return "Vous allez bientôt pouvoir voter !";
         } else {
