@@ -5,16 +5,19 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Tableau de bord <a class="btn btn-danger float-right" href="{{ route('reset-game', [$game->id]) }}">Reset jeu</a></div>
-                    <div class="card-body">
-                        <ul>
-                            <li>ID: {{ $game->id }}</li>
-                            <li>Step: {{ $game->step }}</li>
-                        </ul>
-                        <a class="btn btn-primary @if(!$stepOver)disabled @endif" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Étape suivante</a>
-                    </div>
-                </div>
-            </div>
+                <div class="card-header d-flex align-items-start justify-content-between">
+                    <span>Tableau de bord <br/>Code de jeu : {{ $game->code }}</span>
+                    <a class="btn btn-danger float-right" href="{{ route('reset-game', [$game->id]) }}">Reset jeu</a>
+                  </div>
+                  <div class="card-body">
+                      <ul>
+                          <li>ID: {{ $game->id }}</li>
+                          <li>Step: {{ $game->step }}</li>
+                      </ul>
+                      <a class="btn btn-primary @if(!$stepOver)disabled @endif" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Étape suivante</a>
+                  </div>
+              </div>
+          </div>
             @if($game->step == 1)
                 <div class="col-md-8">
                     <div class="card">
@@ -51,7 +54,7 @@
                                 @forelse($players as $key => $player)
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span class="font-weight-bold">
-                                            {{ $player->name }} : 
+                                            {{ $player->name }} :
                                         </span>
                                         @php
                                             $disabled = ($perfsOver ||  $performersData[$player->id]['nb_perfs'] == 2 || $game->performance_player != 0 && $game->performance_player != $player->id);
@@ -68,14 +71,14 @@
                                         Score : <span class="badge badge-success ">{{ $performersData[$player->id]['score'] }}</span>
                                     </li>
                                 @empty
-                                    
+
                                 @endforelse
                             </ul>
                             @if($perfsOver)
                                 <a class="btn btn-primary @if($stepOver)disabled @endif" href="{{ route('set-step2-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
                             @endif
                         </div>
-                       
+
                     </div>
                 </div>
             @endif

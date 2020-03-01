@@ -34,7 +34,7 @@ class GameController extends Controller
                 $performersData[$player->id]['score'] = $game->performanceScore($player);
                 $performersData[$player->id]['nb_perfs'] = $game->numberOfPerfs($player);
             }
-      
+
         }
         return view('game.show', compact('game', 'players', 'question', 'stepOver', 'perfsOver', 'performersData'));
     }
@@ -50,6 +50,27 @@ class GameController extends Controller
         $game->save();
 
         return back();
+    }
+
+    public function edit(Game $game) {
+        return view('game.edit', compact('game'));
+    }
+    public function editpost(Game $game, Request $request) {
+        $game->code = $request->input('code');
+        $game->winners = $request->input('winners');
+        $game->save();
+        return redirect()->route('home');
+    }
+
+    public function create() {
+        return view('game.create');
+    }
+    public function createpost(Request $request) {
+        $game = new Game();
+        $game->code = $request->input('code');
+        $game->winners = $request->input('winners');
+        $game->save();
+        return redirect()->route('edit-game', ['game' => $game->id]);
     }
 
     public function resetPerfs(Game $game) {
@@ -88,9 +109,9 @@ class GameController extends Controller
         if($game->question < $nbQuestions) {
             $game->question = $game->question +1;
             $game->save();
-            
+
             $question = $game->questionWithOrder($game->question);
-            
+
             $question = $question->cleanData($game);
 
 
@@ -144,7 +165,7 @@ class GameController extends Controller
             json_encode($data)
         );
         $publisher($update);
-        
+
         return back();
 
     }
@@ -161,14 +182,14 @@ class GameController extends Controller
             json_encode($data)
         );
         $publisher($update);
-        
+
         return back();
 
     }
 
     public function validatePerformance(Game $game, Publify $publisher)
     {
-       
+
 
        $data = [
            'performance' => [
@@ -187,7 +208,7 @@ class GameController extends Controller
             json_encode($data)
         );
         $publisher($update);
-        
+
 
         $game->performance_sent = 0;
         $game->performance_props_sent = 0;
@@ -217,13 +238,13 @@ class GameController extends Controller
                         ->where('player_id', $player->id)
                         ->where('question_id', $question->id)
                         ->first();
-            
+
             $gameData['question']['answered'] = !!$answer;
 
-            // Check if the winners have been set up 
+            // Check if the winners have been set up
             $winners = $game->getStep1Winners();
             $gameData['question']['ended'] = !!$winners;
-        } 
+        }
         if($game->step == 2) {
             $performance = Performance::find($game->performance_sent);
             if($performance) {
@@ -238,7 +259,7 @@ class GameController extends Controller
                     ->where('performance_id', $performance->id)
                     ->first();
                     $gameData['performance']['answered'] = !!$answer;
-                    
+
                 }
             }
         }

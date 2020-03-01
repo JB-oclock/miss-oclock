@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware('auth')->group( function() {
+    Route::get('/game/create', 'GameController@create')->name('create-game');
+    Route::post('/game/create', 'GameController@createpost')->name('create-game-post');
     Route::get('/game/{game}/next-step', 'GameController@nextStep')->name('next-step');
     Route::get('/game/{game}/next-question', 'GameController@nextQuestion')->name('next-question');
     Route::get('/game/{game}/set-step1-winners', 'GameController@setStep1Winners')->name('set-step1-winners');
@@ -28,5 +30,7 @@ Route::middleware('auth')->group( function() {
     Route::get('/game/{game}/validate-performance', 'GameController@validatePerformance')->name('validate-performance');
     Route::get('/game/{game}', 'GameController@show')->name('show-game');
     Route::get('/game/{game}/reset', 'GameController@reset')->name('reset-game');
+    Route::get('/game/{game}/edit', 'GameController@edit')->name('edit-game');
+    Route::post('/game/{game}/edit', 'GameController@editpost')->name('edit-game-post');
     Route::get('/game/{game}/reset-perfs', 'GameController@resetPerfs')->name('reset-perfs');
 });

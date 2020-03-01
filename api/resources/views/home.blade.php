@@ -29,17 +29,17 @@
                           </td>
                           <td>{{ $game->step }}</td>
                           <td>{{ $game->created_at->format('d/m/Y H:i') }}</td>
-                          <td>{{ $game->updated_at->format('d-m-Y H:i') }}</td>
+                          <td>{{ $game->updated_at->format('d/m/Y H:i') }}</td>
                           <td>
                             <a href="{{ route('show-game', ['game' => $game->id]) }}" class="btn btn-success">Jouer</a>
-                            <a href="{{ route('show-game', ['game' => $game->id]) }}" class="btn btn-primary">Éditer</a>
+                            <a href="{{ route('edit-game', ['game' => $game->id]) }}" class="btn btn-primary">Éditer</a>
                           </td>
                         </tr>
                       @endforeach
                       </tbody>
                     </table>
 
-                    <a class="btn btn-primary" href="#" role="button">Nouveau jeu</a>
+                    <a class="btn btn-primary" href="{{ route('create-game') }}" role="button">Nouveau jeu</a>
                 </div>
             </div>
         </div>
