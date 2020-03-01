@@ -72,6 +72,21 @@ class Game extends Model
         return $this->players()->wherePivot('winner2', 1)->get();
     }
 
+    public function getStep3Props()
+    {
+        $winners = $this->getStep2Winners();
+        $props = [];
+
+        foreach($winners as $winner) {
+            $props[] = [
+                'id' => $winner->id,
+                'name' => $winner->name
+            ];
+        }
+
+        return $props;
+    }
+
 
     
     public function findStep1Winners() {

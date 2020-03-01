@@ -26,6 +26,7 @@ Route::middleware('auth')->group( function() {
     Route::get('/game/{game}/send-performance/{player}', 'GameController@sendPerformance')->name('send-performance');
     Route::get('/game/{game}/send-performance-props', 'GameController@sendPerformanceProps')->name('send-performance-props');
     Route::get('/game/{game}/validate-performance', 'GameController@validatePerformance')->name('validate-performance');
+    Route::get('/game/{game}/send-votes', 'GameController@sendVotes')->name('send-votes');
     Route::get('/game/{game}', 'GameController@show');
     Route::get('/game/{game}/reset', 'GameController@reset')->name('reset-game');
     Route::get('/game/{game}/reset-perfs', 'GameController@resetPerfs')->name('reset-perfs');

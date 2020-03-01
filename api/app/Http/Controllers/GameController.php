@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Vote;
 use \App\Game;
 use App\Answer;
 use App\Player;
@@ -228,6 +229,28 @@ class GameController extends Controller
         return back();
     }
 
+    public function sendVotes(Game $game, Publify $publisher)
+    {
+        $game->votes_started = true;
+        $game->save();
+
+        $answers = $game->getStep3Props();
+
+        $data = [
+            'votes' => [
+                'started' => true,
+                'answers' => $answers,
+            ]
+        ];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/votes/'.$game->id.'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+
+        return back();
+    }
+
     public function gameData(Request $request) {
         $game = $request->get('game');
         $player = $request->get('player');
@@ -277,6 +300,15 @@ class GameController extends Controller
             // Check if the winners have been set up 
             $winners = $game->getStep2Winners();
             $gameData['performance']['ended'] = !!$winners;
+        }
+        
+        if($game->step == 3) {
+            $voteExists = Vote::where('game_id', $game->id)->where('player_id', $player->id)->first();
+            $gameData['votes'] = [
+               'started' => !!$game->votes_started,
+               'answers' => $game->getStep3Props(), 
+               'answered' => !!$voteExists,
+            ];
         }
 
 

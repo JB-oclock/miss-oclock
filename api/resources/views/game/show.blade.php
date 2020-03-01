@@ -11,7 +11,7 @@
                             <li>ID: {{ $game->id }}</li>
                             <li>Step: {{ $game->step }}</li>
                         </ul>
-                        <a class="btn btn-primary @if(!$stepOver)disabled @endif" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Étape suivante</a>
+                        <a class="btn btn-primary @if(!$stepOver || $game->step == 3)disabled @endif" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Étape suivante</a>
                     </div>
                 </div>
             </div>
@@ -78,6 +78,22 @@
                        
                     </div>
                 </div>
+            @elseif($game->step == 3)
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Votes </div>
+                    <div class="card-body">
+                        <a class="btn btn-primary  @if($game->votes_started)disabled @endif" href="{{ route('send-votes', ['game' => $game->id]) }}" role="button">Activer la votation !</a>
+                        <ul class="list-group">
+                            
+                        </ul>
+                        @if($perfsOver)
+                            <a class="btn btn-primary @if($stepOver)disabled @endif" href="{{ route('set-step2-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
+                        @endif
+                    </div>
+                   
+                </div>
+            </div>
             @endif
         </div>
     </div>

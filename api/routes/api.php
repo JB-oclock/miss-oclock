@@ -21,4 +21,5 @@ Route::group(['middleware' => 'token'], function () {
     Route::get('/get-infos', 'CodeController@getInfos');
     Route::post('/answer-question', 'AnswerController@answerQuestion');
     Route::post('/answer-performance', 'PerformanceController@answerPerformance');
+    Route::post('/send-vote', 'VoteController@sendVote');
 });

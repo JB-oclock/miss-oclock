@@ -3,6 +3,7 @@ import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeStep
 import { setQuestion, setAnswered, ANSWER_QUESTION } from '../questionsReducer';
 import { toastr } from 'react-redux-toastr';
 import { setPerformance, ANSWER_PERFORMANCE, setAnswered as setAnsweredPerformance } from '../performancesReducer';
+import { SEND_VOTE, SET_VOTES, setVotes } from '../votesReducer';
 
 
 const ajaxMiddleware = (store) => (next) => (action) => {
@@ -33,7 +34,7 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           Authorization: token,
         },
       }).then((response) => {
-          const {gameId, gameStep, question, step_1_winner, step_2_winner, performance} = response.data;
+          const {gameId, gameStep, question, step_1_winner, step_2_winner, performance, votes} = response.data;
           
         store.dispatch(setGameId(gameId));
         store.dispatch(setGameStep(gameStep));
@@ -50,6 +51,9 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         }  
         if(gameStep == 2 && performance) {
           store.dispatch(setPerformance(performance));
+        }   
+        if(gameStep == 3 && votes) {
+          store.dispatch(setVotes(votes));
         }   
       });
       break;  
@@ -89,6 +93,31 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         },
       }).then(() => {
         store.dispatch(setAnsweredPerformance());
+        
+      }).catch((error) => {
+        if (error.response?.data.errors) {
+          const { errors } = error.response.data;
+          for (const error in errors) {
+            toastr.error(errors[error]);
+          }
+        }
+
+      });
+      break;
+    case SEND_VOTE:
+      data = {
+        answer: action.vote,
+      };
+      
+      Axios.post(`${process.env.API_DOMAIN}send-vote`,data, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(() => {
+        const votes = {
+          'answered': true
+        };
+        store.dispatch(setVotes(votes));
         
       }).catch((error) => {
         if (error.response?.data.errors) {
