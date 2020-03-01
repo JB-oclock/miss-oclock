@@ -25,7 +25,7 @@ class Performer extends Component {
       }
 
       if(winner){
-        setWinner();
+        setWinner(winner);
         endPerformance();
       }
     };

@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(setPerformance(performance));
     },
     setWinner: () => {
-        dispatch(setStep2Winner());
+        dispatch(setStep2Winner(winner));
     },
     endPerformance: () => {
         dispatch(endPerformance());

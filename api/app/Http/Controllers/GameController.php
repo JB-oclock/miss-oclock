@@ -10,6 +10,7 @@ use App\Performance;
 use Idplus\Mercure\Publify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Mercure\Update;
 
 class GameController extends Controller
@@ -231,11 +232,13 @@ class GameController extends Controller
         $game = $request->get('game');
         $player = $request->get('player');
         $step1Winner = !!$player->winnerStep1($game);
+        $step2Winner = !!$player->winnerStep2($game);
 
         $gameData = [
             'gameId' => $game->id,
             'gameStep' => $game->step,
             'step_1_winner' => $step1Winner,
+            'step_2_winner' => $step2Winner,
         ];
 
         if($game->step == 1 && $game->question != 0) {
@@ -271,6 +274,9 @@ class GameController extends Controller
                     
                 }
             }
+            // Check if the winners have been set up 
+            $winners = $game->getStep2Winners();
+            $gameData['performance']['ended'] = !!$winners;
         }
 
 

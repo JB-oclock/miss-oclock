@@ -15,6 +15,10 @@ class Player extends Model
         return $this->games()->where('id', $game->id)->wherePivot('winner', 1)->first();
     }
 
+    public function winnerStep2(Game $game) {
+        return $this->games()->where('id', $game->id)->wherePivot('winner2', 1)->first();
+    }
+
     public function answers()
     {
         return $this->hasMany('App\Answer');

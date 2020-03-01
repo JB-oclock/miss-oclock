@@ -125,7 +125,7 @@ const reducer = (state = initialState, action = {}) => {
     case SET_STEP_2_WINNER:
       return {
         ...state,
-        step_2_winner: true,
+        step_2_winner: action.winner,
       }
     default:
       return state;
