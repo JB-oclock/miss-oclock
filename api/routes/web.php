@@ -33,4 +33,10 @@ Route::middleware('auth')->group( function() {
     Route::get('/game/{game}/edit', 'GameController@edit')->name('edit-game');
     Route::post('/game/{game}/edit', 'GameController@editpost')->name('edit-game-post');
     Route::get('/game/{game}/reset-perfs', 'GameController@resetPerfs')->name('reset-perfs');
+
+    Route::get('/question/create', 'QuestionController@create')->name('create-question');
+    Route::post('/question/create', 'QuestionController@createpost')->name('create-question-post');
+    Route::get('/question/{question}/edit', 'QuestionController@edit')->name('edit-question');
+    Route::post('/question/{question}/edit', 'QuestionController@editpost')->name('edit-question-post');
+    Route::get('/question/{question}/delete', 'QuestionController@delete')->name('delete-question');
 });
