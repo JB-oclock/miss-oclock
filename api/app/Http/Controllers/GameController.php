@@ -303,14 +303,14 @@ class GameController extends Controller
 
             // Check if the winners have been set up 
             $winners = $game->getStep1Winners();
-            $gameData['question']['ended'] = !!$winners;
+            $gameData['question']['ended'] = !!count($winners);
         } 
         if($game->step == 2) {
             $performance = Performance::find($game->performance_sent);
             if($performance) {
                 if($step1Winner && $game->performance_player == $player->id && $game->performance_sent) {
                     $gameData['performance'] = $performance->performerData();
-                } else {
+                } else if (!$step1Winner && $game->performance_props_sent) {
                     $gameData['performance'] = $performance->voterData($game);
 
                     // Check if the player has already answered this performance
@@ -324,7 +324,7 @@ class GameController extends Controller
             }
             // Check if the winners have been set up 
             $winners = $game->getStep2Winners();
-            $gameData['performance']['ended'] = !!$winners;
+            $gameData['performance']['ended'] = !!count($winners);
         }
         
         if($game->step == 3) {
@@ -334,7 +334,7 @@ class GameController extends Controller
                'answers' => $game->getStep3Props(), 
                'answered' => !!$voteExists,
             ];
-            $gameData['step_3_winner'] = $game->getFinalWinner()->name;
+            $gameData['step_3_winner'] = $game->getfinalWinnerName();
         }
 
 

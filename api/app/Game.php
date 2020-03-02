@@ -29,6 +29,11 @@ class Game extends Model
     {
         return $this->belongsToMany('App\Performance');
     }
+
+    public function finalWinner()
+    {
+        return $this->belongsTo('App\Player', 'winner');
+    }
     public function performanceScore($player) 
     {
         return $this->hasMany('App\PerfVote')->where('performer_id', $player->id)->get()->sum('correct_answer');
@@ -40,6 +45,11 @@ class Game extends Model
     public function perfVotes()
     {
         return $this->hasMany('App\PerfVote');
+    }
+
+    public function getfinalWinnerName()
+    {
+        return ($this->finalWinner) ? $this->finalWinner->name : false;
     }
 
     public function questionWithOrder($order) {

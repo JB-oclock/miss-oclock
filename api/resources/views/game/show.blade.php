@@ -88,9 +88,7 @@
                         <ul class="list-group">
                             
                         </ul>
-                        @if($perfsOver)
-                            <a class="btn btn-primary @if($stepOver)disabled @endif" href="{{ route('set-step2-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
-                        @endif
+                        
                     </div>
                     <div class="card-body">
                         <ul class="list-group">

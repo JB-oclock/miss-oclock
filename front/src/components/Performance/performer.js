@@ -22,6 +22,9 @@ class Performer extends Component {
       
       if(performance){
         setPerformance(performance);
+        this.setState({
+          mission:false,
+        })
       }
 
       if(winner){
