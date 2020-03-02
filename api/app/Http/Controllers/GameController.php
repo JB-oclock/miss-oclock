@@ -37,6 +37,9 @@ class GameController extends Controller
                 $performersData[$player->id]['nb_perfs'] = $game->numberOfPerfs($player);
             }
       
+        } else if ($game->step == 3) {
+            $players = $game->getStep3Scores();
+            
         }
         return view('game.show', compact('game', 'players', 'question', 'stepOver', 'perfsOver', 'performersData'));
     }

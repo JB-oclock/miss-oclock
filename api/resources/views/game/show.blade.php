@@ -91,8 +91,21 @@
                             <a class="btn btn-primary @if($stepOver)disabled @endif" href="{{ route('set-step2-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
                         @endif
                     </div>
-                   
+                    <div class="card-body">
+                        <ul class="list-group">
+                            @php
+                            $i = 1
+                            @endphp
+                            @forelse($players as $player)
+                                <li class="list-group-item">{{$player['player']->name}} : {{$player['score']}}</li>
+                                @php $i++ @endphp
+                            @empty
+                                <li class="list-group-item">Pas encore de réponses</li>
+                            @endforelse
+                        </ul>
+                    </div>
                 </div>
+                
             </div>
             @endif
         </div>

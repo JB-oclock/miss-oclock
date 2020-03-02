@@ -87,7 +87,21 @@ class Game extends Model
         return $props;
     }
 
+    public function getStep3Scores()
+    {
+        $scores = [];
+        $playerVotes = $this->votes()->with('vote')->groupBy('voted_player_id')->get();
+        foreach($playerVotes as $playerVote) {
+            $player = $playerVote->vote;
+            $votes = $player->voted()->where('game_id', $this->id)->count();
+            $scores[] = [
+                'player' => $player,
+                'score' => $votes
+            ];
+        }
 
+        return $scores;
+    }
     
     public function findStep1Winners() {
         
