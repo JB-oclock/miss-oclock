@@ -50,7 +50,12 @@ class GameController extends Controller
         $game->performance_sent = 0;
         $game->performance_props_sent = 0;
         $game->performance_player = 0;
+        $game->votes_started = 0;
+        $game->winner = null;
         $game->answers()->delete();
+        $game->perfVotes()->delete();
+        $game->votes()->delete();
+        $game->performances()->delete();
         $game->players()->delete();
         $game->save();
 
