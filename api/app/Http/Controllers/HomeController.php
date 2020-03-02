@@ -28,7 +28,7 @@ class HomeController extends Controller
     {
         $games = Game::all();
         $questions = Question::all();
-        $perfs = Performance::all();
-        return view('home', compact('games', 'questions', 'perfs'));
+        $performances = Performance::all();
+        return view('home', compact('games', 'questions', 'performances'));
     }
 }

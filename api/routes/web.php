@@ -39,4 +39,10 @@ Route::middleware('auth')->group( function() {
     Route::get('/question/{question}/edit', 'QuestionController@edit')->name('edit-question');
     Route::post('/question/{question}/edit', 'QuestionController@editpost')->name('edit-question-post');
     Route::get('/question/{question}/delete', 'QuestionController@delete')->name('delete-question');
+
+    Route::get('/performance/create', 'PerformanceController@create')->name('create-performance');
+    Route::post('/performance/create', 'PerformanceController@createpost')->name('create-performance-post');
+    Route::get('/performance/{performance}/edit', 'PerformanceController@edit')->name('edit-performance');
+    Route::post('/performance/{performance}/edit', 'PerformanceController@editpost')->name('edit-performance-post');
+    Route::get('/performance/{performance}/delete', 'PerformanceController@delete')->name('delete-performance');
 });

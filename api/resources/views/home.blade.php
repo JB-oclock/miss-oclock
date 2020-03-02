@@ -45,10 +45,12 @@
                 </div>
             </div>
         </div>
+    </div>
 
 
 
-        <div class="col col-md-8">
+    <div class="row justify-content-center mt-4">
+        <div class="col col-md-4">
             <div class="card">
                 <div class="card-header">Questions enregistrées</div>
                 <div class="card-body">
@@ -75,6 +77,36 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="col col-md-4">
+            <div class="card">
+                <div class="card-header">Performances enregistrées</div>
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <ul class="performances list">
+                      @foreach ($performances as $performance)
+                        <li>
+                          <a href="{{ route('edit-performance', ['performance' => $performance->id]) }}">
+                            {{ $performance->answer_good }}
+                          </a>
+                          <a href="#" data-href="{{ route('delete-performance', ['performance' => $performance->id]) }}" data-toggle="modal" data-target="#confirm-delete" class="deletebtn" data-title="{{ $performance->answer_good }}">
+                            <span class="badge badge-danger deletebtn">x</span>
+                          </a>
+                        </li>
+                      @endforeach
+                    </ul>
+
+                    <a class="btn btn-primary" href="{{ route('create-performance') }}" role="button">Nouvelle performance</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -85,7 +117,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-              Voulez-vous réellement supprimer cette question :
+              Voulez-vous réellement supprimer cet élément :
               <p id="question-title-copy"></p>
             </div>
             <div class="modal-footer">

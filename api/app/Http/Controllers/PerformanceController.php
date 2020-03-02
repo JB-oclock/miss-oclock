@@ -49,4 +49,43 @@ class PerformanceController extends Controller
             return response()->json($errors, 422);
         }
     }
+
+    public function create()
+    {
+        return view('performance.create');
+    }
+
+    public function createpost(Request $request)
+    {
+        $performance = new Performance();
+        $performance->title = $request->input('title');
+        $performance->answer_1 = $request->input('answer_1');
+        $performance->answer_2 = $request->input('answer_2');
+        $performance->answer_3 = $request->input('answer_3');
+        $performance->answer_good = $request->input('answer_good');
+        $performance->save();
+        return redirect()->route('home');
+    }
+
+    public function edit(Performance $performance)
+    {
+        return view('performance.create', compact('performance'));
+    }
+
+    public function editpost(Performance $performance, Request $request)
+    {
+        $performance->title = $request->input('title');
+        $performance->answer_1 = $request->input('answer_1');
+        $performance->answer_2 = $request->input('answer_2');
+        $performance->answer_3 = $request->input('answer_3');
+        $performance->answer_good = $request->input('answer_good');
+        $performance->save();
+        return redirect()->route('home');
+    }
+
+    public function delete(Performance $performance)
+    {
+        $performance->delete();
+        return redirect()->route('home');
+    }
 }
