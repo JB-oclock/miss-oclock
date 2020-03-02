@@ -8,9 +8,11 @@ import { Switch, Route } from 'react-router-dom';
 import ReduxToastr from 'react-redux-toastr';
 import FirstTimeForm from '../FirstTimeForm';
 import Waiting from '../Waiting';
+import End from '../End';
 import Question from '../../containers/Question';
 import Performance from '../../containers/Performance';
 import Votes from '../../containers/Votes';
+
 
 class App extends Component {
 
@@ -26,7 +28,7 @@ class App extends Component {
   }
 
   render() {
-    const { player, loading, waiting, step } = this.props;
+    const { player, loading, waiting, step, winner } = this.props;
     
     return (
       <>
@@ -38,7 +40,8 @@ class App extends Component {
             {waiting && <Waiting />}
             {!waiting &&  step == 1 && <Question />}
             {!waiting &&  step == 2 && <Performance />}
-            {!waiting &&  step == 3 && <Votes />}
+            {!waiting &&  step == 3 && !winner && <Votes />}
+            {!waiting &&  step == 3 && winner && <End winner={winner} />}
           </Route>
         </Switch>
         {/* <Footer ? /> */}

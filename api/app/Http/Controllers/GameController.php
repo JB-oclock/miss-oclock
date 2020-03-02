@@ -254,6 +254,25 @@ class GameController extends Controller
         return back();
     }
 
+    public function validateVotes(Game $game, Publify $publisher)
+    {
+        $winner = $game->getFinalWinner();
+        $game->winner = $winner->id;
+        $game->save();
+
+        $data = [
+            'winner' => $winner->name,
+        ];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/votes/'.$game->id.'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+        
+
+        return back();
+    }
+
     public function gameData(Request $request) {
         $game = $request->get('game');
         $player = $request->get('player');
@@ -312,6 +331,7 @@ class GameController extends Controller
                'answers' => $game->getStep3Props(), 
                'answered' => !!$voteExists,
             ];
+            $gameData['step_3_winner'] = $game->getFinalWinner()->name;
         }
 
 

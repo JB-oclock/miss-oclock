@@ -14,17 +14,20 @@ class Votes extends Component {
 
 
   listenProps = () => {
-    const {app,setVotes} = this.props;
+    const {app,setVotes, setGameWinner} = this.props;
     
     const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
     url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}missoclock/votes/${app.gameId}.jsonld`);
     const eventSource = new EventSource(url, { withCredentials: true });
     
     eventSource.onmessage = (event) => {
-        const { votes } = JSON.parse(event.data);
+        const { votes, winner } = JSON.parse(event.data);
         
         if(votes){
             setVotes(votes);
+        }
+        if(winner) {
+          setGameWinner(winner);
         }
     };
   }

@@ -20,6 +20,7 @@ export const initialState = {
 export const SET_PLAYER = 'SET_PLAYER';
 export const SET_GAME_ID = 'SET_GAME_ID';
 export const SET_GAME_STEP = 'SET_GAME_STEP';
+export const SET_GAME_WINNER = 'SET_GAME_WINNER';
 export const GET_PLAYER_INFOS = 'GET_PLAYER_INFOS';
 export const GET_GAME_DATA = 'GET_GAME_DATA';
 export const MERCURE_SUBSCRIBE_STEPS = 'MERCURE_SUBSCRIBE_STEPS';
@@ -47,6 +48,10 @@ export const setGameId = (id) => ({
 export const setGameStep = (step) => ({
   type: SET_GAME_STEP,
   step,
+});
+export const setGameWinner = (winner) => ({
+  type: SET_GAME_WINNER,
+  winner,
 });
 
 export const setStep1Winner = (winner) => ({
@@ -126,6 +131,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         step_2_winner: action.winner,
+      }
+    case SET_GAME_WINNER:
+      return {
+        ...state,
+        step_3_winner: action.winner,
       }
     default:
       return state;

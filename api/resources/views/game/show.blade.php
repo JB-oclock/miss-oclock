@@ -84,6 +84,7 @@
                     <div class="card-header">Votes </div>
                     <div class="card-body">
                         <a class="btn btn-primary  @if($game->votes_started)disabled @endif" href="{{ route('send-votes', ['game' => $game->id]) }}" role="button">Activer la votation !</a>
+                        <a class="btn btn-primary  @if(!$game->votes_started)disabled @endif" href="{{ route('validate-votes', ['game' => $game->id]) }}" role="button">Valider les résultats</a>
                         <ul class="list-group">
                             
                         </ul>
