@@ -259,7 +259,7 @@ class GameController extends Controller
 
     public function validateVotes(Game $game, Publify $publisher)
     {
-        $winner = $game->getFinalWinner();
+        $winner = $game->findFinalWinner();
         $game->winner = $winner->id;
         $game->save();
 

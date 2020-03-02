@@ -113,7 +113,7 @@ class Game extends Model
         return $scores;
     }
 
-    public function getFinalWinner()
+    public function findFinalWinner()
     {
         $votes = $this->getStep3Scores();
         usort($votes, function ($a, $b){
