@@ -133,7 +133,7 @@ class Game extends Model
         });
 
 
-        return array_slice($players, 0, 2);
+        return array_slice($players, 0, $this->winners);
     }
 
     
@@ -156,7 +156,7 @@ class Game extends Model
         });
 
 
-        return array_slice($players, 0, $this->winners);
+        return array_slice($players, 0, 2);
     }
 
 

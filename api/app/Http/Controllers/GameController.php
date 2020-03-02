@@ -41,21 +41,19 @@ class GameController extends Controller
             $players = $game->getStep3Scores();
             
         }
+        
         return view('game.show', compact('game', 'players', 'question', 'stepOver', 'perfsOver', 'performersData'));
     }
 
     public function reset(Game $game) {
         $game->step = 0;
         $game->question = 0;
-        $game->performance_sent = 0;
-        $game->performance_props_sent = 0;
-        $game->performance_player = 0;
+        $this->resetPerfs($game);
         $game->votes_started = 0;
         $game->winner = null;
         $game->answers()->delete();
         $game->perfVotes()->delete();
         $game->votes()->delete();
-        $game->performances()->delete();
         $game->players()->delete();
         $game->save();
 
