@@ -1,6 +1,32 @@
 @import 'react-redux-toastr/src/styles/index';
-#app {
-  font-size: 1.2em;
+
+@font-face {
+  font-family: "oclock";
+  src: url("fonts/oclock-regular.ttf");
+}
+@font-face {
+  font-family: "oclock-bold";
+  src: url("fonts/oclock-bold.ttf");
+}
+
+body {
+  font-family: 'oclock';
+  color: #fffdd8;
+}
+html,body, #root {
+  height: 100%;
+}
+
+html {
+  font-size: 20px;
+}
+.mainWrapper{
+  background: #d8373a;
+  height: 100%;
+  font-size: 1rem;
+}
+
+h1 {
   text-align: center;
-  margin: 1em;
+  padding: 1rem 0;
 }

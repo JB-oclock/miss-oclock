@@ -15,7 +15,24 @@
                     </div>
                 </div>
             </div>
-            @if($game->step == 1)
+            @if($game->step == 0)
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Participants : {{ count($players) }} </div>
+                        <div class="card-body">
+                            <ul class="list-group d-flex flex-row flex-wrap">
+                                @php
+                                @endphp
+                                @forelse($players as $player)
+                                    <li class="list-group-item w-50 border  p-2 px-3">{{$player->name}}</li>
+                                @empty
+                                    <li class="list-group-item">Pas encore de participants</li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @elseif($game->step == 1)
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">Questions</div>

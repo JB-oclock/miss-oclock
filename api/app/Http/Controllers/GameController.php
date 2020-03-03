@@ -23,7 +23,10 @@ class GameController extends Controller
         $stepOver = true;
         $perfsOver = false;
         $gameQuestion = ($game->question == 0)? 1 : $game->question;
-        if($game->step == 1) {
+        if($game->step == 0 ) {
+            $players = $game->players;
+        }
+        else if($game->step == 1) {
             $players = $game->getPlayersWithScore();
             $question = $game->questionWithOrder($gameQuestion);
             $question = $question->CleanData($game);
