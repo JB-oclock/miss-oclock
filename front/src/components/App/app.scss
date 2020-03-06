@@ -9,6 +9,8 @@
   src: url("fonts/oclock-bold.ttf");
 }
 
+$red: #d8373A;
+
 body {
   font-family: 'oclock';
   color: #fffdd8;
@@ -21,7 +23,7 @@ html {
   font-size: 20px;
 }
 .mainWrapper{
-  background: #d8373a;
+  background: $red;
   height: 100%;
   font-size: 1rem;
 }
@@ -29,4 +31,35 @@ html {
 h1 {
   text-align: center;
   padding: 1rem 0;
+}
+
+input[type=text] {
+  padding: .8rem;
+  border:none;
+  color: $red;
+  background: darken($red, 30%);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 2rem;
+  font-family: 'oclock';
+  width: 100%;
+  text-align: center;
+}
+
+input[type=submit] {
+  display: block;
+  width: 100%;
+  padding: .8rem;
+  font-family: 'oclock';
+  border-radius: 5px;
+  border: none;
+}
+label {
+  font-size: 1.5rem;
+  margin-bottom: .8rem;
+  display: block;
+}
+
+main.content{
+  padding: 1rem;
 }
