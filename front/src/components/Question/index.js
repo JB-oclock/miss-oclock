@@ -46,7 +46,7 @@ class Question extends Component {
     const inputs = [];
 
     answers.forEach((answer, id) => {
-      inputs.push(<label  key={id} htmlFor={'answer_'+id}><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer} />{answer}</label>);
+      inputs.push(<div className="fake-checkboxes"><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer} /><label className="input-btn" key={id} htmlFor={'answer_'+id}>{answer}</label></div>);
     });
  
     return inputs;
@@ -82,18 +82,30 @@ class Question extends Component {
     
     if(question.ended) {
       if(app.step_1_winner){
-        return "Tu as gagné cette étape ! Mais ne pense pas que tout est fini !";
+        return (
+          <div className="question-message message">
+            Tu as gagné cette étape ! Mais ne pense pas que tout est fini !
+          </div>
+        )
       } else {
-        return "Tu n'as pas gagné durant cette étape. Mais reste avec nous, on aura besoin de toi pour la suite !";
+        return (
+          <div className="question-message message">
+            Tu n'as pas gagné durant cette étape. Mais reste avec nous, on aura besoin de toi pour la suite !
+          </div>
+        )
       }
     }
     else if(!question.answered) {
         if(question.questionId == 0) {
-            return "La première question va bientôt arriver !";
+            return (
+              <div className="question-message message">
+                La première question va bientôt arriver !
+              </div>
+            )
         } else {
             return (
                 <form onSubmit={this.handleSubmit}>
-                    <h2>{question.question}</h2>
+                    <h2 className="question">{question.question}</h2>
                     { this.getAnswers() }
                     <button type="submit">Valider la réponse</button>
                 </form>
@@ -101,10 +113,18 @@ class Question extends Component {
         }
     }
     else if (question.last) {
-      return "Merci d'avoir répondu ! C'était la dernière question, les résultats vont bientôt arriver !";
+      return (
+        <div className="question-message message">
+         Merci d'avoir répondu ! C'était la dernière question, les résultats vont bientôt arriver !
+        </div>
+      )
     }
     else {
-        return "Merci d'avoir répondu, la prochaine question arrive bientôt !";
+      return (
+        <div className="question-message message">
+          Merci d'avoir répondu, la prochaine question arrive tout bientôt !
+        </div>
+      )
     }
   }
 }
