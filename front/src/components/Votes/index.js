@@ -75,7 +75,8 @@ class Votes extends Component {
     const inputs = [];
 
     answers.forEach((answer, id) => {
-      inputs.push(<label  key={id} htmlFor={'answer_'+id}><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer.id} />{answer.name}</label>);
+      inputs.push(<div className="fake-checkboxes"><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer.id} /><label className="input-btn" key={id} htmlFor={'answer_'+id}>{answer.name}</label></div>);
+
     });
  
     return inputs;
@@ -85,15 +86,23 @@ class Votes extends Component {
 
     const {votes} = this.props;
     if(votes.ended) {
-      return "Merci d'avoir participé ! On a encore besoin de toi pour la finale !";
+      return (
+        <div className="vote-message message">
+          Merci d'avoir participé ! On a encore besoin de toi pour la finale !
+        </div>
+      );
     }
     else if(!votes.answered) {
         if(!votes.started) {
-            return "Écoute bien nos finalistes, tu pourras agir juste après !";
+          return (
+            <div className="vote-message message">
+              Écoute bien nos finalistes, tu pourras agir juste après !
+            </div>
+          );
         } else {
             return (
                 <form onSubmit={this.handleSubmit}>
-                    <h2>Qui devrait être Miss O'clock ?</h2>
+                    <h2 className="question">Qui devrait être Miss O'clock ?</h2>
                     { this.getAnswers() }
                     <button type="submit">Valider la réponse</button>
                 </form>
@@ -102,7 +111,11 @@ class Votes extends Component {
     }
 
     else {
-        return "Merci d'avoir répondu !";
+      return (
+        <div className="vote-message message">
+          Merci d'avoir répondu !
+        </div>
+      );
     }
   }
 }

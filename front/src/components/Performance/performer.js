@@ -50,24 +50,37 @@ class Performer extends Component {
 
     if(performance.ended) {
       if(app.step_2_winner){
-        return "Tu as gagné cette étape ! Place à la finale !";
+        return (
+          <div className="performer-message message">
+            <strong>Tu as gagné cette étape !</strong> Place à la finale !
+          </div>
+        );
       } else {
-        return "Tu n'as pas gagné durant cette étape. Mais reste avec nous, on aura besoin de toi pour la finale !";
+        return (
+          <div className="performer-message message">
+            Tu n'as pas gagné durant cette étape. Mais reste avec nous, on aura besoin de toi pour la finale !
+          </div>
+        );
       }
     }
     else if(!performance.title) {
       return (
-        "Vos instructions arrivent bientôt !"
+        <div className="performer-message message">
+          Vos instructions arrivent bientôt !
+        </div>
       );
     } else {
       return (
         <>
-          <p>Votre mission si vous l'acceptez sera de dessiner le mot ou expression qui sera dévoilé en cliquant ci-dessous.</p>
-          <span onClick={this.toggleMission} className="fake-btn btn">Dévoiler la mission.</span>
-          <div className="mission">
-            { mission && performance.title}
+          <div className="performer-message message">
+            <p>Votre mission si vous l'acceptez sera de dessiner le mot ou expression qui sera dévoilée en cliquant ci-dessous.</p>
           </div>
+          <span onClick={this.toggleMission} className="fake-btn btn">Dévoiler la mission.</span>
+          <div className={"mission" + (mission ? ' message' : '' )}>
+              { mission && performance.title}
+            </div>
         </>
+
       )
     }
   }

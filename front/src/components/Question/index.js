@@ -84,7 +84,7 @@ class Question extends Component {
       if(app.step_1_winner){
         return (
           <div className="question-message message">
-            Tu as gagné cette étape ! Mais ne pense pas que tout est fini !
+            <strong>Tu as gagné cette étape !</strong> Mais ne pense pas que tout est fini !
           </div>
         )
       } else {

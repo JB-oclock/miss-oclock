@@ -52,7 +52,7 @@ input[type=text] {
   text-align: center;
   margin-bottom: 0.5rem;
 }
-
+.fake-btn,
 button[type=submit],
 input[type=submit] {
   display: block;
@@ -127,4 +127,17 @@ main.content{
     display: inline-block;
     margin-right: 1rem;
   }
+}
+strong {
+  font-weight: bold;
+}
+
+.fake-btn {
+  margin: 0.5rem 0;
+}
+.miss-result {
+  text-align: center;
+  font-size: 1.8rem;
+  margin: 1rem 0;
+  font-weight: bold;
 }
