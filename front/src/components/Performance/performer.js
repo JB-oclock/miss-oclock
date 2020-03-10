@@ -72,7 +72,7 @@ class Performer extends Component {
     else if(!performance.title) {
       return (
         <div className="performer-message message">
-          Vos instructions arrivent bientôt !
+          Tes instructions arrivent bientôt !
         </div>
       );
     } else {
@@ -82,7 +82,7 @@ class Performer extends Component {
             <p>Votre mission si vous l'acceptez sera de dessiner le mot ou expression qui sera dévoilée en cliquant ci-dessous.</p>
           </div>
           <span onClick={this.toggleMission} className="fake-btn btn">Dévoiler la mission.</span>
-          <div className={"mission" + (mission ? ' message' : '' )}>
+          <div className={"mission " + (mission ? ' message' : '' )}>
               { mission && performance.title}
             </div>
         </>

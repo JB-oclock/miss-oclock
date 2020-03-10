@@ -5,9 +5,9 @@ const End = ({winner}) => {
     
     return(
         <>
-            <p className="new-miss">Et notre nouvelle miss est...</p>
-            <div className="miss-result">{winner} !</div>
-            <div className="thankyu">Merci d'avoir participé, patati patata</div>
+            <p className="new-miss animated fadeIn">Et notre nouvelle miss est...</p>
+            <div className="miss-result animated fadeIn">{winner} !</div>
+            <div className="thankyu animated fadeIn">Merci d'avoir participé, patati patata</div>
         </>
     );
 }
