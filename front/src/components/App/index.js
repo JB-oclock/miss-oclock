@@ -33,7 +33,10 @@ class App extends Component {
     return (
       <>
         <div className={`mainWrapper  step-${step}`}>
-          <ReduxToastr />
+          <ReduxToastr
+          transitionIn="bounceInDown"
+          transitionOut="fadeOut"
+           />
           <header>
             <h1>Miss O'clock</h1>
           </header>

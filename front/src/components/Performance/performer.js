@@ -51,15 +51,21 @@ class Performer extends Component {
     if(performance.ended) {
       if(app.step_2_winner){
         return (
-          <div className="performer-message message">
-            <strong>Tu as gagné cette étape !</strong> Place à la finale !
-          </div>
+          <>
+            <h2 className="success-title">Bravo !</h2>
+            <div className="performer-message message">
+              <strong>Tu as gagné cette étape !</strong> <br /> Maintenant place à la finale !
+            </div>
+          </>
         );
       } else {
         return (
-          <div className="performer-message message">
-            Tu n'as pas gagné durant cette étape. Mais reste avec nous, on aura besoin de toi pour la finale !
-          </div>
+          <>
+            <h2 className="success-title">Presque !</h2>
+            <div className="performer-message message">
+              Tu n'as pas gagné durant cette étape. <br />Mais reste avec nous, on aura besoin de toi pour la finale !
+            </div>
+          </>
         );
       }
     }

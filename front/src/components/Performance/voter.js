@@ -89,7 +89,7 @@ class Voter extends Component {
     if(performance.ended) {
       return (
         <div className="voter-message message">
-          Merci d'avoir participé ! On a encore besoin de toi pour la finale !
+          Merci d'avoir participé ! <br />On a encore besoin de toi pour la finale !
         </div>
       );
     }
