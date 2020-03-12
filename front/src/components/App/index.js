@@ -17,6 +17,8 @@ import Votes from '../../containers/Votes';
 class App extends Component {
 
   componentDidMount() {
+    let root = document.querySelector('.root');
+    root.classList.remove('root');
     const { getPlayerInfos, stopLoading } = this.props;
     const token = localStorage.getItem('token');
     if (token) {

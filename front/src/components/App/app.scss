@@ -12,6 +12,9 @@
 
 $red: #d8373A;
 $mainOclock: #00C4AF;
+$blue:  rgb(27, 59, 94);
+$green: rgb(83, 138, 6);
+$yellow : #ce9105;
 $text: #fffdd8;
 
 body {
@@ -174,4 +177,74 @@ strong {
 .redux-toastr .toastr .rrt-middle-container {
   font-size: 1rem;
   font-family: 'oclock';
+}
+
+.step-0 {
+  background: rgb(216, 58, 55);
+  background-image: url(assets/pineapple.svg); 
+  background-size: 65px;
+}
+
+.step-1 {
+  background: rgb(35, 75, 120);
+  background-image: url(assets/chausson.svg);
+  background-size: 90px;
+
+  .message {
+    color: $blue;
+  }
+  input[type=radio]:checked + .input-btn {
+    background: darken($blue, 10%);
+  }
+  .input-btn {
+    background: $blue;
+  }
+}
+h1:before {
+  position: relative;
+  content:"";
+  display: block;
+  height: 2.5rem;
+  width: 100%;
+  background: url(assets/logo.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+h1 {
+  overflow: hidden;
+  height: 3.5rem;
+}
+.step-2 {
+  background:  rgb(94, 157, 7);
+  background-image: url(assets/cake.svg);
+  background-size: 80px;
+
+  .message {
+    color: $green;
+  }
+
+  input[type=radio]:checked + .input-btn {
+    background: darken($green, 10%);
+  }
+  .input-btn {
+    background: $green;
+  }
+}
+
+.step-3 {
+  background: rgb(255, 180, 0);
+  background-image: url(assets/mics.svg);
+  background-size: 90px;
+
+  .message {
+    color: $yellow;
+  }
+
+  input[type=radio]:checked + .input-btn {
+    background: darken($yellow, 10%);
+  }
+  .input-btn {
+    background: $yellow;
+  }
 }
