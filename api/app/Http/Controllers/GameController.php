@@ -142,15 +142,17 @@ class GameController extends Controller
     }
 
     public function setStep2Winners(Game $game,  Publify $publisher) {
-        $players = $game->findStep2Winners();
-
-        foreach ($players as $player) {
+        $winners = $game->findStep2Winners();
+        $players = $game->getStep1Winners();
+        $winnerIds = [];
+        foreach ($winners as $player) {
             $player = $player['player'];
             $player->games()->updateExistingPivot($game->id, ['winner2' => 1]);
+            $winnerIds[] = $player->id;
         }
         foreach($players as $player) {
-            $player = $player['player'];
-            $data = ['winner' => true];
+            $winner = in_array($player->id, $winnerIds);
+            $data = ['winner' => $winner];
             $update = new Update(
                 env('MERCURE_DOMAIN') . 'missoclock/performances/'.$game->id.'/performer/'.$player->id.'.jsonld',
                 json_encode($data)
