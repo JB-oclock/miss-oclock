@@ -39,5 +39,42 @@
             </div>
         </div>
     </div>
+
+
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <span>Questions retenues</span>
+                    <a class="btn btn-primary float-right async" href="#" data-href="{{ route('home') }}">Enregistrer</a>
+                </div>
+                <div class="card-body">
+                  <ul class="draggable-container" id="savable">
+                    <li class="draggable-source" id="1">Test1</li>
+                    <li class="draggable-source" id="2">Test2</li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <span>Questions disponibles</span>
+                </div>
+                <div class="card-body">
+                  <ul class="draggable-container">
+                    <li class="draggable-source" id="4">Test4</li>
+                    <li class="draggable-source" id="3">Test3</li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
+<script src="{{ asset('js/dragndrop.js') }}"></script>
+
 @endsection
