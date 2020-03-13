@@ -12,6 +12,8 @@ import End from '../End';
 import Question from '../../containers/Question';
 import Performance from '../../containers/Performance';
 import Votes from '../../containers/Votes';
+import Header from '../Header';
+import LoadingScreen from '../LoadingScreen';
 
 
 class App extends Component {
@@ -39,9 +41,15 @@ class App extends Component {
           transitionIn="bounceInDown"
           transitionOut="fadeOut"
            />
-          <header>
-            <h1>Miss O'clock</h1>
-          </header>
+           <Switch>
+              <Route exact path="/">
+                <Header step={step} view="player" />
+              </Route>
+              <Route path="/view/:code">
+                <Header step={step} view="global" />
+              </Route>
+           </Switch>
+
           <main className="content">
             <Switch>
               <Route exact path="/">
@@ -51,6 +59,9 @@ class App extends Component {
                 {!waiting &&  step == 2 && <Performance />}
                 {!waiting &&  step == 3 && !winner && <Votes />}
                 {!waiting &&  step == 3 && winner && <End winner={winner} />}
+              </Route>
+              <Route path="/view/:code">
+                { step == 0 && <LoadingScreen />}
               </Route>
             </Switch>
           </main>

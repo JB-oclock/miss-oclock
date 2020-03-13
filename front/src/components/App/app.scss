@@ -248,3 +248,12 @@ h1 {
     background: $yellow;
   }
 }
+
+.view-loading{
+  text-align: center;
+  &>i {
+    max-width: 40rem;
+    display: block;
+    margin: auto;
+  }
+}
