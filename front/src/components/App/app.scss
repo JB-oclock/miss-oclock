@@ -1,5 +1,4 @@
 @import 'react-redux-toastr/src/styles/index';
-@import '/node_modules/animate.css/animate.min.css';
 
 @font-face {
   font-family: "oclock";
@@ -9,6 +8,22 @@
   font-family: "oclock-bold";
   src: url("fonts/oclock-bold.ttf");
 }
+
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.slideInUp {
+  animation-name: slideInUp;
+}
+
 
 $red: #d8373A;
 $mainOclock: #00C4AF;

@@ -5,7 +5,11 @@ import { toastr } from 'react-redux-toastr';
 
 
 class Code extends Component {
-
+    constructor(props) {
+        super(props);
+        this.checkCode = this.checkCode.bind(this);
+     }    
+   
     checkCode = (event) => {
         event.preventDefault();
         const {nextStep} = this.props;
@@ -17,15 +21,15 @@ class Code extends Component {
                 nextStep();
             } else {
                toastr.error('Erreur', "Ce code n'existe pas !");
-            }
+            } 
         });
     }
     render() {
         const { handleChange, code } = this.props;
-        return (
-            <form onSubmit={this.checkCode}>
+        return ( 
+            <form autoComplete='off' onSubmit={this.checkCode}>
                 <label htmlFor="code">Code de jeu</label>
-                <input onChange={handleChange} autoFocus defaultValue={ code } name="code" id="code" type="text"/>
+                <input autoComplete="off" onChange={handleChange} autoFocus defaultValue={ code } name="code" id="code" type="text"/>
                 <input disabled={!(code.length == 5)} type="submit" value="Envoyer" />
             </form>
         );
