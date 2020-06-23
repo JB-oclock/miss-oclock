@@ -29,7 +29,7 @@ class GameController extends Controller
         else if($game->step == 1) {
             $players = $game->getPlayersWithScore();
             $question = $game->questionWithOrder($gameQuestion);
-            $question = $question->CleanData($game);
+            $question = $question->cleanData($game);
             $stepOver = !!count($game->getStep1Winners());
         } else if ($game->step == 2) {
             $players = $game->getStep1Winners();
