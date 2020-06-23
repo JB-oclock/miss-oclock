@@ -141,12 +141,12 @@ form,
     background: darken(rgb(193, 53, 48), 20%);
   }
   input[type=radio]:checked + .input-btn:before {
-    content: "🞊";
+    background: url(assets/dotted.svg);
   }
 
 }
 .input-btn {
-  display: block;
+  display: flex; 
   width: 100%;
   padding: .8rem;
   border-radius: 5px;
@@ -155,9 +155,13 @@ form,
   background: rgb(193, 53, 48);
 
   &:before {
-    content: "🞅";
+    content: "";
+    background: url(assets/circle.svg);
+    height: 1.4rem;
+    width: 1.4rem;
     display: inline-block;
     margin-right: 1rem;
+    vertical-align: middle;
   }
 }
 strong {
