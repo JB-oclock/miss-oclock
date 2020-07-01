@@ -61,7 +61,7 @@ class App extends Component {
                 {!waiting &&  step == 3 && winner && <End winner={winner} />}
               </Route>
               <Route path="/view/:code">
-                { step == 0 && <LoadingScreen />}
+                { step == 0 && <LoadingScreen  />}
               </Route>
             </Switch>
           </main>
