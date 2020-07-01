@@ -15,9 +15,11 @@ use Illuminate\Http\Request;
 
 Route::post('/check-code', 'CodeController@checkCode');
 Route::post('/login', 'CodeController@login');
+Route::get('/game-data-global-view', 'GameController@gameDataGlobal');
+
 
 Route::group(['middleware' => 'token'], function () {
-    Route::get('/game-data', 'GameController@gameData');
+    Route::get('/game-data', 'GameController@gameDataPlayer');
     Route::get('/get-infos', 'CodeController@getInfos');
     Route::post('/answer-question', 'AnswerController@answerQuestion');
     Route::post('/answer-performance', 'PerformanceController@answerPerformance');

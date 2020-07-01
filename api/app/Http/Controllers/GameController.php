@@ -281,38 +281,83 @@ class GameController extends Controller
         return back();
     }
 
-    public function gameData(Request $request) {
+    /**
+     * Get game data for a player
+     *
+     * @param Request $request
+     * @return json
+     */
+    public function gameDataPlayer(Request $request) {
         $game = $request->get('game');
         $player = $request->get('player');
-        $step1Winner = !!$player->winnerStep1($game);
-        $step2Winner = !!$player->winnerStep2($game);
+        
+        $gameData = $this->gameData($game, $player);
 
+        return response()->json($gameData);
+    }
+
+    /**
+     * Get game data for the global view (without player related data)
+     *
+     * @param Request $request
+     * @return json
+     */
+    public function gameDataGlobal(Request $request) {
+        $game = Game::find($request->get('id'));
+        $gameData = $this->gameData($game);
+
+        return response()->json($gameData);
+    }
+
+    /**
+     * Generic method getting all the current game data
+     *
+     * @param App\Game $game
+     * @param boolean|App\Player $player
+     * @return array $gameData
+     */
+    public function gameData($game, $player = false)
+    {
+        
         $gameData = [
             'gameId' => $game->id,
             'gameStep' => $game->step,
-            'step_1_winner' => $step1Winner,
-            'step_2_winner' => $step2Winner,
         ];
 
+
+        if($player){
+            // Check if the player is the winner of the two first steps
+            $step1Winner = !!$player->winnerStep1($game);
+            $step2Winner = !!$player->winnerStep2($game);
+            $gameData['step_1_winner'] = $step1Winner;
+            $game['step_2_winner'] = $step2Winner;
+        }
+
         if($game->step == 1 && $game->question != 0) {
+
             $question = $game->questionWithOrder($game->question);
             $gameData['question'] = $question->cleanData($game);
 
-            // Check if the player has already answered this question
-            $answer = Answer::where('game_id', $game->id)
-                        ->where('player_id', $player->id)
-                        ->where('question_id', $question->id)
-                        ->first();
-            
-            $gameData['question']['answered'] = !!$answer;
+            if($player) {
 
+                // Check if the player has already answered this question
+                $answer = Answer::where('game_id', $game->id)
+                ->where('player_id', $player->id)
+                ->where('question_id', $question->id)
+                ->first();
+                
+                $gameData['question']['answered'] = !!$answer;
+            } else {
+                $gameData['question']['answer'] = $question->answer_good; 
+            }
+                
             // Check if the winners have been set up 
             $winners = $game->getStep1Winners();
             $gameData['question']['ended'] = !!count($winners);
         } 
         if($game->step == 2) {
             $performance = Performance::find($game->performance_sent);
-            if($performance) {
+            if($performance && $player) {
                 if($step1Winner && $game->performance_player == $player->id && $game->performance_sent) {
                     $gameData['performance'] = $performance->performerData();
                 } else if (!$step1Winner && $game->performance_props_sent) {
@@ -333,16 +378,18 @@ class GameController extends Controller
         }
         
         if($game->step == 3) {
-            $voteExists = Vote::where('game_id', $game->id)->where('player_id', $player->id)->first();
-            $gameData['votes'] = [
-               'started' => !!$game->votes_started,
-               'answers' => $game->getStep3Props(), 
-               'answered' => !!$voteExists,
-            ];
+            if($player) {
+
+                $voteExists = Vote::where('game_id', $game->id)->where('player_id', $player->id)->first();
+                $gameData['votes'] = [
+                    'started' => !!$game->votes_started,
+                    'answers' => $game->getStep3Props(), 
+                    'answered' => !!$voteExists,
+                ];
+            }
             $gameData['step_3_winner'] = $game->getfinalWinnerName();
         }
 
-
-        return response()->json($gameData);
+        return $gameData;
     }
 }
