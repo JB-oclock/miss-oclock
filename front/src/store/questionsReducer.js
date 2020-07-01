@@ -49,8 +49,6 @@ const reducer = (state = initialState, action = {}) => {
           };
         break;
       case SET_ANSWERED_QUESTION: 
-      console.log(state);
-      
           return {
             ...state,
             answered: true,

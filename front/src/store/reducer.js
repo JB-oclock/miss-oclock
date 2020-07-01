@@ -23,6 +23,7 @@ export const SET_GAME_STEP = 'SET_GAME_STEP';
 export const SET_GAME_WINNER = 'SET_GAME_WINNER';
 export const GET_PLAYER_INFOS = 'GET_PLAYER_INFOS';
 export const GET_GAME_DATA = 'GET_GAME_DATA';
+export const GET_GAME_DATA_GLOBAL = 'GET_GAME_DATA_GLOBAL';
 export const MERCURE_SUBSCRIBE_STEPS = 'MERCURE_SUBSCRIBE_STEPS';
 const STOP_LOADING = 'STOP_LOADING';
 const WAITING_STEP = 'WAITING_STEP';
@@ -68,6 +69,11 @@ export const getPlayerInfos = () => ({
 
 export const getGameData = () => ({
   type: GET_GAME_DATA,
+});
+
+export const getGameDataGlobal = (id) => ({
+  type: GET_GAME_DATA_GLOBAL,
+  id,
 });
 
 export const mercureSubscribeSteps = () => ({

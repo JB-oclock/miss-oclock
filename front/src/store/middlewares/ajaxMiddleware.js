@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, GET_GAME_DATA, setGameStep, setStep1Winner,  setStep2Winner, setGameWinner} from '../reducer';
+import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, getGameDataGlobal, GET_GAME_DATA,GET_GAME_DATA_GLOBAL, setGameStep, setStep1Winner,  setStep2Winner, setGameWinner} from '../reducer';
 import { setQuestion, setAnswered, ANSWER_QUESTION } from '../questionsReducer';
 import { toastr } from 'react-redux-toastr';
 import { setPerformance, ANSWER_PERFORMANCE, setAnswered as setAnsweredPerformance } from '../performancesReducer';
@@ -40,6 +40,37 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         store.dispatch(setGameStep(gameStep));
         store.dispatch(setStep1Winner(step_1_winner));
         store.dispatch(setStep2Winner(step_2_winner));
+        store.dispatch(mercureSubscribeSteps());
+
+        store.dispatch(stopLoading());
+        if(gameStep == 0 ){
+          store.dispatch(waiting());
+        }
+        if(gameStep == 1 && question) {
+          store.dispatch(setQuestion(question));
+        }  
+        if(gameStep == 2 && performance) {
+          store.dispatch(setPerformance(performance));
+        }   
+        if(gameStep == 3 && votes) {
+          store.dispatch(setVotes(votes));
+        }   
+        if(step_3_winner) {
+          store.dispatch(setGameWinner(step_3_winner));
+        }
+      });
+      break;  
+    case GET_GAME_DATA_GLOBAL: 
+    
+      Axios.get(`${process.env.API_DOMAIN}game-data-global-view`, {
+        params: {
+          id: action.id
+        }
+      }).then((response) => {
+          const {gameId, gameStep, question,  step_3_winner, performance, votes} = response.data;
+          
+        store.dispatch(setGameId(gameId));
+        store.dispatch(setGameStep(gameStep));
         store.dispatch(mercureSubscribeSteps());
 
         store.dispatch(stopLoading());

@@ -2,7 +2,7 @@ import React from 'react'
 
 
 const Header = ({step, view}) => {
-    if(view != 'global' && step != 0) {
+    if(step != 0) {
         return (
             <header>
                 <h1>Miss O'clock</h1>

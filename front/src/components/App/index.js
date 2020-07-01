@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 // == Import : local
 import './app.scss';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import ReduxToastr from 'react-redux-toastr';
 import FirstTimeForm from '../FirstTimeForm';
 import Waiting from '../Waiting';
@@ -13,7 +13,7 @@ import Question from '../../containers/Question';
 import Performance from '../../containers/Performance';
 import Votes from '../../containers/Votes';
 import Header from '../Header';
-import LoadingScreen from '../LoadingScreen';
+import GlobalView from '../../containers/GlobalView';
 
 
 class App extends Component {
@@ -61,7 +61,9 @@ class App extends Component {
                 {!waiting &&  step == 3 && winner && <End winner={winner} />}
               </Route>
               <Route path="/view/:code">
-                { step == 0 && <LoadingScreen  />}
+                < GlobalView />
+                {/* { step == 0 && <LoadingScreen  />} */}
+                {/* { step == 1 && <LoadingScreen  />} */}
               </Route>
             </Switch>
           </main>
@@ -72,4 +74,4 @@ class App extends Component {
   }
 }
 // == Export
-export default App;
+export default withRouter(App);

@@ -1,18 +1,11 @@
 import React, { Component } from 'react'
 import InlineSVG from 'svg-inline-react'
 import Segment from 'segment-js';
-import store from 'src/store';
-import { mercureSubscribeSteps, setGameId } from 'src/store/reducer';
+
 import {withRouter} from "react-router-dom";
 
 class LoadingScreen extends Component {
-    
-    componentDidMount() {
-        
-        let { code } = this.props.match.params;
-        store.dispatch(setGameId(code));
-        store.dispatch(mercureSubscribeSteps());
-    }
+ 
     render() {
         const logo = `<svg class="logo" version="1.1"
             id="svg3733" inkscape:version="0.92.4 (5da689c313, 2019-01-14)" sodipodi:docname="logo-miss-clock.svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg"
