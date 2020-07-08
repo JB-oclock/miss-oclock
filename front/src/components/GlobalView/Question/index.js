@@ -4,8 +4,10 @@ import { answerQuestion, endQuestions } from '../../../store/questionsReducer';
 
 class Question extends Component {
   componentDidMount() {
-    this.eventSource = '';
+    this.eventSourceQuestions = '';
+    this.eventSourceAnswers = '';
     this.listenQuestions();
+    this.listenAnswers();
   }
 
   state = {
@@ -17,9 +19,9 @@ class Question extends Component {
     
     const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
     url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}${process.env.MERCURE_QUESTIONS}${app.gameId}.jsonld`);
-    const eventSource = new EventSource(url, { withCredentials: true });
+    this.eventSourceQuestions = new EventSource(url, { withCredentials: true });
     
-    eventSource.onmessage = (event) => {
+    this.eventSourceQuestions.onmessage = (event) => {
       const { questions, winners } = JSON.parse(event.data);
       if(questions){
         setQuestion(questions);
@@ -31,18 +33,42 @@ class Question extends Component {
         // setWinner(isWinner);
         // endQuestions();
       }
+    }; 
+  }
+
+  listenAnswers = () => {
+    const {app, setAnswered } = this.props;
+
+    const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
+    url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}${process.env.MERCURE_ANSWERS}${app.gameId}.jsonld`);
+    this.eventSourceAnswers = new EventSource(url, { withCredentials: true });
+
+    this.eventSourceAnswers.onmessage = (event) => {
+      const { answer } = JSON.parse(event.data);
+
+      if(answer) {
+        setAnswered();
+        this.setState({
+          answer
+        });
+      }
+       
     };
   }
 
   componentWillUnmount(){
-    if(typeof this.eventSource !== 'string') {
-        this.eventSource.close();
+    if(typeof this.eventSourceQuestions !== 'string') {
+        this.eventSourceQuestions.close();
+    }
+    if(typeof this.eventSourceAnswers !== 'string') {
+        this.eventSourceAnswers.close();
     }
   }
 
 
 
   componentWillUpdate(nextProps, nextState){
+    console.log(this.eventSource);
     
     // const { answered } = nextProps.question;
     // const { answer} = this.state;
@@ -56,6 +82,7 @@ class Question extends Component {
   }
   render() {
     const { question } = this.props;
+    const {answer} = this.state;
     if(!question.question) {
       return (
         <div className="question-global-message slideIn">
@@ -68,6 +95,14 @@ class Question extends Component {
         <>
           <p className="question-tag">Question :</p>
           <p className="question-global slideIn">{question.question}</p>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <p className="question-tag">Réponse :</p>
+          {/* // The key is here to force the render of a new p, hence the css animation refresh */}
+          <p className="question-global slideIn" key={+new Date()}>{ answer }</p>
         </>
       )
     }

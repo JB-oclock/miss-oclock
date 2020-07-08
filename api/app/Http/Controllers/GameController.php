@@ -7,6 +7,7 @@ use \App\Game;
 use App\Answer;
 use App\Player;
 use App\PerfVote;
+use App\Question;
 use App\Performance;
 use Idplus\Mercure\Publify;
 use Illuminate\Http\Request;
@@ -114,6 +115,27 @@ class GameController extends Controller
         }
 
         return back();
+    }
+
+    public function displayAnswer(Game $game, Question $question,  Publify $publisher)
+    {
+        $data = ['endQuestion' => true];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/questions/'.$game->id.'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+        
+
+        $data = ['answer' => $question->answer_good];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/answers/'.$game->id.'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+
+        return back();
+
     }
 
     public function setStep1Winners(Game $game,  Publify $publisher) {

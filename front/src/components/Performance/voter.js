@@ -18,9 +18,9 @@ class Voter extends Component {
     
     const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
     url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}missoclock/performances/${app.gameId}/props.jsonld`);
-    const eventSource = new EventSource(url, { withCredentials: true });
+    this.eventSource = new EventSource(url, { withCredentials: true });
     
-    eventSource.onmessage = (event) => {
+    this.eventSource.onmessage = (event) => {
       const { performance, ended } = JSON.parse(event.data);
       
       if(performance){

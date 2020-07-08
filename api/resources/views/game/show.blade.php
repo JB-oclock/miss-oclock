@@ -35,17 +35,25 @@
             @elseif($game->step == 1)
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Questions</div>
-                        <div class="card-body">
-                            Question actuelle : {{ $game->question }} @if($question['last']) Dernière question ! @endif
+                        <div class="card-header">Questions
                             @if($question['last'])
-                                <a class="btn btn-primary @if($stepOver)disabled @endif" href="{{ route('set-step1-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
+                            <a class="btn btn-primary float-right @if($stepOver)disabled @endif" href="{{ route('set-step1-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
                             @else
-                                <a class="btn btn-primary" href="{{ route('next-question', ['game' => $game->id]) }}" role="button">Question suivante</a>
+                            <a class="btn btn-primary float-right" href="{{ route('next-question', ['game' => $game->id]) }}" role="button">Question suivante</a>
                             @endif
+                            <a class="btn btn-success float-right mr-2" href="{{ route('display-answer', ['game' => $game->id, 'question' => $question['questionId']]) }}" role="button">Afficher la réponse</a>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                Question actuelle :  @if($question['last']) Dernière question ! @endif
+                            </p>
+                            ID : {{ $question['questionId'] }} <br>
+                            Question : {{ $question['question'] }} <br>
+                           
                         </div>
                         <div class="card-body">
                             <ul class="list-group">
+                                <h2>Score :</h2>
                                 @php
                                 $i = 1
                                 @endphp

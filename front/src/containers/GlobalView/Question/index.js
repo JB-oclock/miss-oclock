@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 
 import Question from 'src/components/GlobalView/Question';
-import {setQuestion, answerQuestion, endQuestions } from 'src/store/questionsReducer';
-import {setStep1Winner } from 'src/store/reducer';
+import {setQuestion,  endQuestions, setAnswered } from 'src/store/questionsReducer';
 
 
 const mapStateToProps = (state) => ({
@@ -13,6 +12,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setQuestion: (q) => {
     dispatch(setQuestion(q));
+  },
+  setAnswered: () => {
+    dispatch(setAnswered());
   },
   endQuestions: () => {
     dispatch(endQuestions());
