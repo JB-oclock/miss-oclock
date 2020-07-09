@@ -25,10 +25,11 @@ class Performer extends Component {
         this.setState({
           mission:false,
         })
-      }
-
-      if(winner){
+      } else if(winner) {
         setWinner(winner);
+        endPerformance();
+      }
+      else {
         endPerformance();
       }
     };

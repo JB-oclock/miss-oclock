@@ -125,7 +125,7 @@ class GameController extends Controller
             json_encode($data)
         );
         $publisher($update);
-        
+
 
         $data = ['answer' => $question->answer_good];
         $update = new Update(
@@ -352,7 +352,7 @@ class GameController extends Controller
             $step1Winner = !!$player->winnerStep1($game);
             $step2Winner = !!$player->winnerStep2($game);
             $gameData['step_1_winner'] = $step1Winner;
-            $game['step_2_winner'] = $step2Winner;
+            $gameData['step_2_winner'] = $step2Winner;
         }
 
         if($game->step == 1 && $game->question != 0) {
