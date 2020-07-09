@@ -12,6 +12,7 @@ class Question extends Component {
 
   state = {
     answer: '',
+    winners: '',
   }
 
   listenQuestions = () => {
@@ -28,10 +29,12 @@ class Question extends Component {
       }
 
       if(winners){
-        // const isWinner = winners.indexOf(app.player.name) !== -1;
         
-        // setWinner(isWinner);
-        // endQuestions();
+        this.setState({
+          winners
+        });
+        endQuestions();
+        
       }
     }; 
   }
@@ -45,7 +48,7 @@ class Question extends Component {
 
     this.eventSourceAnswers.onmessage = (event) => {
       const { answer } = JSON.parse(event.data);
-
+      
       if(answer) {
         setAnswered();
         this.setState({
@@ -67,22 +70,26 @@ class Question extends Component {
 
 
 
-  componentWillUpdate(nextProps, nextState){
-    console.log(this.eventSource);
-    
-    // const { answered } = nextProps.question;
-    // const { answer} = this.state;
-    
-    // if(answered && answer.length){
-    //   this.setState({
-    //     answer: '',
-    //   })
-    // }
-    
-  }
   render() {
     const { question } = this.props;
-    const {answer} = this.state;
+    const {answer, winners} = this.state;
+    if(question.ended &&  winners) {
+      
+      return (
+        <>
+          <p className="question-tag">Nos vainqueurs sont :</p>
+          <div className="winners-global">
+            {winners.map((winner,i) => {
+              return (
+                <>
+                  <div className={`slideIn winners-global-view delay-${i}`} key={i.toString()}>{winner}</div>
+                </>
+              )
+            })}
+          </div>
+        </> 
+      )
+    }
     if(!question.question) {
       return (
         <div className="question-global-message slideIn">
