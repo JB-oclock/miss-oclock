@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-flex">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -75,7 +75,7 @@
                             <ul class="list-group">
                                 @forelse($players as $key => $player)
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span class="font-weight-bold">
+                                        <span class="font-weight-bold flex-fill">
                                             {{ $player->name }} : 
                                         </span>
                                         @php
@@ -84,13 +84,17 @@
                                             $propsDisabled = ($disabled || !$game->performance_sent || $game->performance_props_sent);
                                             $validationDisabled = ($disabled || (!$game->performance_sent || !$game->performance_props_sent));
                                         @endphp
-                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                        <div class="btn-group mr-2" role="group" aria-label="Basic example">
                                                 <a href="{{ route('send-performance', ['game' => $game->id, 'player' => $player->id]) }}" class="btn btn-secondary @if($sendDisabled)disabled @endif">Envoyer perf.</a>
                                                 <a href="{{ route('send-performance-props', ['game' => $game->id]) }}" class="btn btn-secondary @if($propsDisabled)disabled @endif">Envoyer propositions</a>
                                                 <a href="{{ route('validate-performance', ['game' => $game->id]) }}" class="btn btn-secondary @if($validationDisabled) disabled @endif">Valider perf.</a>
                                         </div>
-                                        Perfs : <span class="badge badge-secondary ">{{ $performersData[$player->id]['nb_perfs'] }}</span>
-                                        Score : <span class="badge badge-success ">{{ $performersData[$player->id]['score'] }}</span>
+                                        <div class="mr-2">
+                                            Perfs : <span class="badge badge-secondary ">{{ $performersData[$player->id]['nb_perfs'] }}</span>
+                                        </div>
+                                        <div class="mr-2">
+                                            Score : <span class="badge badge-success ">{{ $performersData[$player->id]['score'] }}</span>
+                                        </div>
                                     </li>
                                 @empty
                                     

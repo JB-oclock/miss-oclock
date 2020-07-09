@@ -19,6 +19,7 @@ class GlobalView extends Component {
             <>
               { step == 0 && <LoadingScreen  />}
               { step == 1 && <Question  />}
+              { step == 2 && <LoadingScreen  />}
             </>
         );
     }
