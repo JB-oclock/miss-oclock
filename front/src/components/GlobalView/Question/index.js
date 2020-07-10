@@ -72,7 +72,7 @@ class Question extends Component {
       
       return (
         <>
-          <p className="question-tag">Nos vainqueurs sont :</p>
+          <p className="result-tag question-title">Nos vainqueurs sont :</p>
           <div className="winners-global">
             {winners.map((winner,i) => {
               return (
@@ -95,14 +95,14 @@ class Question extends Component {
     if(!question.answered) {
       return (
         <>
-          <p className="question-tag">Question :</p>
+          <p className="question-title result-tag">Question :</p>
           <p className="question-global slideIn">{question.question}</p>
         </>
       )
     } else {
       return (
         <>
-          <p className="question-tag">Réponse :</p>
+          <p className="question-title result-tag">Réponse :</p>
           {/* // The key is here to force the render of a new p, hence the css animation refresh */}
           <p className="question-global slideIn" key={+new Date()}>{ answer }</p>
         </>

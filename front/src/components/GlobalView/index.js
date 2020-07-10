@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import LoadingScreen from '../../components/LoadingScreen';
-import Performance from '../../components/GlobalView/Performance';
+import Performance from '../../containers/GlobalView/Performance';
 import Question from '../../containers/GlobalView/Question';
 
 class GlobalView extends Component {
