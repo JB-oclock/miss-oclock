@@ -4,7 +4,7 @@ import React from 'react'
 const Header = ({step, view}) => {
     if(step != 0 && step != 2) {
         return (
-            <header>
+            <header className={view}>
                 <h1>Miss O'clock</h1>
             </header>
         )

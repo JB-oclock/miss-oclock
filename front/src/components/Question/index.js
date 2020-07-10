@@ -1,6 +1,6 @@
 // == Import : npm
 import React, { Component } from 'react';
-import { answerQuestion, endQuestions } from '../../store/questionsReducer';
+import { mercureSubscribe } from 'src/helpers';
 
 class Question extends Component {
   componentDidMount() {
@@ -15,9 +15,7 @@ class Question extends Component {
   listenQuestions = () => {
     const {app, setQuestion, setWinner, endQuestions, setAnswered } = this.props;
     
-    const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
-    url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}${process.env.MERCURE_QUESTIONS}${app.gameId}.jsonld`);
-    this.eventSource = new EventSource(url, { withCredentials: true });
+    this.eventSource = mercureSubscribe(`${process.env.MERCURE_QUESTIONS}${app.gameId}`);
     
     this.eventSource.onmessage = (event) => {
       const { questions, winners, endQuestion } = JSON.parse(event.data);

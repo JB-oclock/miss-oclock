@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import LoadingScreen from '../../components/LoadingScreen';
+import Performance from '../../components/GlobalView/Performance';
 import Question from '../../containers/GlobalView/Question';
 
 class GlobalView extends Component {
@@ -13,13 +14,14 @@ class GlobalView extends Component {
     }
 
     render() {
-        const { player, loading, waiting, step, winner } = this.props;
+        const {  step } = this.props;
 
         return (
             <>
               { step == 0 && <LoadingScreen  />}
               { step == 1 && <Question  />}
-              { step == 2 && <LoadingScreen  />}
+              { step == 2 && <Performance  />}
+              { step == 3 && <LoadingScreen  />}
             </>
         );
     }

@@ -1,13 +1,13 @@
 import {MERCURE_SUBSCRIBE_STEPS, setGameStep, stopWaiting } from '../reducer';
+import { mercureSubscribe } from 'src/helpers';
+
 
 const mercureMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case MERCURE_SUBSCRIBE_STEPS:
-      const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
-
+      
       const state = store.getState();
-      url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}${process.env.MERCURE_STEPS}${state.app.gameId}.jsonld`);
-      const eventSource = new EventSource(url, { withCredentials: true });
+      const eventSource = mercureSubscribe(`${process.env.MERCURE_STEPS}${state.app.gameId}`);
 
       eventSource.onmessage = (e) => {
         const { step } = JSON.parse(e.data);

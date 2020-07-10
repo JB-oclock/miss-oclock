@@ -1,5 +1,7 @@
 // == Import : npm
 import React, { Component } from 'react';
+import { mercureSubscribe } from 'src/helpers';
+
 class Voter extends Component {
 
   componentDidMount() {
@@ -16,9 +18,7 @@ class Voter extends Component {
   listenProps = () => {
     const {app, setPerformance, endPerformance} = this.props;
     
-    const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
-    url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}missoclock/performances/${app.gameId}/props.jsonld`);
-    this.eventSource = new EventSource(url, { withCredentials: true });
+    this.eventSource = mercureSubscribe(`missoclock/performances/${app.gameId}/props`);
     
     this.eventSource.onmessage = (event) => {
       const { performance, ended } = JSON.parse(event.data);

@@ -1,6 +1,6 @@
 // == Import : npm
 import React, { Component } from 'react';
-import { answerQuestion, endQuestions } from '../../../store/questionsReducer';
+import { mercureSubscribe } from 'src/helpers';
 
 class Question extends Component {
   componentDidMount() {
@@ -16,12 +16,9 @@ class Question extends Component {
   }
 
   listenQuestions = () => {
-    const {app, setQuestion, setWinner, endQuestions } = this.props;
+    const {app, setQuestion, endQuestions } = this.props;
     
-    const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
-    url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}${process.env.MERCURE_QUESTIONS}${app.gameId}.jsonld`);
-    this.eventSourceQuestions = new EventSource(url, { withCredentials: true });
-    
+    this.eventSourceQuestions = mercureSubscribe(`${process.env.MERCURE_QUESTIONS}${app.gameId}`);    
     this.eventSourceQuestions.onmessage = (event) => {
       const { questions, winners } = JSON.parse(event.data);
       if(questions){
@@ -42,10 +39,8 @@ class Question extends Component {
   listenAnswers = () => {
     const {app, setAnswered } = this.props;
 
-    const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
-    url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}${process.env.MERCURE_ANSWERS}${app.gameId}.jsonld`);
-    this.eventSourceAnswers = new EventSource(url, { withCredentials: true });
-
+   
+    this.eventSourceAnswers = mercureSubscribe(`${process.env.MERCURE_ANSWERS}${app.gameId}`);
     this.eventSourceAnswers.onmessage = (event) => {
       const { answer } = JSON.parse(event.data);
       
@@ -92,8 +87,8 @@ class Question extends Component {
     }
     if(!question.question) {
       return (
-        <div className="question-global-message slideIn">
-          La première question va bientôt arriver !
+        <div className="global-view-title slideIn">
+          Le quiz
         </div>
       )
     }

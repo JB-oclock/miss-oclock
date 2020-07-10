@@ -324,3 +324,19 @@ h1 {
   text-align: center;
   font-size: 2.5rem;
 }
+.global-view-title {
+  text-transform: uppercase;
+  font-size: 7rem;
+  font-weight: bold;
+  font-family: 'oclock-bold', sans-serif;
+  color: darken($blue, 10%);
+  text-align: center;
+}
+.global {
+  h1 {
+    height: 5.5rem;
+  }
+  h1::before{
+    height: 4.5rem;
+  }
+}
