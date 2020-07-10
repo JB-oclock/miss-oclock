@@ -22,7 +22,6 @@ class Performance extends Component {
           const { ended, winners } = JSON.parse(event.data);
           
           if (winners){
-              console.log(winners);
               
             this.setState({
                 winners
