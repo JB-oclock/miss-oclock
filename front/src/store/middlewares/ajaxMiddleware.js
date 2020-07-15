@@ -1,8 +1,9 @@
 import Axios from 'axios';
-import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, GET_GAME_DATA, setGameStep, setStep1Winner } from '../reducer';
+import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, getGameDataGlobal, GET_GAME_DATA,GET_GAME_DATA_GLOBAL, setGameStep, setStep1Winner,  setStep2Winner, setGameWinner} from '../reducer';
 import { setQuestion, setAnswered, ANSWER_QUESTION } from '../questionsReducer';
 import { toastr } from 'react-redux-toastr';
 import { setPerformance, ANSWER_PERFORMANCE, setAnswered as setAnsweredPerformance } from '../performancesReducer';
+import { SEND_VOTE, SET_VOTES, setVotes } from '../votesReducer';
 
 
 const ajaxMiddleware = (store) => (next) => (action) => {
@@ -33,11 +34,12 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           Authorization: token,
         },
       }).then((response) => {
-          const {gameId, gameStep, question, step_1_winner, performance} = response.data;
+          const {gameId, gameStep, question, step_1_winner, step_2_winner, step_3_winner, performance, votes} = response.data;
           
         store.dispatch(setGameId(gameId));
         store.dispatch(setGameStep(gameStep));
         store.dispatch(setStep1Winner(step_1_winner));
+        store.dispatch(setStep2Winner(step_2_winner));
         store.dispatch(mercureSubscribeSteps());
 
         store.dispatch(stopLoading());
@@ -50,6 +52,43 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         if(gameStep == 2 && performance) {
           store.dispatch(setPerformance(performance));
         }   
+        if(gameStep == 3 && votes) {
+          store.dispatch(setVotes(votes));
+        }   
+        if(step_3_winner) {
+          store.dispatch(setGameWinner(step_3_winner));
+        }
+      });
+      break;  
+    case GET_GAME_DATA_GLOBAL: 
+    
+      Axios.get(`${process.env.API_DOMAIN}game-data-global-view`, {
+        params: {
+          id: action.id
+        }
+      }).then((response) => {
+          const {gameId, gameStep, question,  step_3_winner, performance, votes} = response.data;
+          
+        store.dispatch(setGameId(gameId));
+        store.dispatch(setGameStep(gameStep));
+        store.dispatch(mercureSubscribeSteps());
+
+        store.dispatch(stopLoading());
+        if(gameStep == 0 ){
+          store.dispatch(waiting());
+        }
+        if(gameStep == 1 && question) {
+          store.dispatch(setQuestion(question));
+        }  
+        if(gameStep == 2 && performance) {
+          store.dispatch(setPerformance(performance));
+        }   
+        if(gameStep == 3 && votes) {
+          store.dispatch(setVotes(votes));
+        }   
+        if(step_3_winner) {
+          store.dispatch(setGameWinner(step_3_winner));
+        }
       });
       break;  
 
@@ -88,6 +127,31 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         },
       }).then(() => {
         store.dispatch(setAnsweredPerformance());
+        
+      }).catch((error) => {
+        if (error.response?.data.errors) {
+          const { errors } = error.response.data;
+          for (const error in errors) {
+            toastr.error(errors[error]);
+          }
+        }
+
+      });
+      break;
+    case SEND_VOTE:
+      data = {
+        answer: action.vote,
+      };
+      
+      Axios.post(`${process.env.API_DOMAIN}send-vote`,data, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(() => {
+        const votes = {
+          'answered': true
+        };
+        store.dispatch(setVotes(votes));
         
       }).catch((error) => {
         if (error.response?.data.errors) {

@@ -29,6 +29,11 @@ class Game extends Model
     {
         return $this->belongsToMany('App\Performance');
     }
+
+    public function finalWinner()
+    {
+        return $this->belongsTo('App\Player', 'winner');
+    }
     public function performanceScore($player) 
     {
         return $this->hasMany('App\PerfVote')->where('performer_id', $player->id)->get()->sum('correct_answer');
@@ -40,6 +45,11 @@ class Game extends Model
     public function perfVotes()
     {
         return $this->hasMany('App\PerfVote');
+    }
+
+    public function getfinalWinnerName()
+    {
+        return ($this->finalWinner) ? $this->finalWinner->name : false;
     }
 
     public function questionWithOrder($order) {
@@ -58,6 +68,10 @@ class Game extends Model
         return $this->answers()->with('player')->where('correct_answer', 1)->get();
     }
 
+    public function getCorrectPerfAnswers() {
+        return $this->perfVotes()->with('player')->where('correct_answer', 1)->get();
+    }
+
     public function getStep1Winners()
     {
         return $this->players()->wherePivot('winner', 1)->get();
@@ -68,7 +82,47 @@ class Game extends Model
         return $this->players()->wherePivot('winner2', 1)->get();
     }
 
+    public function getStep3Props()
+    {
+        $winners = $this->getStep2Winners();
+        $props = [];
 
+        foreach($winners as $winner) {
+            $props[] = [
+                'id' => $winner->id,
+                'name' => $winner->name
+            ];
+        }
+
+        return $props;
+    }
+
+    public function getStep3Scores()
+    {
+        $scores = [];
+        $playerVotes = $this->votes()->with('vote')->groupBy('voted_player_id')->get();
+        foreach($playerVotes as $playerVote) {
+            $player = $playerVote->vote;
+            $votes = $player->voted()->where('game_id', $this->id)->count();
+            $scores[] = [
+                'player' => $player,
+                'score' => $votes
+            ];
+        }
+
+        return $scores;
+    }
+
+    public function findFinalWinner()
+    {
+        $votes = $this->getStep3Scores();
+        usort($votes, function ($a, $b){
+            return $b['score'] - $a['score'];
+        });
+
+        return $votes[0]['player'];
+
+    }
     
     public function findStep1Winners() {
         
@@ -90,6 +144,29 @@ class Game extends Model
 
 
         return array_slice($players, 0, $this->winners);
+    }
+
+    
+    public function findStep2Winners() {
+        
+        $answers  = $this->getCorrectPerfAnswers();
+        $players = [];
+
+        foreach($answers as $answer ) {
+            $player = $answer->performer;
+            if(!array_key_exists($player->id, $players)) {
+                $players[$player->id]['player'] = $player;
+                $players[$player->id]['score'] = 1;
+            } else {
+                $players[$player->id]['score'] += $answer->correct_answer;
+            }
+        }
+        usort($players, function ($a, $b){
+            return $b['score'] - $a['score'];
+        });
+
+
+        return array_slice($players, 0, 2);
     }
 
 

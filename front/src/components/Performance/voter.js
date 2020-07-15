@@ -1,5 +1,7 @@
 // == Import : npm
 import React, { Component } from 'react';
+import { mercureSubscribe } from 'src/helpers';
+
 class Voter extends Component {
 
   componentDidMount() {
@@ -14,17 +16,19 @@ class Voter extends Component {
 
 
   listenProps = () => {
-    const {app, setPerformance} = this.props;
+    const {app, setPerformance, endPerformance} = this.props;
     
-    const url = new URL(`${process.env.MERCURE_DOMAIN}${process.env.MERCURE_HUB}`);
-    url.searchParams.append('topic', `${process.env.MERCURE_DOMAIN}missoclock/performances/${app.gameId}/props.jsonld`);
-    const eventSource = new EventSource(url, { withCredentials: true });
+    this.eventSource = mercureSubscribe(`missoclock/performances/${app.gameId}/props`);
     
-    eventSource.onmessage = (event) => {
-      const { performance } = JSON.parse(event.data);
+    this.eventSource.onmessage = (event) => {
+      const { performance, ended } = JSON.parse(event.data);
       
       if(performance){
         setPerformance(performance);
+      }
+
+      if(ended) {
+        endPerformance();
       }
     };
   }
@@ -72,7 +76,8 @@ class Voter extends Component {
     const inputs = [];
 
     answers.forEach((answer, id) => {
-      inputs.push(<label  key={id} htmlFor={'answer_'+id}><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer} />{answer}</label>);
+      inputs.push(<div className="fake-checkboxes"><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer} /><label className="input-btn" key={id} htmlFor={'answer_'+id}>{answer}</label></div>);
+      
     });
  
     return inputs;
@@ -81,13 +86,24 @@ class Voter extends Component {
   render() {
 
     const {performance} = this.props;
-    if(!performance.answered) {
+    if(performance.ended) {
+      return (
+        <div className="voter-message message">
+          Merci d'avoir participé ! <br />On a encore besoin de toi pour la finale !
+        </div>
+      );
+    }
+    else if(!performance.answered) {
         if(performance.performanceId == 0) {
-            return "Vous allez bientôt pouvoir voter !";
+          return (
+            <div className="voter-message message">
+              Un peu de patience, tu vas bientôt pouvoir voter !
+            </div>
+          );
         } else {
             return (
                 <form onSubmit={this.handleSubmit}>
-                    <h2>{performance.performance}</h2>
+                    <h2 className="question">{performance.performance}</h2>
                     { this.getAnswers() }
                     <button type="submit">Valider la réponse</button>
                 </form>
@@ -95,10 +111,18 @@ class Voter extends Component {
         }
     }
     else if (performance.last) {
-      return "Merci d'avoir répondu ! Les résultats vont bientôt arriver !";
+      return (
+        <div className="voter-message message">
+          Merci d'avoir répondu ! Les résultats vont bientôt arriver !
+        </div>
+      );
     }
     else {
-        return "Merci d'avoir répondu !";
+      return (
+        <div className="voter-message message">
+          Merci d'avoir répondu !
+        </div>
+      );
     }
   }
 }

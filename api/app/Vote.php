@@ -16,10 +16,6 @@ class Vote extends Model
         return $this->belongsTo('App\Game');
     }
 
-    public function question()
-    {
-        return $this->belongsTo('App\Question');
-    }
 
     public function vote()
     {

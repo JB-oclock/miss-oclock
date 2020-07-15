@@ -23,11 +23,14 @@ Route::middleware('auth')->group( function() {
     Route::post('/game/create', 'GameController@createpost')->name('create-game-post');
     Route::get('/game/{game}/next-step', 'GameController@nextStep')->name('next-step');
     Route::get('/game/{game}/next-question', 'GameController@nextQuestion')->name('next-question');
+    Route::get('/game/{game}/display-answer/{question}', 'GameController@displayAnswer')->name('display-answer');
     Route::get('/game/{game}/set-step1-winners', 'GameController@setStep1Winners')->name('set-step1-winners');
     Route::get('/game/{game}/set-step2-winners', 'GameController@setStep2Winners')->name('set-step2-winners');
     Route::get('/game/{game}/send-performance/{player}', 'GameController@sendPerformance')->name('send-performance');
     Route::get('/game/{game}/send-performance-props', 'GameController@sendPerformanceProps')->name('send-performance-props');
     Route::get('/game/{game}/validate-performance', 'GameController@validatePerformance')->name('validate-performance');
+    Route::get('/game/{game}/send-votes', 'GameController@sendVotes')->name('send-votes');
+    Route::get('/game/{game}/validate-votes', 'GameController@validateVotes')->name('validate-votes');
     Route::get('/game/{game}', 'GameController@show')->name('show-game');
     Route::get('/game/{game}/reset', 'GameController@reset')->name('reset-game');
     Route::get('/game/{game}/edit', 'GameController@edit')->name('edit-game');

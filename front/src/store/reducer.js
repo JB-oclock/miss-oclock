@@ -20,12 +20,15 @@ export const initialState = {
 export const SET_PLAYER = 'SET_PLAYER';
 export const SET_GAME_ID = 'SET_GAME_ID';
 export const SET_GAME_STEP = 'SET_GAME_STEP';
+export const SET_GAME_WINNER = 'SET_GAME_WINNER';
 export const GET_PLAYER_INFOS = 'GET_PLAYER_INFOS';
 export const GET_GAME_DATA = 'GET_GAME_DATA';
+export const GET_GAME_DATA_GLOBAL = 'GET_GAME_DATA_GLOBAL';
 export const MERCURE_SUBSCRIBE_STEPS = 'MERCURE_SUBSCRIBE_STEPS';
 const STOP_LOADING = 'STOP_LOADING';
 const WAITING_STEP = 'WAITING_STEP';
 const SET_STEP_1_WINNER = 'SET_STEP_1_WINNER';
+const SET_STEP_2_WINNER = 'SET_STEP_2_WINNER';
 const STOP_WAITING_STEP = 'STOP_WAITING_STEP';
 
 /**
@@ -47,9 +50,17 @@ export const setGameStep = (step) => ({
   type: SET_GAME_STEP,
   step,
 });
+export const setGameWinner = (winner) => ({
+  type: SET_GAME_WINNER,
+  winner,
+});
 
 export const setStep1Winner = (winner) => ({
   type: SET_STEP_1_WINNER,
+  winner,
+});
+export const setStep2Winner = (winner) => ({
+  type: SET_STEP_2_WINNER,
   winner,
 });
 export const getPlayerInfos = () => ({
@@ -58,6 +69,11 @@ export const getPlayerInfos = () => ({
 
 export const getGameData = () => ({
   type: GET_GAME_DATA,
+});
+
+export const getGameDataGlobal = (id) => ({
+  type: GET_GAME_DATA_GLOBAL,
+  id,
 });
 
 export const mercureSubscribeSteps = () => ({
@@ -116,6 +132,16 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         step_1_winner: action.winner
+      }
+    case SET_STEP_2_WINNER:
+      return {
+        ...state,
+        step_2_winner: action.winner,
+      }
+    case SET_GAME_WINNER:
+      return {
+        ...state,
+        step_3_winner: action.winner,
       }
     default:
       return state;

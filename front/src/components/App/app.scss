@@ -1,6 +1,373 @@
 @import 'react-redux-toastr/src/styles/index';
-#app {
-  font-size: 1.2em;
+
+@font-face {
+  font-family: "oclock";
+  src: url("fonts/oclock-regular.ttf");
+}
+@font-face {
+  font-family: "oclock-bold";
+  src: url("fonts/oclock-bold.ttf");
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+  
+  to {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+}
+
+.slideInUp {
+  animation-name: slideInUp;
+}
+
+
+$red: #d8373A;
+$mainOclock: #00C4AF;
+$blue:  rgb(27, 59, 94);
+$green: rgb(83, 138, 6);
+$yellow : #ce9105;
+$text: #fffdd8;
+
+body {
+  font-family: 'oclock', 'sans-serif';
+  color: $text;
+  word-break: break-word;
+}
+html,body, #root {
+  height: 100%;
+}
+
+html {
+  font-size: 20px;
+  box-sizing: border-box;
+}
+.mainWrapper{
+  background: $red;
+  height: 100%;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+h1 {
   text-align: center;
-  margin: 1em;
+  padding: 1rem 0;
+}
+
+input[type=text] {
+  padding: .8rem;
+  border:none;
+  color: $red;
+  background: darken($red, 30%);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 2rem;
+  font-family: 'oclock';
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.fake-btn,
+button[type=submit],
+input[type=submit] {
+  display: block;
+  width: 100%;
+  padding: .8rem;
+  font-family: 'oclock';
+  border-radius: 5px;
+  border: none;
+  font-size: 1.4rem;
+  background: $mainOclock;
+  color: $text; 
+}
+
+button[type=submit]:disabled,
+input[type=submit]:disabled {
+  background: desaturate($mainOclock, 70%);
+}
+
+
+label {
+  font-size: 1.5rem;
+  margin-bottom: .8rem;
+  display: block;
+}
+
+main.content{
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex:2;
+  justify-content: center;
+}
+
+
+.message {
+  color: $red;
+  background-color: $text;
+  padding: 0.5rem;
+  border-radius: 5px;
+  line-height: 1.3;
+} 
+.slideIn,
+form,
+.fake-btn,
+.message {
+  animation-duration: .3s;
+  -webkit-animation-duration: .3s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: slideInUp;
+  animation-name: slideInUp;
+}
+
+
+
+.question {
+  font-size: 1.5rem;
+  padding-bottom: 0.8rem;
+}
+.question-global {
+  text-align: center;
+  font-size: 2.8rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  max-width: 23em;
+  margin: 0 auto;
+}
+.result-tag {
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'oclock-bold', sans-serif;
+  font-weight: bold;
+  font-size: 2.7rem;
+  margin-bottom: 2rem;
+}
+.performance-title {
+  color: darken($green, 10%);
+}
+.question-title {
+  color: darken($blue, 10%);
+}
+.question-global-message {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.fake-checkboxes {
+
+  input[type=radio] {
+    display: none;
+  }
+
+  input[type=radio]:checked + .input-btn {
+    background: darken(rgb(193, 53, 48), 20%);
+  }
+  input[type=radio]:checked + .input-btn:before {
+    background: url(assets/dotted.svg);
+  }
+
+}
+.input-btn {
+  display: flex; 
+  width: 100%;
+  padding: .8rem;
+  border-radius: 5px;
+  border: none;
+  font-size: 1.4rem;
+  background: rgb(193, 53, 48);
+
+  &:before {
+    content: "";
+    background: url(assets/circle.svg);
+    height: 1.4rem;
+    width: 1.4rem;
+    display: inline-block;
+    margin-right: 1rem;
+    vertical-align: middle;
+  }
+}
+strong {
+  font-weight: bold;
+}
+
+.fake-btn {
+  margin: 0.5rem 0;
+}
+.miss-result {
+  text-align: center;
+  font-size: 2.3rem;
+  margin: 1rem 0;
+  text-transform: uppercase;
+  color: darken($yellow, 5%);
+  font-family: 'oclock-bold', sans-serif;
+  font-weight: bold;
+  // -webkit-animation-delay: 2s;
+  // animation-delay: 2s;
+  opacity: 0;
+}
+.new-miss {
+  text-align: center;
+  font-size: 1.8rem;
+}
+.success-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.thankyu {
+  // animation-delay: 4s;
+  opacity: 0;
+  text-align: center;
+}
+.global {
+  .new-miss{
+    font-size: 3rem;
+  }
+  .miss-result {
+    font-size: 5rem;
+  }
+  .thankyu {
+    margin-top: 3rem;
+    font-size: 1.5rem;
+  }
+}
+.redux-toastr .toastr .rrt-middle-container {
+  font-size: 1rem;
+  font-family: 'oclock';
+}
+
+.step-0 {
+  background: rgb(216, 58, 55);
+  background-image: url(assets/pineapple.svg); 
+  background-size: 65px;
+}
+
+.step-1 {
+  background: rgb(35, 75, 120);
+  background-image: url(assets/chausson.svg);
+  background-size: 90px;
+
+  .message {
+    color: $blue;
+  }
+  input[type=radio]:checked + .input-btn {
+    background: darken($blue, 10%);
+  }
+  .input-btn {
+    background: $blue;
+  }
+}
+h1:before {
+  position: relative;
+  content:"";
+  display: block;
+  height: 2.5rem;
+  width: 100%;
+  background: url(assets/logo.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+h1 {
+  overflow: hidden;
+  height: 3.5rem;
+}
+.step-2 {
+  background:  rgb(94, 157, 7);
+  background-image: url(assets/cake.svg);
+  background-size: 80px;
+
+  .message {
+    color: $green;
+  }
+
+  input[type=radio]:checked + .input-btn {
+    background: darken($green, 10%);
+  }
+  .input-btn {
+    background: $green;
+  }
+}
+
+.step-3 {
+  background: rgb(255, 180, 0);
+  background-image: url(assets/mics.svg);
+  background-size: 90px;
+
+  .message {
+    color: $yellow;
+  }
+
+  input[type=radio]:checked + .input-btn {
+    background: darken($yellow, 10%);
+  }
+  .input-btn {
+    background: $yellow;
+  }
+}
+
+.view-loading{
+  text-align: center;
+  &>i {
+    max-width: 40rem;
+    display: block;
+    margin: auto;
+  }
+}
+
+@for $i from 0 through 10 {
+  .delay-#{$i} {
+    $delay: 2 + $i;
+    animation-delay: #{$delay}s;
+  }
+}
+
+.winners-global-view {
+  visibility: hidden;
+}
+
+.winners-global {
+  display: flex;
+  flex-wrap: nowrap;
+
+}
+.winners-global-view {
+  text-transform: uppercase;
+  font-family: "oclock-bold";
+  flex: 1;
+  text-align: center;
+  font-size: 2.5rem;
+}
+.global-view-title {
+  text-transform: uppercase;
+  font-size: 7rem;
+  font-weight: bold;
+  font-family: 'oclock-bold', sans-serif;
+  color: darken($blue, 10%);
+  text-align: center;
+}
+.step-2 .global-view-title {
+  color: darken($green, 10%);
+
+}
+.step-3 .global-view-title {
+  color: darken($yellow, 10%);
+
+}
+.global {
+  h1 {
+    height: 5.5rem;
+  }
+  h1::before{
+    height: 4.5rem;
+  }
 }

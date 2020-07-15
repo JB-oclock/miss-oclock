@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 
 import Performer from 'src/components/Performance/performer';
-import { setPerformance } from 'src/store/performancesReducer';
+import { setPerformance, endPerformance } from 'src/store/performancesReducer';
+import {setStep2Winner } from 'src/store/reducer';
+
 
 
 const mapStateToProps = (state) => ({
@@ -12,6 +14,12 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     setPerformance: (performance) => {
         dispatch(setPerformance(performance));
+    },
+    setWinner: (winner) => {
+        dispatch(setStep2Winner(winner));
+    },
+    endPerformance: () => {
+        dispatch(endPerformance());
     },
 });
 

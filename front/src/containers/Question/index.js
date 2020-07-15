@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Question from 'src/components/Question';
-import {setQuestion, answerQuestion, endQuestions } from 'src/store/questionsReducer';
+import {setQuestion, answerQuestion, endQuestions, setAnswered } from 'src/store/questionsReducer';
 import {setStep1Winner } from 'src/store/reducer';
 
 
@@ -16,6 +16,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setWinner: (winners) => {
     dispatch(setStep1Winner(winners));
+  },
+  setAnswered: () => {
+    dispatch(setAnswered());
   },
   endQuestions: () => {
     dispatch(endQuestions());
