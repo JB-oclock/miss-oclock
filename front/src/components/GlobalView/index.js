@@ -24,7 +24,7 @@ class GlobalView extends Component {
               { step == 1 && <Question  />}
               { step == 2 && <Performance  />}
               { step == 3 && !winner && <Speech  />}
-              { step == 3 && winner && <End  />}
+              { step == 3 && winner && <End winner={winner} view='global' />}
             </>
         );
     }
