@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import GlobalView from '../../components/GlobalView';
-import {  setGameId, getGameDataGlobal } from 'src/store/reducer';
+import {  setGameId, getGameDataGlobal, setGameWinner } from 'src/store/reducer';
 
 
 const mapStateToProps = (state) => ({
@@ -20,6 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
   getGameDataGlobal: (id) => {
     dispatch(getGameDataGlobal(id));
   },
+
 });
 
 const GlobalViewContainer = connect(

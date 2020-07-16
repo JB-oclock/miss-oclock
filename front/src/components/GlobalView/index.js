@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import LoadingScreen from '../../components/LoadingScreen';
 import End from '../../components/End';
-import Speech from '../../components/GlobalView/Speech';
+import Speech from '../../containers/GlobalView/Speech';
 import Performance from '../../containers/GlobalView/Performance';
 import Question from '../../containers/GlobalView/Question';
+
 
 class GlobalView extends Component {
 
@@ -14,6 +15,8 @@ class GlobalView extends Component {
         let { getGameDataGlobal } = this.props;
         getGameDataGlobal(code);
     }
+
+ 
 
     render() {
         const {  step, winner } = this.props;
