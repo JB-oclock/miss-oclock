@@ -4,6 +4,7 @@
 /api/storage/*.key
 /api/storage/debugbar
 /api/vendor
+/api/node_modules
 .env
 .env.backup
 .phpunit.result.cache

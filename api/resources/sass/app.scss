@@ -6,3 +6,17 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.draggable-source {
+    cursor: grab;
+}
+.draggable-container li{
+    background: #e3e3e3;
+}
+.draggable-container li:nth-child(odd) {
+    background: #d7d7d7;
+}
+
+.draggable-container {
+    min-height: 50px;
+}

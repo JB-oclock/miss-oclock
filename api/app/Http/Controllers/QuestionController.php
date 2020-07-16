@@ -49,6 +49,7 @@ class QuestionController extends Controller
 
     public function delete(Question $question)
     {
+        $question->games()->detach();
         $question->delete();
         return redirect()->back();
     }

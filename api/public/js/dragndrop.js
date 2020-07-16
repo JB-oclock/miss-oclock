@@ -7124,19 +7124,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var sortable = new _shopify_draggable__WEBPACK_IMPORTED_MODULE_0__["Sortable"](document.querySelectorAll('.draggable-container'), {
   draggable: 'li'
-});
-sortable.on('sortable:start', function () {
-  return console.log('sortable:start');
-});
-sortable.on('sortable:sort', function () {
-  return console.log('sortable:sort');
-});
-sortable.on('sortable:sorted', function () {
-  return console.log('sortable:sorted');
-});
-sortable.on('sortable:stop', function () {
-  return console.log('sortable:stop');
-});
+}); // sortable.on('sortable:start', () => console.log('sortable:start'));
+// sortable.on('sortable:sort', () => console.log('sortable:sort'));
+// sortable.on('sortable:sorted', () => console.log('sortable:sorted'));
+// sortable.on('sortable:stop', () => console.log('sortable:stop'));
+
 var asyncBtn = document.querySelectorAll('.async');
 asyncBtn.forEach(function (item) {
   item.addEventListener('click', setOrderThenSend);
@@ -7144,16 +7136,18 @@ asyncBtn.forEach(function (item) {
 
 function setOrderThenSend(e) {
   e.preventDefault();
-  var target = document.getElementById('savable');
-  var children = Array.from(target.children);
-  console.log(children); // on va construire l'array à envoyer en récupérant les id dans le dom et numérotant à la volée
+  var targetName = e.target.dataset.type;
+  var target = document.querySelector(".container-".concat(targetName));
+  var children = Array.from(target.children); // on va construire l'array à envoyer en récupérant les id dans le dom et numérotant à la volée
 
-  var selectedQuestions = [];
+  var selectedElements = [];
   children.forEach(function (item, i) {
-    console.log(item);
-    selectedQuestions[i] = item.id;
+    selectedElements.push(item.dataset.id);
   });
-  console.log(selectedQuestions);
+  var input = document.querySelector(".".concat(targetName));
+  input.value = selectedElements;
+  var form = document.querySelector('.edit-form');
+  form.submit();
 }
 
 /***/ }),
@@ -7165,7 +7159,7 @@ function setOrderThenSend(e) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/html/miss-oclock/api/resources/js/dragndrop.js */"./resources/js/dragndrop.js");
+module.exports = __webpack_require__(/*! /home/fabio/www/perso/miss-oclock/api/resources/js/dragndrop.js */"./resources/js/dragndrop.js");
 
 
 /***/ })

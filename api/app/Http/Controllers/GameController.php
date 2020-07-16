@@ -65,13 +65,43 @@ class GameController extends Controller
     }
 
     public function edit(Game $game) {
-        return view('game.edit', compact('game'));
+        $questions = $game->questions()->orderBy('order')->get();
+        $performances = $game->performances;
+        $questionIds = $performanceIds = [];
+
+        foreach($questions as $question) {
+            $questionIds[] = $question->id;
+        }
+
+        foreach($performances as $performance) {
+            $performanceIds[] = $performance->id;
+        }
+
+        $remainingQuestions = Question::whereNotIn('id', $questionIds)->get();
+        $remainingPerformances = Performance::whereNotIn('id', $performanceIds)->get();
+        return view('game.edit', compact('game', 'questions', 'remainingQuestions', 'questionIds', 'performanceIds', 'performances', 'remainingPerformances'));
     }
     public function editpost(Game $game, Request $request) {
         $game->code = $request->input('code');
         $game->winners = $request->input('winners');
+        $questions = $request->questions;
+        $performances = $request->performances;
+        if($questions) {
+            $questions = explode(',', $questions);
+            $questionsToSync = [];
+            
+            foreach($questions as $key => $question) {
+                $questionsToSync[$question] = ['order' => $key + 1];
+            }
+            $game->questions()->sync($questionsToSync);
+        }
+        if($performances) {
+            $performances = explode(',', $performances);
+            
+            $game->performances()->sync($performances);
+        }
         $game->save();
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     public function create() {
