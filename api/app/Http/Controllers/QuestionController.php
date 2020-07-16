@@ -13,6 +13,12 @@ class QuestionController extends Controller
         return view('question.create');
     }
 
+    public function list()
+    {
+        $questions = Question::orderBy('id', 'desc')->get();
+        return view('question.list', compact('questions'));
+    }
+
     public function createpost(Request $request)
     {
         $question = new Question();
@@ -22,7 +28,7 @@ class QuestionController extends Controller
         $question->answer_3 = $request->input('answer_3');
         $question->answer_good = $request->input('answer_good');
         $question->save();
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     public function edit(Question $question)
@@ -38,12 +44,12 @@ class QuestionController extends Controller
         $question->answer_3 = $request->input('answer_3');
         $question->answer_good = $request->input('answer_good');
         $question->save();
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     public function delete(Question $question)
     {
         $question->delete();
-        return redirect()->route('home');
+        return redirect()->back();
     }
 }

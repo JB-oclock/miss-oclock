@@ -33,8 +33,8 @@
             <div class="card">
                 <div class="card-header">Gestion des associations</div>
                 <div class="card-body">
-                    <a class="btn btn-success" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Questions liées</a><br><br>
-                    <a class="btn btn-success" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Performances liées</a>
+                    {{-- <a class="btn btn-success" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Questions liées</a><br><br> --}}
+                    {{-- <a class="btn btn-success" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Performances liées</a> --}}
                 </div>
             </div>
         </div>
@@ -50,8 +50,8 @@
                 </div>
                 <div class="card-body">
                   <ul class="draggable-container" id="savable">
-                    <li class="draggable-source" id="1">Test1</li>
-                    <li class="draggable-source" id="2">Test2</li>
+                    <li class="draggable-source btn btn-info" id="1">Test1</li>
+                    <li class="draggable-source btn btn-info" id="2">Test2</li>
                   </ul>
                 </div>
             </div>
@@ -64,8 +64,8 @@
                 </div>
                 <div class="card-body">
                   <ul class="draggable-container">
-                    <li class="draggable-source" id="4">Test4</li>
-                    <li class="draggable-source" id="3">Test3</li>
+                    <li class="draggable-source btn btn-info" id="4">Test4</li>
+                    <li class="draggable-source btn btn-info" id="3">Test3</li>
                   </ul>
                 </div>
             </div>

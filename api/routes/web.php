@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware('auth')->group( function() {
     Route::get('/game/create', 'GameController@create')->name('create-game');
     Route::post('/game/create', 'GameController@createpost')->name('create-game-post');
+    Route::get('/game/list', 'GameController@list')->name('game-list');
     Route::get('/game/{game}/next-step', 'GameController@nextStep')->name('next-step');
     Route::get('/game/{game}/next-question', 'GameController@nextQuestion')->name('next-question');
     Route::get('/game/{game}/display-answer/{question}', 'GameController@displayAnswer')->name('display-answer');
@@ -37,12 +38,14 @@ Route::middleware('auth')->group( function() {
     Route::post('/game/{game}/edit', 'GameController@editpost')->name('edit-game-post');
     Route::get('/game/{game}/reset-perfs', 'GameController@resetPerfs')->name('reset-perfs');
 
+    Route::get('/question/list', 'QuestionController@list')->name('list-question');
     Route::get('/question/create', 'QuestionController@create')->name('create-question');
     Route::post('/question/create', 'QuestionController@createpost')->name('create-question-post');
     Route::get('/question/{question}/edit', 'QuestionController@edit')->name('edit-question');
     Route::post('/question/{question}/edit', 'QuestionController@editpost')->name('edit-question-post');
     Route::get('/question/{question}/delete', 'QuestionController@delete')->name('delete-question');
-
+    
+    Route::get('/performance/list', 'PerformanceController@list')->name('list-performance');
     Route::get('/performance/create', 'PerformanceController@create')->name('create-performance');
     Route::post('/performance/create', 'PerformanceController@createpost')->name('create-performance-post');
     Route::get('/performance/{performance}/edit', 'PerformanceController@edit')->name('edit-performance');

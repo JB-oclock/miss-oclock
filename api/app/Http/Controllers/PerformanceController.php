@@ -50,6 +50,13 @@ class PerformanceController extends Controller
         }
     }
 
+
+    public function list()
+    {
+        $performances = Performance::orderBy('id', 'desc')->get();
+        return view('performance.list', compact('performances'));
+    }
+
     public function create()
     {
         return view('performance.create');
@@ -64,7 +71,7 @@ class PerformanceController extends Controller
         $performance->answer_3 = $request->input('answer_3');
         $performance->answer_good = $request->input('answer_good');
         $performance->save();
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     public function edit(Performance $performance)
@@ -80,12 +87,12 @@ class PerformanceController extends Controller
         $performance->answer_3 = $request->input('answer_3');
         $performance->answer_good = $request->input('answer_good');
         $performance->save();
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     public function delete(Performance $performance)
     {
         $performance->delete();
-        return redirect()->route('home');
+        return redirect()->back();
     }
 }

@@ -33,7 +33,15 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">Jeux</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('list-question') }}">Questions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('list-performance') }}">Performances</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -76,5 +84,39 @@
             @yield('content')
         </main>
     </div>
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                  <p id="question-title-copy"></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                  <a class="btn btn-danger btn-ok" id="confirm-delete-btn">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        (function() {
+          const deletebtns = document.getElementsByClassName('deletebtn');
+          const modalBtn = document.getElementById('confirm-delete-btn');
+          const titleCopy = document.getElementById('question-title-copy');
+          const messages = {
+              'delete': 'Voulez-vous réellement supprimer cet élément : ',
+              'reset': 'Voulez-vous vraiment réinitialiser : '
+          }
+          for (let btn of deletebtns) {
+            btn.addEventListener('click', function(e){
+              let url = e.target.parentElement.dataset.href;
+              let title = e.target.parentElement.dataset.title;
+              
+              modalBtn.href = url;
+              titleCopy.innerHTML = messages[e.target.parentElement.dataset.action] + '<span class="font-weight-bold">"' + title + '"</span> ?';
+            });
+          }
+        })();
+        </script>
+        
 </body>
 </html>
