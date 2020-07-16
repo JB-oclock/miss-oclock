@@ -64,6 +64,57 @@ class GameController extends Controller
         return back();
     }
 
+    public function edit(Game $game) {
+        $questions = $game->questions()->orderBy('order')->get();
+        $performances = $game->performances;
+        $questionIds = $performanceIds = [];
+
+        foreach($questions as $question) {
+            $questionIds[] = $question->id;
+        }
+
+        foreach($performances as $performance) {
+            $performanceIds[] = $performance->id;
+        }
+
+        $remainingQuestions = Question::whereNotIn('id', $questionIds)->get();
+        $remainingPerformances = Performance::whereNotIn('id', $performanceIds)->get();
+        return view('game.edit', compact('game', 'questions', 'remainingQuestions', 'questionIds', 'performanceIds', 'performances', 'remainingPerformances'));
+    }
+    public function editpost(Game $game, Request $request) {
+        $game->code = $request->input('code');
+        $game->winners = $request->input('winners');
+        $questions = $request->questions;
+        $performances = $request->performances;
+        if($questions) {
+            $questions = explode(',', $questions);
+            $questionsToSync = [];
+            
+            foreach($questions as $key => $question) {
+                $questionsToSync[$question] = ['order' => $key + 1];
+            }
+            $game->questions()->sync($questionsToSync);
+        }
+        if($performances) {
+            $performances = explode(',', $performances);
+            
+            $game->performances()->sync($performances);
+        }
+        $game->save();
+        return redirect()->back();
+    }
+
+    public function create() {
+        return view('game.create');
+    }
+    public function createpost(Request $request) {
+        $game = new Game();
+        $game->code = $request->input('code');
+        $game->winners = $request->input('winners');
+        $game->save();
+        return redirect()->route('edit-game', ['game' => $game->id]);
+    }
+
     public function resetPerfs(Game $game) {
         $game->performance_sent = 0;
         $game->performance_props_sent = 0;
@@ -100,9 +151,9 @@ class GameController extends Controller
         if($game->question < $nbQuestions) {
             $game->question = $game->question +1;
             $game->save();
-            
+
             $question = $game->questionWithOrder($game->question);
-            
+
             $question = $question->cleanData($game);
 
 
@@ -213,7 +264,7 @@ class GameController extends Controller
             json_encode($data)
         );
         $publisher($update);
-        
+
         return back();
 
     }
@@ -230,14 +281,14 @@ class GameController extends Controller
             json_encode($data)
         );
         $publisher($update);
-        
+
         return back();
 
     }
 
     public function validatePerformance(Game $game, Publify $publisher)
     {
-       
+
 
        $data = [
            'performance' => [
@@ -256,7 +307,7 @@ class GameController extends Controller
             json_encode($data)
         );
         $publisher($update);
-        
+
 
         $game->performance_sent = 0;
         $game->performance_props_sent = 0;
@@ -395,7 +446,7 @@ class GameController extends Controller
                     ->where('performance_id', $performance->id)
                     ->first();
                     $gameData['performance']['answered'] = !!$answer;
-                    
+
                 }
             }
             // Check if the winners have been set up 

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Game;
+use App\Question;
+use App\Performance;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $games = Game::orderBy('id', 'desc')->get();
+        $questions = Question::orderBy('id', 'desc')->get();
+        return view('home', compact('games', 'questions', 'performances'));
     }
 }
