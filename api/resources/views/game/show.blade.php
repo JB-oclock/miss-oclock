@@ -7,14 +7,18 @@
             <div class="card">
                 <div class="card-header d-flex align-items-start justify-content-between">
                     <span>Tableau de bord <br/>Code de jeu : {{ $game->code }}</span>
-                    <a class="btn btn-danger float-right" href="{{ route('reset-game', [$game->id]) }}">Reset jeu</a>
+                    <a href="#" data-href="{{ route('reset-game', [$game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="reset" class="deletebtn btn btn-danger" data-title="tout le jeu">
+                        Reset jeu
+                    </a>
                   </div>
                   <div class="card-body">
                       <ul>
                           <li>ID: {{ $game->id }}</li>
                           <li>Step: {{ $game->step }}</li>
                       </ul>
-                      <a class="btn btn-primary @if(!$stepOver || $game->step == 3)disabled @endif" href="{{ route('next-step', ['game' => $game->id]) }}" role="button">Étape suivante</a>
+                      <a class="btn btn-primary deletebtn  @if(!$stepOver || $game->step == 3)disabled @endif"  href="#" data-href="{{ route('next-step', ['game' => $game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="next-step" data-title="">
+                        Étape suivante
+                      </a>
                   </div>
               </div>
           </div>
@@ -40,11 +44,17 @@
                     <div class="card">
                         <div class="card-header">Questions
                             @if($question['last'])
-                            <a class="btn btn-primary float-right @if($stepOver)disabled @endif" href="{{ route('set-step1-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
+                            <a class="btn btn-primary float-right @if($stepOver)disabled @endif deletebtn"  href="#" data-href="{{ route('set-step1-winners', ['game' => $game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="valid-winners" data-title="">
+                                Valider les vainqueurs
+                            </a>
                             @else
-                            <a class="btn btn-primary float-right" href="{{ route('next-question', ['game' => $game->id]) }}" role="button">Question suivante</a>
+                            <a class="btn btn-primary float-right mr-2 deletebtn"  href="#" data-href="{{ route('next-question', ['game' => $game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="next-question" data-title="">
+                                Question suivante
+                            </a>
                             @endif
-                            <a class="btn btn-success float-right mr-2" href="{{ route('display-answer', ['game' => $game->id, 'question' => $question['questionId']]) }}" role="button">Afficher la réponse</a>
+                            <a class="btn btn-success float-right mr-2 deletebtn"  href="#" data-href="{{ route('display-answer', ['game' => $game->id, 'question' => $question['questionId']]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="display-answer" data-title="">
+                                Afficher la réponse
+                            </a>
                         </div>
                         <div class="card-body">
                             <p>
@@ -73,7 +83,11 @@
             @elseif($game->step == 2)
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Performances <a class="btn btn-danger float-right" href="{{ route('reset-perfs', [$game->id]) }}">Reset Perfs</a></div>
+                        <div class="card-header">Performances 
+                            <a class="btn btn-danger float-right deletebtn"  href="#" data-href="{{ route('reset-perfs', [$game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="reset" data-title="cette étape">
+                                Reset Perfs
+                            </a>
+                        </div>
                         <div class="card-body">
                             <ul class="list-group">
                                 @forelse($players as $key => $player)
@@ -104,7 +118,9 @@
                                 @endforelse
                             </ul>
                             @if($perfsOver)
-                                <a class="btn btn-primary @if($stepOver)disabled @endif" href="{{ route('set-step2-winners', ['game' => $game->id]) }}" role="button">Valider les vainqueurs</a>
+                                <a class="btn btn-primary @if($stepOver)disabled @endif deletebtn"  href="#" data-href="{{ route('set-step2-winners', ['game' => $game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="valid-winners" data-title="">
+                                    Valider les vainqueurs
+                                </a>
                             @endif
                         </div>
 
@@ -116,10 +132,10 @@
                     <div class="card-header">Votes </div>
                     <div class="card-body">
                         <a class="btn btn-primary  @if($game->votes_started)disabled @endif" href="{{ route('send-votes', ['game' => $game->id]) }}" role="button">Activer la votation !</a>
-                        <a class="btn btn-primary  @if(!$game->votes_started)disabled @endif" href="{{ route('validate-votes', ['game' => $game->id]) }}" role="button">Valider les résultats</a>
-                        <ul class="list-group">
-                            
-                        </ul>
+                        <a class="btn btn-primary @if(!$game->votes_started)disabled @endif deletebtn"  href="#" data-href="{{ route('validate-votes', ['game' => $game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="valid-winners" data-title="">
+                            Valider les résultats
+                        </a>
+
                         
                     </div>
                     <div class="card-body">

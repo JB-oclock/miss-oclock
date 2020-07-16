@@ -12,11 +12,11 @@
             </li>
             @forelse ($performances as $performance)
                 <li class="list-group-item d-flex justify-content-between  align-items-center">
-                  <a href="{{ route('edit-performance', ['performance' => $performance->id]) }}">{{ $performance->title }}</a>
+                  <a href="{{ route('edit-performance', ['performance' => $performance->id]) }}">{{ $performance->answer_good }}</a>
                   <span>
                     <a href=""></a>
-                    <a href="#" data-href="{{ route('delete-performance', ['performance' => $performance->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="delete" class="deletebtn" data-title="{{ $performance->title }}">
-                      <span class="btn btn-danger">Supprimer</span>
+                    <a href="#" data-href="{{ route('delete-performance', ['performance' => $performance->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="delete" class="deletebtn btn btn-danger" data-title="{{ $performance->answer_good }}">
+                      Supprimer
                     </a>
                   </span>
                 </li>

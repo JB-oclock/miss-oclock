@@ -37054,41 +37054,47 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-var deletebtns = document.getElementsByClassName('deletebtn');
-var modalBtn = document.getElementById('confirm-delete-btn');
-var titleCopy = document.getElementById('question-title-copy');
-var messages = {
-  'delete': 'Voulez-vous réellement supprimer cet élément : ',
-  'reset': 'Voulez-vous vraiment réinitialiser : '
-};
-var _iteratorNormalCompletion = true;
-var _didIteratorError = false;
-var _iteratorError = undefined;
+(function () {
+  var deletebtns = document.getElementsByClassName('deletebtn');
+  var modalBtn = document.getElementById('confirm-delete-btn');
+  var titleCopy = document.getElementById('question-title-copy');
+  var messages = {
+    'delete': 'Voulez-vous réellement supprimer cet élément : ',
+    'reset': 'Voulez-vous vraiment réinitialiser : ',
+    'next-step': 'Voulez-vous vraiment passer à l\'étape suivante',
+    'next-question': 'Voulez-vous vraiment passer à la question suivante',
+    'display-answer': 'Voulez-vous vraiment afficher la réponse',
+    'valid-winners': 'Voulez-vous vraiment valider les vainqueurs'
+  };
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
 
-try {
-  for (var _iterator = deletebtns[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-    var btn = _step.value;
-    btn.addEventListener('click', function (e) {
-      var url = e.target.parentElement.dataset.href;
-      var title = e.target.parentElement.dataset.title;
-      modalBtn.href = url;
-      titleCopy.innerHTML = messages[e.target.parentElement.dataset.action] + '<span class="font-weight-bold">"' + title + '"</span> ?';
-    });
-  }
-} catch (err) {
-  _didIteratorError = true;
-  _iteratorError = err;
-} finally {
   try {
-    if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-      _iterator["return"]();
+    for (var _iterator = deletebtns[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var btn = _step.value;
+      btn.addEventListener('click', function (e) {
+        var url = e.target.dataset.href;
+        var title = e.target.dataset.title;
+        modalBtn.href = url;
+        titleCopy.innerHTML = messages[e.target.dataset.action] + '<span class="font-weight-bold">' + title + '</span> ?';
+      });
     }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
   } finally {
-    if (_didIteratorError) {
-      throw _iteratorError;
+    try {
+      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+        _iterator["return"]();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
     }
   }
-}
+})();
 
 /***/ }),
 

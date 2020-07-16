@@ -15,8 +15,8 @@
                   <a href="{{ route('edit-question', ['question' => $question->id]) }}">{{ $question->title }}</a>
                   <span>
                     <a href=""></a>
-                    <a href="#" data-href="{{ route('delete-question', ['question' => $question->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="delete" class="deletebtn" data-title="{{ $question->title }}">
-                      <span class="btn btn-danger">Supprimer</span>
+                    <a href="#" data-href="{{ route('delete-question', ['question' => $question->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="delete" class="deletebtn btn btn-danger" data-title="{{ $question->title }}">
+                      Supprimer
                     </a>
                   </span>
                 </li>

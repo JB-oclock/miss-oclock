@@ -98,7 +98,7 @@
                       <div class="card-body">
                         <ul class="draggable-container container-performances list-group" id="savable">
                           @foreach ($performances as $performance)
-                            <li class="draggable-source list-group-item" data-id="{{ $performance->id}}">{{ $performance->title }}</li>
+                            <li class="draggable-source list-group-item" data-id="{{ $performance->id}}">{{ $performance->answer_good }}</li>
                           @endforeach
                         </ul>
                       </div>
@@ -113,7 +113,7 @@
                       <div class="card-body">
                         <ul class="draggable-container list-group">
                           @foreach ($remainingPerformances as $performance)
-                            <li class="draggable-source list-group-item" data-id="{{ $performance->id}}">{{ $performance->title }}</li>
+                            <li class="draggable-source list-group-item" data-id="{{ $performance->id}}">{{ $performance->answer_good }}</li>
                           @endforeach
                         </ul>
                       </div>
