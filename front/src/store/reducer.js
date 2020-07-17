@@ -8,6 +8,7 @@ export const initialState = {
   player: false,
   gameId: 0,
   gameStep: 0,
+  code: '',
   step_1_winner: false,
   step_2_winner: false,
   step_3_winner: false,
@@ -20,6 +21,7 @@ export const initialState = {
 export const SET_PLAYER = 'SET_PLAYER';
 export const SET_GAME_ID = 'SET_GAME_ID';
 export const SET_GAME_STEP = 'SET_GAME_STEP';
+export const SET_CODE = 'SET_CODE';
 export const SET_GAME_WINNER = 'SET_GAME_WINNER';
 export const GET_PLAYER_INFOS = 'GET_PLAYER_INFOS';
 export const GET_GAME_DATA = 'GET_GAME_DATA';
@@ -44,6 +46,11 @@ export const setPlayer = (player) => ({
 export const setGameId = (id) => ({
   type: SET_GAME_ID,
   id,
+});
+
+export const setCode = (code) => ({
+  type: SET_CODE,
+  code,
 });
 
 export const setGameStep = (step) => ({
@@ -112,6 +119,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         gameStep: action.step,
+      };
+    case SET_CODE:
+      return {
+        ...state,
+        code: action.code,
       };
     case STOP_LOADING:
       return {

@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, getGameDataGlobal, GET_GAME_DATA,GET_GAME_DATA_GLOBAL, setGameStep, setStep1Winner,  setStep2Winner, setGameWinner} from '../reducer';
+import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, getGameDataGlobal, GET_GAME_DATA,GET_GAME_DATA_GLOBAL, setGameStep, setCode, setStep1Winner,  setStep2Winner, setGameWinner} from '../reducer';
 import { setQuestion, setAnswered, ANSWER_QUESTION } from '../questionsReducer';
 import { toastr } from 'react-redux-toastr';
 import { setPerformance, ANSWER_PERFORMANCE, setAnswered as setAnsweredPerformance } from '../performancesReducer';
@@ -67,10 +67,11 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           id: action.id
         }
       }).then((response) => {
-          const {gameId, gameStep, question,  step_3_winner, performance, votes} = response.data;
+          const {gameId, gameStep, code, question,  step_3_winner, performance, votes} = response.data;
           
         store.dispatch(setGameId(gameId));
         store.dispatch(setGameStep(gameStep));
+        store.dispatch(setCode(code));
         store.dispatch(mercureSubscribeSteps());
 
         store.dispatch(stopLoading());

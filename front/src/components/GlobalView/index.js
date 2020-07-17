@@ -19,11 +19,11 @@ class GlobalView extends Component {
  
 
     render() {
-        const {  step, winner } = this.props;
+        const {  step, winner, code } = this.props;
 
         return (
             <>
-              { step == 0 && <LoadingScreen  />}
+              { step == 0 && <LoadingScreen code={code} />}
               { step == 1 && <Question  />}
               { step == 2 && <Performance  />}
               { step == 3 && !winner && <Speech  />}

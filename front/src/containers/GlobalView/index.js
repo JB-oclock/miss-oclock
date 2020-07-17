@@ -9,6 +9,7 @@ const mapStateToProps = (state) => ({
   loading: state.app.loading,
   waiting: state.app.waiting,
   step: state.app.gameStep,
+  code: state.app.code,
   winner: state.app.step_3_winner
 });
 

@@ -371,3 +371,26 @@ h1 {
     height: 4.5rem;
   }
 }
+
+.code-display {
+  margin: 4rem auto 0;
+  font-size: 1.8rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: darken($red, 25%);
+  display: flex;
+  width: 10em;
+  justify-content: center;
+  
+  align-items: center;
+  text-align: center;
+
+  span {
+    font-size: 3rem;
+    margin-left: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'oclock-bold';
+  }
+
+}

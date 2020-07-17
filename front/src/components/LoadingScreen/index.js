@@ -7,6 +7,7 @@ import {withRouter} from "react-router-dom";
 class LoadingScreen extends Component {
  
     render() {
+        const { code } = this.props;
         const logo = `<svg class="logo" version="1.1"
             id="svg3733" inkscape:version="0.92.4 (5da689c313, 2019-01-14)" sodipodi:docname="logo-miss-clock.svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 760 250"
@@ -98,9 +99,10 @@ class LoadingScreen extends Component {
         loading();
         setInterval(loading, 3000);
         return (
-        <div className="view-loading">
-                <InlineSVG src={logo} />
-        </div>
+            <div className="view-loading">
+                    <InlineSVG src={logo} />
+                    {code && <div className="code-display">Code : <span>{code}</span></div>}
+            </div>
         )
     }
 }

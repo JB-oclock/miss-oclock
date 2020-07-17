@@ -399,6 +399,7 @@ class GameController extends Controller
         $gameData = [
             'gameId' => $game->id,
             'gameStep' => $game->step,
+            'code' => $game->code,
         ];
 
 
