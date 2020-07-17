@@ -12,6 +12,11 @@ class Question extends Model
         return $this->belongsToMany('App\Game');
     }
 
+    public function answers()
+    {
+        return $this->hasMany('App\Answer');
+    }
+
     public function cleanData(Game $game = NULL) {
         $last = ($game) ? !!($game->lastQuestion()->id == $this->id) : false;
         $answers = [

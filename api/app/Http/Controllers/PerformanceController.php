@@ -93,6 +93,7 @@ class PerformanceController extends Controller
     public function delete(Performance $performance)
     {
         $performance->games()->detach();
+        $performance->votes()->delete();
         $performance->delete();
         return redirect()->back();
     }

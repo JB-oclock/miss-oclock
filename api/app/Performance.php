@@ -8,7 +8,7 @@ class Performance extends Model
 {
     public function votes()
     {
-        return $this->hasMany('App\Vote');
+        return $this->hasMany('App\PerfVote');
     }
 
     public function games()
