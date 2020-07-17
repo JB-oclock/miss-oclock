@@ -48,7 +48,7 @@ class Question extends Component {
     const inputs = [];
 
     answers.forEach((answer, id) => {
-      inputs.push(<div className="fake-checkboxes"><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer} /><label className="input-btn" key={id} htmlFor={'answer_'+id}>{answer}</label></div>);
+      inputs.push(<div className="fake-checkboxes"><input id={'answer_'+id} onChange={this.handleInput} type="radio" name="answer" value={answer} /><label className="input-btn" key={id} htmlFor={'answer_'+id}><span className='dot'></span><span>{answer}</span></label></div>);
     });
  
     return inputs;

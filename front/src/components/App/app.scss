@@ -169,7 +169,7 @@ form,
   input[type=radio]:checked + .input-btn {
     background: darken(rgb(193, 53, 48), 20%);
   }
-  input[type=radio]:checked + .input-btn:before {
+  input[type=radio]:checked + .input-btn .dot {
     background: url(assets/dotted.svg);
   }
 
@@ -180,17 +180,20 @@ form,
   padding: .8rem;
   border-radius: 5px;
   border: none;
+  align-items: center;
   font-size: 1.4rem;
   background: rgb(193, 53, 48);
 
-  &:before {
-    content: "";
+  .dot {
+    // content: "";
     background: url(assets/circle.svg);
     height: 1.4rem;
     width: 1.4rem;
-    display: inline-block;
+    background-repeat: no-repeat;
+    display: block;
     margin-right: 1rem;
     vertical-align: middle;
+    flex: 0 0 auto;
   }
 }
 strong {
