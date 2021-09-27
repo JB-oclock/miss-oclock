@@ -405,3 +405,48 @@ button[type=submit], input[type=button] {
   appearance: none;
   opacity: 1;
 }
+.st1 {
+  fill: transparent;
+}
+.view-loading .st2 {
+  animation: background 1s forwards 3s;
+}
+.view-loading .st1 path:nth-child(1) {
+  stroke-dasharray: 1042;
+  stroke-dashoffset: 1042;
+  animation: letters 1.5s forwards, background 1s forwards 5s;
+}
+.view-loading .st1 path:nth-child(2) {
+  stroke-dasharray: 272;
+  stroke-dashoffset: 272;
+  animation: letters 1s forwards 1.5s, background 1s forwards 5s;
+
+}
+.view-loading .st1 path:nth-child(3) {
+  stroke-dasharray: 314;
+  stroke-dashoffset: 314;
+  animation: letters 1s forwards 2.5s, background 1s forwards 5s;
+
+}
+.view-loading .st1 path:nth-child(4) {
+  stroke-dasharray: 314;
+  stroke-dashoffset: 314;
+  animation: letters 1s forwards 3.6s, background 1s forwards 5s;
+
+}
+
+
+@keyframes letters {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes background {
+  from {
+    fill:transparent;
+  }
+  to {
+    fill: rgb(255, 180, 0);
+  }
+}

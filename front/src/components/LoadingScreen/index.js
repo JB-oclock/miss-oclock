@@ -15,7 +15,7 @@ class LoadingScreen extends Component {
             <style type="text/css">
                 .st0{fill:#FFFDD8;}
                 .st1{enable-background:new    ;}
-                .st2{fill:transparent;}
+                
             </style>
             <g id="g3731" transform="translate(0,41)">
                 <path id="path3727" inkscape:connector-curvature="0" class="st0" d="M321.6,100c15,0,26.1,4.6,36.3,13.9c1.4,1.2,1.4,3,0.1,4.2
@@ -79,25 +79,7 @@ class LoadingScreen extends Component {
             </g>
         </svg>`;
 
-        let done = (element) => () => {
-            element.style.fill = "rgb(255, 180, 0)";
-        }
-        function loading() {
-            
-            let delay = 0;
-            let letters = document.getElementsByClassName("st2");
-            for(let segmentPath of letters) {
-                segmentPath.style.fill = 'transparent'
-            }
-            for(let segmentPath of letters) {
-                let segment = new Segment(segmentPath);
-                segment.draw("100%", "0%", 1,  {circular:true, delay: delay, callback: done(segmentPath)});
-                delay += 0.2;
-            }
-            
-        }
-        loading();
-        setInterval(loading, 3000);
+       
         return (
             <div className="view-loading">
                     <InlineSVG src={logo} />
