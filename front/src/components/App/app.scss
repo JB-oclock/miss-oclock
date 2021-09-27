@@ -397,3 +397,11 @@ h1 {
   }
 
 }
+
+input[type=text],
+button[type=submit], input[type=button] {
+-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  opacity: 1;
+}
