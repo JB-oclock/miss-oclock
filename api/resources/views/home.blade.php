@@ -4,7 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
 
-
+        @if(!$mercureRunning)
+            <div class="col col-md-8">
+                <div class="alert alert-danger" role="alert">
+                 L'instance Mercure n'est pas démarrée !
+                </div>
+            </div>
+        @endif
         <div class="col col-md-8">
             <div class="card">
                 <div class="card-header">Jeux disponibles</div>
@@ -25,7 +31,7 @@
                       </thead>
                       <tbody>
                       @foreach ($games as $game)
-                        <tr>
+                        <tr @if($game->step > 0)  class="alert-success" @endif>
                           <td>
                             {{ $game->code }}
                           </td>
