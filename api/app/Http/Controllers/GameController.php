@@ -40,12 +40,12 @@ class GameController extends Controller
                 $performersData[$player->id]['score'] = $game->performanceScore($player);
                 $performersData[$player->id]['nb_perfs'] = $game->numberOfPerfs($player);
             }
-      
+
         } else if ($game->step == 3) {
             $players = $game->getStep3Scores();
-            
+
         }
-        
+
         return view('game.show', compact('game', 'players', 'question', 'stepOver', 'perfsOver', 'performersData'));
     }
 
@@ -89,7 +89,7 @@ class GameController extends Controller
         if($questions) {
             $questions = explode(',', $questions);
             $questionsToSync = [];
-            
+
             foreach($questions as $key => $question) {
                 $questionsToSync[$question] = ['order' => $key + 1];
             }
@@ -97,7 +97,7 @@ class GameController extends Controller
         }
         if($performances) {
             $performances = explode(',', $performances);
-            
+
             $game->performances()->sync($performances);
         }
         $game->save();
@@ -232,7 +232,7 @@ class GameController extends Controller
                 json_encode($data)
             );
             $publisher($update);
-            
+
         }
 
         $data = [
@@ -244,7 +244,7 @@ class GameController extends Controller
             json_encode($data)
         );
         $publisher($update);
-                
+
 
         return back();
 
@@ -353,7 +353,7 @@ class GameController extends Controller
             json_encode($data)
         );
         $publisher($update);
-        
+
 
         return back();
     }
@@ -367,7 +367,7 @@ class GameController extends Controller
     public function gameDataPlayer(Request $request) {
         $game = $request->get('game');
         $player = $request->get('player');
-        
+
         $gameData = $this->gameData($game, $player);
 
         return response()->json($gameData);
@@ -380,7 +380,7 @@ class GameController extends Controller
      * @return json
      */
     public function gameDataGlobal(Request $request) {
-        $game = Game::find($request->get('id'));
+        $game =Game::where('code', $request->get('id'))->first();
         $gameData = $this->gameData($game);
 
         return response()->json($gameData);
@@ -395,7 +395,7 @@ class GameController extends Controller
      */
     public function gameData($game, $player = false)
     {
-        
+
         $gameData = [
             'gameId' => $game->id,
             'gameStep' => $game->step,
@@ -423,16 +423,16 @@ class GameController extends Controller
                 ->where('player_id', $player->id)
                 ->where('question_id', $question->id)
                 ->first();
-                
+
                 $gameData['question']['answered'] = !!$answer;
             } else {
-                $gameData['question']['answer'] = $question->answer_good; 
+                $gameData['question']['answer'] = $question->answer_good;
             }
-                
-            // Check if the winners have been set up 
+
+            // Check if the winners have been set up
             $winners = $game->getStep1Winners();
             $gameData['question']['ended'] = !!count($winners);
-        } 
+        }
         if($game->step == 2) {
             $performance = Performance::find($game->performance_sent);
             if($performance && $player) {
@@ -450,18 +450,18 @@ class GameController extends Controller
 
                 }
             }
-            // Check if the winners have been set up 
+            // Check if the winners have been set up
             $winners = $game->getStep2Winners();
             $gameData['performance']['ended'] = !!count($winners);
         }
-        
+
         if($game->step == 3) {
             if($player) {
 
                 $voteExists = Vote::where('game_id', $game->id)->where('player_id', $player->id)->first();
                 $gameData['votes'] = [
                     'started' => !!$game->votes_started,
-                    'answers' => $game->getStep3Props(), 
+                    'answers' => $game->getStep3Props(),
                     'answered' => !!$voteExists,
                 ];
             }
