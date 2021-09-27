@@ -82,7 +82,7 @@ class Performer extends Component {
           <div className="performer-message message">
             <p>Votre mission si vous l'acceptez sera de dessiner le mot ou expression qui sera dévoilée en cliquant ci-dessous.</p>
           </div>
-          <span onClick={this.toggleMission} className="fake-btn btn">Dévoiler la mission.</span>
+          <span onClick={this.toggleMission} className="fake-btn btn">Cliquer ici pour dévoiler la mission.</span>
           <div className={"mission " + (mission ? ' message' : '' )}>
               { mission && performance.title}
             </div>
