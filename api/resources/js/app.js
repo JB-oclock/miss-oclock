@@ -108,6 +108,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    let finalContainer = document.querySelector('.live-final');
+    if(finalContainer !== null) {
+        console.log("Live final");
+        // Live display of the final votes
+        const url = new URL(finalContainer.dataset.mercure +'.well-known/mercure');
+        url.searchParams.append('topic', finalContainer.dataset.subscribe);
+
+        const eventSource = new EventSource(url , { withCredentials: true });
+
+        eventSource.onmessage = function ({data}) {
+            data = JSON.parse(data);
+
+
+            const players = finalContainer.querySelectorAll('.name');
+            for (const player of players) {
+                if(player.textContent === data.vote) {
+                    let scoreElement = player.closest('li').querySelector('.score');
+                    scoreElement.textContent = Number(scoreElement.textContent) + 1;
+                }
+            }
+
+            const scores = finalContainer.querySelectorAll('.score');
+            let total = 0;
+
+            for (const score of scores) {
+                total += Number(score.textContent);
+            }
+
+            document.querySelector('.total span').textContent = total;
+        };
+
+    }
+
 
 });
 

@@ -10,16 +10,11 @@
 
         </div>
         <div class="card-body">
-            <ul class="list-group">
-                @php
-                $i = 1
-                @endphp
-                @forelse($players as $player)
-                    <li class="list-group-item">{{$player['player']->name}} : {{$player['score']}}</li>
-                    @php $i++ @endphp
-                @empty
-                    <li class="list-group-item">Pas encore de réponses</li>
-                @endforelse
+            <h2 class="total">Total : <span>{{$totalVotes}}</span></h2>
+            <ul class="list-group live-final" data-mercure={{ env('MERCURE_DOMAIN') }} data-subscribe="{{  env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/final.jsonld' }}">
+                @foreach($players as $player)
+                    <li class="list-group-item"><span class="name">{{$player['player']->name}}</span> : <span class="score"> {{$player['score']}}</span></li>
+                @endforeach
             </ul>
         </div>
     </div>

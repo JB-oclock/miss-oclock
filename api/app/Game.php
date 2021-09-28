@@ -115,6 +115,7 @@ class Game extends Model
     {
         $scores = [];
         $playerVotes = $this->votes()->with('vote')->groupBy('voted_player_id')->get();
+
         foreach($playerVotes as $playerVote) {
             $player = $playerVote->vote;
             $votes = $player->voted()->where('game_id', $this->id)->count();
@@ -122,6 +123,17 @@ class Game extends Model
                 'player' => $player,
                 'score' => $votes
             ];
+        }
+
+        // If there is currently no votes
+        if(empty($scores)){
+            $players = $this->players()->where('winner2', 1)->get();
+            foreach($players as $player) {
+                $scores[] = [
+                    'player' => $player,
+                    'score' => 0
+                ];
+            }
         }
 
         return $scores;

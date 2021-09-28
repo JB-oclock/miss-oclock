@@ -23,7 +23,7 @@ class GameController extends Controller
         $question = '';
         $stepOver = true;
         $perfsOver = false;
-        $perfVotes = 0;
+        $perfVotes = $totalVotes = 0;
         $gameQuestion = ($game->question == 0)? 1 : $game->question;
         if($game->step == 0 ) {
             $players = $game->players;
@@ -48,9 +48,13 @@ class GameController extends Controller
         } else if ($game->step == 3) {
             $players = $game->getStep3Scores();
 
+            foreach ($players as $player) {
+                $totalVotes += $player['score'];
+            }
+
         }
 
-        return view('game.show', compact('game', 'players', 'playersWithoutAnswer', 'question','answers', 'stepOver', 'perfsOver','perfVotes', 'performersData'));
+        return view('game.show', compact('game', 'players', 'playersWithoutAnswer', 'question','answers', 'stepOver', 'perfsOver','perfVotes', 'performersData', 'totalVotes'));
     }
 
     public function reset(Game $game) {

@@ -37185,6 +37185,81 @@ document.addEventListener('DOMContentLoaded', function () {
       votesContainer.querySelector('span').textContent = total;
     };
   }
+
+  var finalContainer = document.querySelector('.live-final');
+
+  if (finalContainer !== null) {
+    console.log("Live final"); // Live display of the final votes
+
+    var _url3 = new URL(finalContainer.dataset.mercure + '.well-known/mercure');
+
+    _url3.searchParams.append('topic', finalContainer.dataset.subscribe);
+
+    var _eventSource3 = new EventSource(_url3, {
+      withCredentials: true
+    });
+
+    _eventSource3.onmessage = function (_ref3) {
+      var data = _ref3.data;
+      data = JSON.parse(data);
+      var players = finalContainer.querySelectorAll('.name');
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = players[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var player = _step2.value;
+
+          if (player.textContent === data.vote) {
+            var scoreElement = player.closest('li').querySelector('.score');
+            scoreElement.textContent = Number(scoreElement.textContent) + 1;
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      var scores = finalContainer.querySelectorAll('.score');
+      var total = 0;
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = scores[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var score = _step3.value;
+          total += Number(score.textContent);
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+            _iterator3["return"]();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+
+      document.querySelector('.total span').textContent = total;
+    };
+  }
 });
 
 /***/ }),

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Vote;
 use App\Player;
+use Idplus\Mercure\Publify;
 use Illuminate\Http\Request;
+use Symfony\Component\Mercure\Update;
 
 class VoteController extends Controller
 {
-    public function sendVote(Request $request)
+    public function sendVote(Request $request, Publify $publisher)
     {
         $player = $request->get('player');
         $game = $request->get('game');
@@ -34,6 +36,13 @@ class VoteController extends Controller
 
         try {
             $vote->save();
+            $update = new Update(
+                env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/final.jsonld',
+                json_encode([
+                    'vote' => $voted->name
+                ])
+            );
+            $publisher($update);
 
         } catch (\Exception $e) {
             $errors = [
