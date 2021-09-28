@@ -13,7 +13,7 @@
                             {{ $player->name }} :
                         </span>
                         @php
-                            $disabled = ($perfsOver ||  $performersData[$player->id]['nb_perfs'] == 2 || $game->performance_player != 0 && $game->performance_player != $player->id);
+                            $disabled = ($perfsOver ||  ($performersData[$player->id]['nb_perfs'] == 2 && $game->performance_player != $player->id) || $game->performance_player != 0 && $game->performance_player != $player->id);
                             $sendDisabled = ($disabled || $game->performance_sent);
                             $propsDisabled = ($disabled || !$game->performance_sent || $game->performance_props_sent);
                             $validationDisabled = ($disabled || (!$game->performance_sent || !$game->performance_props_sent));
