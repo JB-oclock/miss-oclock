@@ -81,6 +81,11 @@ class Game extends Model
         return $this->perfVotes()->with('player')->where('correct_answer', 1)->get();
     }
 
+    public function getCurrentPerfVotes()
+    {
+        return $this->perfVotes()->where('performance_id', $this->performance_sent)->count();
+    }
+
     public function getStep1Winners()
     {
         return $this->players()->wherePivot('winner', 1)->get();

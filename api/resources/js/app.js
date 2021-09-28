@@ -90,5 +90,24 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
+
+    let votesContainer = document.querySelector('.live-vote');
+    if(votesContainer !== null) {
+        // Live display of the performance votes
+        const url = new URL(votesContainer.dataset.mercure +'.well-known/mercure');
+        url.searchParams.append('topic', votesContainer.dataset.subscribe);
+
+        const eventSource = new EventSource(url , { withCredentials: true });
+
+        eventSource.onmessage = function () {
+
+            let total = Number(votesContainer.querySelector('span').textContent);
+            total++;
+            votesContainer.querySelector('span').textContent = total;
+        };
+
+    }
+
+
 });
 

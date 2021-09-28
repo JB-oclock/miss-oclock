@@ -23,6 +23,7 @@ class GameController extends Controller
         $question = '';
         $stepOver = true;
         $perfsOver = false;
+        $perfVotes = 0;
         $gameQuestion = ($game->question == 0)? 1 : $game->question;
         if($game->step == 0 ) {
             $players = $game->players;
@@ -38,6 +39,7 @@ class GameController extends Controller
             $players = $game->getStep1Winners();
             $stepOver = !!count($game->getStep2Winners());
             $perfsOver = ($game->lastPerformance() && !$game->performance_sent);
+            $perfVotes = $game->getCurrentPerfVotes();
             foreach($players as $player) {
                 $performersData[$player->id]['score'] = $game->performanceScore($player);
                 $performersData[$player->id]['nb_perfs'] = $game->numberOfPerfs($player);
@@ -48,7 +50,7 @@ class GameController extends Controller
 
         }
 
-        return view('game.show', compact('game', 'players', 'playersWithoutAnswer', 'question','answers', 'stepOver', 'perfsOver', 'performersData'));
+        return view('game.show', compact('game', 'players', 'playersWithoutAnswer', 'question','answers', 'stepOver', 'perfsOver','perfVotes', 'performersData'));
     }
 
     public function reset(Game $game) {

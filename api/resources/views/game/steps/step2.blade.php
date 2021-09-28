@@ -18,13 +18,19 @@
                             $propsDisabled = ($disabled || !$game->performance_sent || $game->performance_props_sent);
                             $validationDisabled = ($disabled || (!$game->performance_sent || !$game->performance_props_sent));
                         @endphp
+                        @if($game->performance_player == $player->id)
+                            <div class="mr-2 live-vote" data-mercure={{ env('MERCURE_DOMAIN') }} data-subscribe="{{ env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/performances.jsonld', }}">
+                               Votes : <span class="badge badge-secondary">{{ $perfVotes }}</span>
+                            </div>
+                        @endif
                         <div class="btn-group mr-2" role="group" aria-label="Basic example">
                                 <a href="{{ route('send-performance', ['game' => $game->id, 'player' => $player->id]) }}" class="btn btn-secondary @if($sendDisabled)disabled @endif">Envoyer perf.</a>
                                 <a href="{{ route('send-performance-props', ['game' => $game->id]) }}" class="btn btn-secondary @if($propsDisabled)disabled @endif">Envoyer propositions</a>
                                 <a href="{{ route('validate-performance', ['game' => $game->id]) }}" class="btn btn-secondary @if($validationDisabled) disabled @endif">Valider perf.</a>
                         </div>
+
                         <div class="mr-2">
-                            Perfs : <span class="badge badge-secondary ">{{ $performersData[$player->id]['nb_perfs'] }}</span>
+                            Nb dessins faits : <span class="badge badge-secondary ">{{ $performersData[$player->id]['nb_perfs'] }}</span>
                         </div>
                         <div class="mr-2">
                             Score : <span class="badge badge-success ">{{ $performersData[$player->id]['score'] }}</span>

@@ -37166,6 +37166,25 @@ document.addEventListener('DOMContentLoaded', function () {
       document.querySelector('.answers .current').textContent = total.length;
     };
   }
+
+  var votesContainer = document.querySelector('.live-vote');
+
+  if (votesContainer !== null) {
+    // Live display of the performance votes
+    var _url2 = new URL(votesContainer.dataset.mercure + '.well-known/mercure');
+
+    _url2.searchParams.append('topic', votesContainer.dataset.subscribe);
+
+    var _eventSource2 = new EventSource(_url2, {
+      withCredentials: true
+    });
+
+    _eventSource2.onmessage = function () {
+      var total = Number(votesContainer.querySelector('span').textContent);
+      total++;
+      votesContainer.querySelector('span').textContent = total;
+    };
+  }
 });
 
 /***/ }),

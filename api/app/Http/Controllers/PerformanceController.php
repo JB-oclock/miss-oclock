@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\PerfVote;
 use App\Performance;
+use Idplus\Mercure\Publify;
 use Illuminate\Http\Request;
+use Symfony\Component\Mercure\Update;
 
 class PerformanceController extends Controller
 {
-    public function answerPerformance(Request $request)
+    public function answerPerformance(Request $request, Publify $publisher)
     {
         $player = $request->get('player');
         $game = $request->get('game');
@@ -40,7 +42,13 @@ class PerformanceController extends Controller
         try {
             $answer->save();
 
-        } catch (Exception $e) {
+            $update = new Update(
+                env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/performances.jsonld',
+                json_encode('')
+            );
+            $publisher($update);
+
+        } catch (\Exception $e) {
             $errors = [
                 'errors' => [
                     0 => 'Vous avez déjà répondu à cette question !',
