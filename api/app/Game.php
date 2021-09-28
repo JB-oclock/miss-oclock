@@ -34,7 +34,7 @@ class Game extends Model
     {
         return $this->belongsTo('App\Player', 'winner');
     }
-    public function performanceScore($player) 
+    public function performanceScore($player)
     {
         return $this->hasMany('App\PerfVote')->where('performer_id', $player->id)->get()->sum('correct_answer');
     }
@@ -45,6 +45,15 @@ class Game extends Model
     public function perfVotes()
     {
         return $this->hasMany('App\PerfVote');
+    }
+
+    public function answersForQuestion($question) {
+        return $this->answers()->where('question_id', $question)->with('player')->get();
+    }
+
+    public function playersWhoAnsweredQuestion($question)
+    {
+        return $this->answers()->where('question_id', $question)->pluck('player_id')->toArray();
     }
 
     public function getfinalWinnerName()
@@ -76,7 +85,7 @@ class Game extends Model
     {
         return $this->players()->wherePivot('winner', 1)->get();
     }
-    
+
     public function getStep2Winners()
     {
         return $this->players()->wherePivot('winner2', 1)->get();
@@ -123,9 +132,9 @@ class Game extends Model
         return $votes[0]['player'];
 
     }
-    
+
     public function findStep1Winners() {
-        
+
         $answers  = $this->getCorrectAnswers();
         $players = [];
 
@@ -146,9 +155,9 @@ class Game extends Model
         return array_slice($players, 0, $this->winners);
     }
 
-    
+
     public function findStep2Winners() {
-        
+
         $answers  = $this->getCorrectPerfAnswers();
         $players = [];
 
@@ -171,8 +180,8 @@ class Game extends Model
 
 
     public function getPlayersWithScore() {
-        $players = []; 
-    
+        $players = [];
+
         foreach($this->getCorrectAnswers() as $answer) {
             $player = $answer->player;
             if(!array_key_exists($player->name, $players)) {
@@ -183,6 +192,18 @@ class Game extends Model
         }
         arsort($players);
 
+        return $players;
+    }
+
+    /**
+     * Get the players which did not answer the provided question yet
+     *
+     * @return array
+     */
+    public function getPlayersWithoutScore($question)
+    {
+        $answers = $this->playersWhoAnsweredQuestion($question);
+        $players = $this->players()->whereNotIn('id',$answers)->get();
         return $players;
     }
 }

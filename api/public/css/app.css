@@ -10897,5 +10897,6 @@ a.text-dark:focus {
 
 .draggable-container {
   min-height: 50px;
+  padding: 1rem 0;
 }
 

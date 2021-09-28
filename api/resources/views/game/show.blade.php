@@ -62,11 +62,45 @@
                             </p>
                             ID : {{ $question['questionId'] }} <br>
                             Question : {{ $question['question'] }} <br>
-                           
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="answers">Réponses : <span class="current">{{ count($answers) }}</span> / <span class="total">{{ count($game->players) }}</span></h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row live-questions" data-mercure={{ env('MERCURE_DOMAIN') }} data-subscribe="{{ env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/question/'.$question['questionId'].'.jsonld', }}">
+                                @forelse($answers as $answer)
+                                    <div class="col-lg-4 col-sm-12 border px-3 p-2 @if($answer->correct_answer) alert-success @endif">{{$answer->player->name}}</div>
+                                @empty
+                                    <div class="no-answer">Pas encore de réponses</div>
+                                @endforelse
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h2>Non répondu : </h2></div>
+                        <div class="card-body">
+                            <div class="row laters">
+                                @forelse($playersWithoutAnswer as $later)
+                                    <div class="col-lg-4 col-sm-12 border px-3 p-2" data-later="{{$later->name}}">{{$later->name}}</div>
+                                @empty
+                                    Tout le monde a répondu !
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Score total :</h2>
                         </div>
                         <div class="card-body">
                             <ul class="list-group">
-                                <h2>Score :</h2>
                                 @php
                                 $i = 1
                                 @endphp
@@ -83,7 +117,7 @@
             @elseif($game->step == 2)
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Performances 
+                        <div class="card-header">Performances
                             <a class="btn btn-danger float-right deletebtn"  href="#" data-href="{{ route('reset-perfs', [$game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="reset" data-title="cette étape">
                                 Reset Perfs
                             </a>
@@ -93,7 +127,7 @@
                                 @forelse($players as $key => $player)
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span class="font-weight-bold flex-fill">
-                                            {{ $player->name }} : 
+                                            {{ $player->name }} :
                                         </span>
                                         @php
                                             $disabled = ($perfsOver ||  $performersData[$player->id]['nb_perfs'] == 2 || $game->performance_player != 0 && $game->performance_player != $player->id);
@@ -136,7 +170,7 @@
                             Valider les résultats
                         </a>
 
-                        
+
                     </div>
                     <div class="card-body">
                         <ul class="list-group">
@@ -152,10 +186,13 @@
                         </ul>
                     </div>
                 </div>
-                
+
             </div>
             @endif
         </div>
     </div>
 </div>
 @endsection
+<template class="answer-template">
+    <div class="col-lg-4 col-sm-12 border px-3 p-2"></div>
+</template>

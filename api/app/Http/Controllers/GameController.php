@@ -19,7 +19,7 @@ class GameController extends Controller
 {
 
     public function show(Game $game) {
-        $players = $performersData = [];
+        $players = $answers = $playersWithoutAnswer =  $performersData = [];
         $question = '';
         $stepOver = true;
         $perfsOver = false;
@@ -30,6 +30,8 @@ class GameController extends Controller
         else if($game->step == 1) {
             $players = $game->getPlayersWithScore();
             $question = $game->questionWithOrder($gameQuestion);
+            $answers = $game->answersForQuestion($question->id);
+            $playersWithoutAnswer = $game->getPlayersWithoutScore($question->id);
             $question = $question->cleanData($game);
             $stepOver = !!count($game->getStep1Winners());
         } else if ($game->step == 2) {
@@ -46,7 +48,7 @@ class GameController extends Controller
 
         }
 
-        return view('game.show', compact('game', 'players', 'question', 'stepOver', 'perfsOver', 'performersData'));
+        return view('game.show', compact('game', 'players', 'playersWithoutAnswer', 'question','answers', 'stepOver', 'perfsOver', 'performersData'));
     }
 
     public function reset(Game $game) {

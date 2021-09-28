@@ -37054,7 +37054,7 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
   var deletebtns = document.getElementsByClassName('deletebtn');
   var modalBtn = document.getElementById('confirm-delete-btn');
   var titleCopy = document.getElementById('question-title-copy');
@@ -37094,7 +37094,48 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
       }
     }
   }
-})();
+
+  var answersContainer = document.querySelector('.live-questions');
+
+  if (answersContainer !== null) {
+    // Live display of the answers
+    var url = new URL(answersContainer.dataset.mercure + '.well-known/mercure');
+    url.searchParams.append('topic', answersContainer.dataset.subscribe);
+    var eventSource = new EventSource(url, {
+      withCredentials: true
+    }); // The callback will be called every time an update is published
+
+    eventSource.onmessage = function (_ref) {
+      var data = _ref.data;
+      var noAnswer = document.querySelector('.no-answer');
+
+      if (noAnswer !== null) {
+        noAnswer.remove();
+      }
+
+      data = JSON.parse(data);
+      var template = document.importNode(document.querySelector('.answer-template').content, true);
+      var newAnswer = template.querySelector('div');
+      newAnswer.textContent = data.player;
+
+      if (data.answer === true) {
+        newAnswer.classList.add('alert-success');
+      }
+
+      answersContainer.append(newAnswer);
+      var laterPlayer = document.querySelector("div[data-later=\"".concat(data.player, "\""));
+      laterPlayer.remove();
+      var latersContainer = document.querySelector('.laters');
+
+      if (latersContainer.childElementCount === 0) {
+        latersContainer.textContent = "Tout le monde a répondu !";
+      }
+
+      var total = answersContainer.querySelectorAll('div');
+      document.querySelector('.answers .current').textContent = total.length;
+    };
+  }
+});
 
 /***/ }),
 
@@ -37161,8 +37202,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/fabio/www/perso/miss-oclock/api/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/fabio/www/perso/miss-oclock/api/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/fabio/www/Perso/miss-oclock/api/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/fabio/www/Perso/miss-oclock/api/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

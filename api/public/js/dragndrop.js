@@ -7159,7 +7159,7 @@ function setOrderThenSend(e) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/fabio/www/perso/miss-oclock/api/resources/js/dragndrop.js */"./resources/js/dragndrop.js");
+module.exports = __webpack_require__(/*! /home/fabio/www/Perso/miss-oclock/api/resources/js/dragndrop.js */"./resources/js/dragndrop.js");
 
 
 /***/ })

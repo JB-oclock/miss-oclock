@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Answer;
 use App\Question;
+use Idplus\Mercure\Publify;
 use Illuminate\Http\Request;
+use Symfony\Component\Mercure\Update;
+
 
 class AnswerController extends Controller
 {
-    public function answerQuestion(Request $request) {
+    public function answerQuestion(Request $request, Publify $publisher) {
 
         $player = $request->get('player');
         $game = $request->get('game');
@@ -39,6 +42,17 @@ class AnswerController extends Controller
 
         try {
             $answer->save();
+
+            $data = [
+                'player' => $player->name,
+                'answer' => $correct
+            ];
+
+            $update = new Update(
+                env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/question/'.$question->id.'.jsonld',
+                json_encode($data)
+            );
+            $publisher($update);
 
         } catch (Exception $e) {
             $errors = [
