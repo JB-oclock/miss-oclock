@@ -4,20 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use App\Player;
+use Idplus\Mercure\Publify;
 use Illuminate\Http\Request;
+use Symfony\Component\Mercure\Update;
 
 class CodeController extends Controller
 {
-    public function login(Request $request) {
+    public function login(Request $request, Publify $publisher) {
 
         $request->validate([
             'code' => 'required',
             'name' => 'required|min:2|max:255'
         ]);
-        
+
         $game = Game::where('code', $request->input('code'))->first();
         $player = Player::where('name', $request->input('name'))->first();
-        
+
         if($player && $player->games->contains($game)){
             $errors = [
                 'errors' => [
@@ -31,9 +33,9 @@ class CodeController extends Controller
             $player = new Player();
             $player->name = $request->input('name');
             $player->save();
-            
+
         }
-        
+
         $player->games()->attach($game);
         $token = [
             'player' => $player->id,
@@ -45,12 +47,21 @@ class CodeController extends Controller
         $player->save();
 
         $data = [
+            'player' => $player->name
+        ];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/players.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+
+        $data = [
             'token' => $token,
             'id' => $game->id,
             'playerId' => $player->id
         ];
         return response()->json($data);
-        
+
     }
 
     public function checkCode(Request $request) {
@@ -68,12 +79,12 @@ class CodeController extends Controller
         }  else {
             return response()->json(false);
         }
-        
-        
+
+
     }
 
     public function getInfos(Request $request) {
-        
+
         $game = $request->get('game');
         $player = $request->get('player');
 

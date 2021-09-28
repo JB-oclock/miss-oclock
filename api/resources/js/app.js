@@ -23,6 +23,35 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+
+    let playersContainer = document.querySelector('.live-players');
+
+    if(playersContainer !== null) {
+        // Live display of players
+        const url = new URL(playersContainer.dataset.mercure +'.well-known/mercure');
+        url.searchParams.append('topic', playersContainer.dataset.subscribe);
+
+        const eventSource = new EventSource(url , { withCredentials: true });
+        eventSource.onmessage = function ({data}) {
+            const noAnswer = document.querySelector('.no-players');
+            if(noAnswer !== null) {
+                noAnswer.remove();
+            }
+
+            data = JSON.parse(data);
+
+            const newPlayer = document.createElement('li');
+            newPlayer.className = "list-group-item w-50 border  p-2 px-3";
+            newPlayer.textContent = data.player;
+
+            playersContainer.append(newPlayer);
+
+
+            const total = document.querySelector('.total-players');
+           total.textContent = playersContainer.querySelectorAll('li').length;
+        };
+    }
+
     let answersContainer = document.querySelector('.live-questions');
     if(answersContainer !== null) {
 

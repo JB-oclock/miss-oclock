@@ -37095,18 +37095,49 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  var playersContainer = document.querySelector('.live-players');
+
+  if (playersContainer !== null) {
+    // Live display of players
+    var url = new URL(playersContainer.dataset.mercure + '.well-known/mercure');
+    url.searchParams.append('topic', playersContainer.dataset.subscribe);
+    var eventSource = new EventSource(url, {
+      withCredentials: true
+    });
+
+    eventSource.onmessage = function (_ref) {
+      var data = _ref.data;
+      var noAnswer = document.querySelector('.no-players');
+
+      if (noAnswer !== null) {
+        noAnswer.remove();
+      }
+
+      data = JSON.parse(data);
+      var newPlayer = document.createElement('li');
+      newPlayer.className = "list-group-item w-50 border  p-2 px-3";
+      newPlayer.textContent = data.player;
+      playersContainer.append(newPlayer);
+      var total = document.querySelector('.total-players');
+      total.textContent = playersContainer.querySelectorAll('li').length;
+    };
+  }
+
   var answersContainer = document.querySelector('.live-questions');
 
   if (answersContainer !== null) {
     // Live display of the answers
-    var url = new URL(answersContainer.dataset.mercure + '.well-known/mercure');
-    url.searchParams.append('topic', answersContainer.dataset.subscribe);
-    var eventSource = new EventSource(url, {
+    var _url = new URL(answersContainer.dataset.mercure + '.well-known/mercure');
+
+    _url.searchParams.append('topic', answersContainer.dataset.subscribe);
+
+    var _eventSource = new EventSource(_url, {
       withCredentials: true
     }); // The callback will be called every time an update is published
 
-    eventSource.onmessage = function (_ref) {
-      var data = _ref.data;
+
+    _eventSource.onmessage = function (_ref2) {
+      var data = _ref2.data;
       var noAnswer = document.querySelector('.no-answer');
 
       if (noAnswer !== null) {

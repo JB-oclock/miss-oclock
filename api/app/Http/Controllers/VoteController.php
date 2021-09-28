@@ -35,7 +35,7 @@ class VoteController extends Controller
         try {
             $vote->save();
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errors = [
                 'errors' => [
                     0 => 'Vous avez déjà répondu à cette question !',
