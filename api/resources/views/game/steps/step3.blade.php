@@ -3,6 +3,7 @@
         <div class="card-header">Votes </div>
         <div class="card-body">
             <a class="btn btn-primary  @if($game->votes_started)disabled @endif" href="{{ route('send-votes', ['game' => $game->id]) }}" role="button">Activer la votation !</a>
+            <a class="btn btn-primary  @if($game->votes_started)disabled @endif" href="{{ route('send-roulette', ['game' => $game->id]) }}" role="button">Activer la roulette !</a>
             <a class="btn btn-primary @if(!$game->votes_started)disabled @endif deletebtn"  href="#" data-href="{{ route('validate-votes', ['game' => $game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="valid-winners" data-title="">
                 Valider les résultats
             </a>

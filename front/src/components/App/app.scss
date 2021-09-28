@@ -358,10 +358,22 @@ h1 {
   color: darken($blue, 10%);
   text-align: center;
 }
+
+.roulette {
+  font-family: 'oclock-bold', sans-serif;
+  font-size:6rem;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+}
+.roulette div {
+  width: 100vw;
+}
 .step-2 .global-view-title {
   color: darken($green, 10%);
 
 }
+.roulette,
 .step-3 .global-view-title {
   color: darken($yellow, 10%);
 

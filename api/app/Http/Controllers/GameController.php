@@ -347,6 +347,28 @@ class GameController extends Controller
         return back();
     }
 
+    /**
+     * Send the order of displaying the roulette
+     *
+     * @param Game $game
+     * @param Publify $publisher
+     * @return void
+     */
+    public function sendRoulette(Game $game, Publify $publisher)
+    {
+        $data = [
+            'roulette' => true
+        ];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/votes/'.$game->id.'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+
+        return back();
+
+    }
+
     public function validateVotes(Game $game, Publify $publisher)
     {
         $winner = $game->findFinalWinner();

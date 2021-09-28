@@ -31,6 +31,7 @@ Route::middleware('auth')->group( function() {
     Route::get('/game/{game}/send-performance-props', 'GameController@sendPerformanceProps')->name('send-performance-props');
     Route::get('/game/{game}/validate-performance', 'GameController@validatePerformance')->name('validate-performance');
     Route::get('/game/{game}/send-votes', 'GameController@sendVotes')->name('send-votes');
+    Route::get('/game/{game}/send-roulette', 'GameController@sendRoulette')->name('send-roulette');
     Route::get('/game/{game}/validate-votes', 'GameController@validateVotes')->name('validate-votes');
     Route::get('/game/{game}', 'GameController@show')->name('show-game');
     Route::get('/game/{game}/reset', 'GameController@reset')->name('reset-game');
@@ -44,7 +45,7 @@ Route::middleware('auth')->group( function() {
     Route::get('/question/{question}/edit', 'QuestionController@edit')->name('edit-question');
     Route::post('/question/{question}/edit', 'QuestionController@editpost')->name('edit-question-post');
     Route::get('/question/{question}/delete', 'QuestionController@delete')->name('delete-question');
-    
+
     Route::get('/performance/list', 'PerformanceController@list')->name('list-performance');
     Route::get('/performance/create', 'PerformanceController@create')->name('create-performance');
     Route::post('/performance/create', 'PerformanceController@createpost')->name('create-performance-post');
