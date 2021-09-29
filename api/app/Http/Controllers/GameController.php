@@ -374,6 +374,40 @@ class GameController extends Controller
 
     }
 
+
+    /**
+     * Send the final debate subject
+     *
+     * @param Game $game
+     * @param Publify $publisher
+     * @return void
+     */
+    public function sendSubject(Game $game, Publify $publisher)
+    {
+        // @todo CRUD the subjects
+        $subjects = [
+            'Lait puis céréales vs céréales puis lait',
+            'Crocs vs claquettes-chaussettes',
+            'Crêpe roulée vs crèpe triangle',
+            'Frites mayo vs frites ketchup',
+        ];
+
+        $key = array_rand($subjects);
+
+        $data = [
+            'subject' => $subjects[$key]
+        ];
+        $update = new Update(
+            env('MERCURE_DOMAIN') . 'missoclock/votes/'.$game->id.'.jsonld',
+            json_encode($data)
+        );
+        $publisher($update);
+
+        return back();
+
+    }
+
+
     public function validateVotes(Game $game, Publify $publisher)
     {
         $winner = $game->findFinalWinner();

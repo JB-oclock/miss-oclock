@@ -32,6 +32,7 @@ Route::middleware('auth')->group( function() {
     Route::get('/game/{game}/validate-performance', 'GameController@validatePerformance')->name('validate-performance');
     Route::get('/game/{game}/send-votes', 'GameController@sendVotes')->name('send-votes');
     Route::get('/game/{game}/send-roulette', 'GameController@sendRoulette')->name('send-roulette');
+    Route::get('/game/{game}/send-subject', 'GameController@sendSubject')->name('send-subject');
     Route::get('/game/{game}/validate-votes', 'GameController@validateVotes')->name('validate-votes');
     Route::get('/game/{game}', 'GameController@show')->name('show-game');
     Route::get('/game/{game}/reset', 'GameController@reset')->name('reset-game');

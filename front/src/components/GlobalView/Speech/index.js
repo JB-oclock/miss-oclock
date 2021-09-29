@@ -6,7 +6,10 @@ import { mercureSubscribe } from 'src/helpers';
 class Speech extends Component {
   constructor(props) {
     super(props);
-    this.state = {roulette: false};
+    this.state = {
+      roulette: false,
+      subject: false
+    };
   }
   componentDidMount() {
           
@@ -27,10 +30,12 @@ class Speech extends Component {
     this.eventSource = mercureSubscribe(`missoclock/votes/${app.gameId}`);
 
     this.eventSource.onmessage = (event) => {
-      const { winner, roulette } = JSON.parse(event.data);
-
+      const { winner, roulette, subject } = JSON.parse(event.data);
       if(roulette) {
-        this.setState(state => ({ roulette: true}));
+        this.setState(state => ({ roulette: true, subject: false}));
+      }
+      if(subject) {
+        this.setState(state => ({roulette: false, subject}));
       }
       if (winner) {
         setGameWinner(winner);
@@ -41,8 +46,8 @@ class Speech extends Component {
 
     return (
       <>
-      { !this.state.roulette && <div className="global-view-title slideIn">Le débat</div>  }
-      { this.state.roulette && 
+      { !this.state.roulette && !this.state.subject && <div className="global-view-title slideIn">Le débat</div>  }
+      { this.state.roulette &&
         <div className="slideInUp roulette">
 
           <TextLoop className="slideInUp" interval="200">
@@ -57,6 +62,9 @@ class Speech extends Component {
             <span>Ecologie</span>
           </TextLoop>  
         </div>
+      }
+      { this.state.subject && 
+        <div className="final-subject slideIn"  key={+new Date()}>{ this.state.subject }</div>
       }
       </>
     )
