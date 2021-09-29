@@ -7,12 +7,19 @@
             </a>
             @else
             <a class="btn btn-primary float-right mr-2 deletebtn"  href="#" data-href="{{ route('next-question', ['game' => $game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="next-question" data-title="">
-                Question suivante
+                @if($game->question === 0)
+                    Lancer la première question
+                @else
+                    Question suivante
+                @endif
             </a>
             @endif
-            <a class="btn btn-success float-right mr-2 deletebtn"  href="#" data-href="{{ route('display-answer', ['game' => $game->id, 'question' => $question['questionId']]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="display-answer" data-title="">
-                Afficher la réponse
-            </a>
+            @if($game->question !== 0)
+
+                <a class="btn btn-success float-right mr-2 deletebtn"  href="#" data-href="{{ route('display-answer', ['game' => $game->id, 'question' => $question['questionId']]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="display-answer" data-title="">
+                    Afficher la réponse
+                </a>
+            @endif
         </div>
         <div class="card-body">
             <p>

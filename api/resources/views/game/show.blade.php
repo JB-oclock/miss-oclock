@@ -17,7 +17,11 @@
                           <li>Step: {{ $game->step }}</li>
                       </ul>
                       <a class="btn btn-primary deletebtn  @if(!$stepOver || $game->step == 3)disabled @endif"  href="#" data-href="{{ route('next-step', ['game' => $game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="next-step" data-title="">
-                        Étape suivante
+                        @if($game->step === 0)
+                            Lancer le quiz
+                        @else
+                            Étape suivante
+                        @endif
                       </a>
                   </div>
               </div>
