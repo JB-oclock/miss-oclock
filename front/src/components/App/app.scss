@@ -59,6 +59,9 @@ h1 {
   text-align: center;
   padding: 1rem 0;
 }
+img {
+  max-width: 100%;
+}
 
 input[type=text] {
   padding: .8rem;
@@ -408,6 +411,12 @@ h1 {
     font-family: 'oclock-bold';
   }
 
+}
+
+.question-image {
+  max-width: 35%;
+  text-align: center;
+  margin: 2rem auto;
 }
 
 input[type=text],

@@ -187,6 +187,11 @@ class GameController extends Controller
 
 
         $data = ['answer' => $question->answer_good];
+
+        if($question->image) {
+            $data['image'] =  asset('/storage/'.$question->image);
+        }
+
         $update = new Update(
             env('MERCURE_DOMAIN') . 'missoclock/answers/'.$game->id.'.jsonld',
             json_encode($data)

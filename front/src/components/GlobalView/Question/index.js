@@ -12,6 +12,7 @@ class Question extends Component {
 
   state = {
     answer: '',
+    image: '',
     winners: '',
   }
 
@@ -42,12 +43,12 @@ class Question extends Component {
    
     this.eventSourceAnswers = mercureSubscribe(`${process.env.MERCURE_ANSWERS}${app.gameId}`);
     this.eventSourceAnswers.onmessage = (event) => {
-      const { answer } = JSON.parse(event.data);
-      
+      const { answer, image } = JSON.parse(event.data);
       if(answer) {
         setAnswered();
         this.setState({
-          answer
+          answer,
+          image
         });
       }
        
@@ -67,7 +68,7 @@ class Question extends Component {
 
   render() {
     const { question } = this.props;
-    const {answer, winners} = this.state;
+    const {answer, winners, image} = this.state;
     if(question.ended &&  winners) {
       
       return (
@@ -105,6 +106,10 @@ class Question extends Component {
           <p className="question-title result-tag">Réponse :</p>
           {/* // The key is here to force the render of a new p, hence the css animation refresh */}
           <p className="question-global slideIn" key={+new Date()}>{ answer }</p>
+          { image !== '' && 
+            <div className="question-image slideIn">
+              <img  src={ image } />
+            </div>}
         </>
       )
     }
