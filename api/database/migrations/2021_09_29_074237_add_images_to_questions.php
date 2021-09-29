@@ -26,7 +26,7 @@ class AddImagesToQuestions extends Migration
     public function down()
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->dropColumn('correct_answer');
+            $table->dropColumn('image');
         });
     }
 }
