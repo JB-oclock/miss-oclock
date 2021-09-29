@@ -19,7 +19,7 @@
                             $validationDisabled = ($disabled || (!$game->performance_sent || !$game->performance_props_sent));
                         @endphp
                         @if($game->performance_player == $player->id)
-                            <div class="mr-2 live-vote" data-mercure={{ env('MERCURE_DOMAIN') }} data-subscribe="{{ env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/performances.jsonld', }}">
+                            <div class="mr-2 live-vote" data-mercure={{ env('MERCURE_DOMAIN') }} data-subscribe="{{ env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/performances.jsonld' }}">
                                Votes : <span class="badge badge-secondary">{{ $perfVotes }}</span>
                             </div>
                         @endif
