@@ -21,6 +21,7 @@ class GameController extends Controller
     public function show(Game $game) {
         $players = $answers = $playersWithoutAnswer =  $performersData = [];
         $question = '';
+        $numberQuestions = count($game->questions);
         $stepOver = true;
         $perfsOver = false;
         $perfVotes = $totalVotes = 0;
@@ -54,7 +55,7 @@ class GameController extends Controller
 
         }
 
-        return view('game.show', compact('game', 'players', 'playersWithoutAnswer', 'question','answers', 'stepOver', 'perfsOver','perfVotes', 'performersData', 'totalVotes'));
+        return view('game.show', compact('game', 'players', 'playersWithoutAnswer','gameQuestion', 'numberQuestions', 'question','answers', 'stepOver', 'perfsOver','perfVotes', 'performersData', 'totalVotes'));
     }
 
     public function reset(Game $game) {

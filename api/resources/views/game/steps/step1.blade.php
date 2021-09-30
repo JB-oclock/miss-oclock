@@ -1,6 +1,6 @@
 <div class="col-md-8">
     <div class="card">
-        <div class="card-header">Questions
+        <div class="card-header"><h2 class="d-inline">Questions ({{$gameQuestion}} / {{ $numberQuestions }})</h2>
             @if($question['last'])
             <a class="btn btn-primary float-right @if($stepOver)disabled @endif deletebtn"  href="#" data-href="{{ route('set-step1-winners', ['game' => $game->id]) }}" data-toggle="modal" data-target="#confirm-delete" data-action="valid-winners" data-title="">
                 Valider les vainqueurs
