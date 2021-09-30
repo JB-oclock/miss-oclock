@@ -12,6 +12,8 @@ class Voter extends Component {
 
   state = {
     answer: '',
+    answered: false
+
   }
 
 
@@ -22,9 +24,14 @@ class Voter extends Component {
     
     this.eventSource.onmessage = (event) => {
       const { performance, ended } = JSON.parse(event.data);
-      
-      if(performance){
+
+      if(performance ){
         setPerformance(performance);
+        if(this.state.answered == true) {
+          this.setState({
+            answered: performance.answered,
+          })
+        }
       }
 
       if(ended) {
@@ -53,6 +60,9 @@ class Voter extends Component {
     const {answer} = this.state;
 
     answerPerformance(answer);
+    this.setState({
+      answered: true,
+    })
     
   }
 
@@ -113,14 +123,21 @@ class Voter extends Component {
     else if (performance.last) {
       return (
         <div className="voter-message message">
-          Merci d'avoir répondu ! Les résultats vont bientôt arriver !
+          Merci d'avoir participé ! Les résultats vont bientôt arriver !
         </div>
       );
     }
     else {
+      let message;
+      if(this.state.answered) {
+        message = "Merci d'avoir répondu !";
+      } else {
+        message = "Dommage, essaie de répondre plus vite !"
+      }
+
       return (
         <div className="voter-message message">
-          Merci d'avoir répondu !
+          {message}
         </div>
       );
     }
