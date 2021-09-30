@@ -5,7 +5,20 @@ import Segment from 'segment-js';
 import {withRouter} from "react-router-dom";
 
 class LoadingScreen extends Component {
- 
+
+    state = {
+      key: 0
+    }
+
+
+    componentDidMount(){
+      setInterval(() => {
+        this.setState({
+          key: Math.random()
+        });
+
+      }, 10000);
+    }
     render() {
         const { code } = this.props;
         const logo = `<svg class="logo" version="1.1"
@@ -81,7 +94,7 @@ class LoadingScreen extends Component {
 
        
         return (
-            <div className="view-loading">
+            <div className="view-loading" key={this.state.key}>
                     <InlineSVG src={logo} />
                     {code && <div className="code-display">Code : <span>{code}</span></div>}
             </div>
