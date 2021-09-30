@@ -35,7 +35,7 @@
             <h2 class="answers">Réponses : <span class="current">{{ count($answers) }}</span> / <span class="total">{{ count($game->players) }}</span></h2>
         </div>
         <div class="card-body">
-            <div class="row live-questions" data-mercure={{ env('MERCURE_DOMAIN') }} data-subscribe="{{ env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/question/'.$question['questionId'].'.jsonld' }}">
+            <div class="row live-questions" data-mercure="{{ env('MERCURE_DOMAIN') }}" data-subscribe="{{ env('MERCURE_DOMAIN') . 'missoclock/game/'.$game->id.'/question/'.$question['questionId'].'.jsonld' }}">
                 @forelse($answers as $answer)
                     <div class="col-lg-4 col-sm-12 border px-3 p-2 @if($answer->correct_answer) alert-success @endif">{{$answer->player->name}}</div>
                 @empty
