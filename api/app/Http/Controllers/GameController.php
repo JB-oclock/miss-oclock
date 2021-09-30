@@ -159,6 +159,7 @@ class GameController extends Controller
         $nbQuestions = $game->questions->count();
         if($game->question < $nbQuestions) {
             $game->question = $game->question +1;
+            $game->question_votes = true;
             $game->save();
 
             $question = $game->questionWithOrder($game->question);
@@ -179,6 +180,9 @@ class GameController extends Controller
 
     public function displayAnswer(Game $game, Question $question,  Publify $publisher)
     {
+        $game->question_votes = false;
+        $game->save();
+
         $data = ['endQuestion' => true];
         $update = new Update(
             env('MERCURE_DOMAIN') . 'missoclock/questions/'.$game->id.'.jsonld',
@@ -487,14 +491,19 @@ class GameController extends Controller
             $gameData['question'] = $question->cleanData($game);
 
             if($player) {
+                // If the votes are opened
+                if($game->question_votes) {
 
-                // Check if the player has already answered this question
-                $answer = Answer::where('game_id', $game->id)
-                ->where('player_id', $player->id)
-                ->where('question_id', $question->id)
-                ->first();
+                    // Check if the player has already answered this question
+                    $answer = Answer::where('game_id', $game->id)
+                    ->where('player_id', $player->id)
+                    ->where('question_id', $question->id)
+                    ->first();
 
-                $gameData['question']['answered'] = !!$answer;
+                    $gameData['question']['answered'] = !!$answer;
+                } else {
+                    $gameData['question']['answered'] = true;
+                }
             } else {
                 $gameData['question']['answer'] = $question->answer_good;
             }

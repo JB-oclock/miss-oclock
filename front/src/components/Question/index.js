@@ -10,6 +10,7 @@ class Question extends Component {
 
   state = {
     answer: '',
+    notAnswered: true
   }
 
   listenQuestions = () => {
@@ -21,6 +22,9 @@ class Question extends Component {
       const { questions, winners, endQuestion } = JSON.parse(event.data);
       if(questions){
         setQuestion(questions);
+        this.setState({
+          notAnswered: true,
+        })
       }
 
       if(winners){
@@ -64,8 +68,10 @@ class Question extends Component {
     const {answerQuestion} = this.props;
     const {answer} = this.state;
 
-    answerQuestion(answer);
-    
+    answerQuestion(answer);   
+    this.setState({
+      notAnswered: false,
+    })
   }
   componentWillUpdate(nextProps, nextState){
     
@@ -123,14 +129,20 @@ class Question extends Component {
     else if (question.last) {
       return (
         <div className="question-message message">
-         Merci d'avoir répondu ! C'était la dernière question, les résultats vont bientôt arriver !
+          C'était la dernière question, les résultats vont bientôt arriver !
         </div>
       )
     }
     else {
+      let message;
+      if(this.state.notAnswered) {
+        message = "Dommage, essaie de répondre plus vite !"
+      } else {
+        message = "Merci d'avoir répondu, la prochaine question arrive tout bientôt !";
+      }
       return (
         <div className="question-message message">
-          Merci d'avoir répondu, la prochaine question arrive tout bientôt !
+          {message}
         </div>
       )
     }
