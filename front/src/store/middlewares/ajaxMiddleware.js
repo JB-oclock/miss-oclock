@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, getGameDataGlobal, GET_GAME_DATA,GET_GAME_DATA_GLOBAL, setGameStep, setCode, setStep1Winner,  setStep2Winner, setGameWinner} from '../reducer';
+import { GET_PLAYER_INFOS, setPlayer, stopLoading, waiting, mercureSubscribeSteps, setGameId, getGameData, getGameDataGlobal, GET_GAME_DATA,GET_GAME_DATA_GLOBAL, setGameStep, setCode, setStep1Winner,  setStep2Winner, setGameWinner, waitingAjax, stopWaitingAjax} from '../reducer';
 import { setQuestion, setAnswered, ANSWER_QUESTION } from '../questionsReducer';
 import { toastr } from 'react-redux-toastr';
 import { setPerformance, ANSWER_PERFORMANCE, setAnswered as setAnsweredPerformance } from '../performancesReducer';
@@ -99,6 +99,7 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         question: state.questions.questionId
       };
       
+      store.dispatch(waitingAjax());
       Axios.post(`${process.env.API_DOMAIN}answer-question`,data, {
         headers: {
           Authorization: token,
@@ -114,6 +115,8 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           }
         }
 
+      }).finally(() => {
+        store.dispatch(stopWaitingAjax());
       });
       break;
     case ANSWER_PERFORMANCE:

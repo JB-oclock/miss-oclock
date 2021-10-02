@@ -12,6 +12,7 @@ export const initialState = {
   step_1_winner: false,
   step_2_winner: false,
   step_3_winner: false,
+  waiting_ajax: false
 };
 
 /**
@@ -28,6 +29,8 @@ export const GET_GAME_DATA = 'GET_GAME_DATA';
 export const GET_GAME_DATA_GLOBAL = 'GET_GAME_DATA_GLOBAL';
 export const MERCURE_SUBSCRIBE_STEPS = 'MERCURE_SUBSCRIBE_STEPS';
 const STOP_LOADING = 'STOP_LOADING';
+const WAITING_AJAX = 'WAITING_AJAX';
+const STOP_WAITING_AJAX = 'STOP_WAITING_AJAX';
 const WAITING_STEP = 'WAITING_STEP';
 const SET_STEP_1_WINNER = 'SET_STEP_1_WINNER';
 const SET_STEP_2_WINNER = 'SET_STEP_2_WINNER';
@@ -99,6 +102,13 @@ export const stopWaiting = () => ({
   type: STOP_WAITING_STEP,
 });
 
+export const waitingAjax = () => ({
+  type: WAITING_AJAX,
+});
+export const stopWaitingAjax = () => ({
+  type: STOP_WAITING_AJAX,
+});
+
 /**
  * Reducer
  */
@@ -139,6 +149,16 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         waiting: false,
+      };
+    case WAITING_AJAX:
+      return {
+        ...state,
+        waiting_ajax: true,
+      };
+    case STOP_WAITING_AJAX:
+      return {
+        ...state,
+        waiting_ajax: false,
       };
     case SET_STEP_1_WINNER:
       return {

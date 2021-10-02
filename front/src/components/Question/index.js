@@ -1,6 +1,8 @@
 // == Import : npm
 import React, { Component } from 'react';
 import { mercureSubscribe } from 'src/helpers';
+import AjaxButton from '../AjaxButton';
+
 
 class Question extends Component {
   componentDidMount() {
@@ -73,6 +75,8 @@ class Question extends Component {
       notAnswered: false,
     })
   }
+
+
   componentWillUpdate(nextProps, nextState){
     
     const { answered } = nextProps.question;
@@ -121,7 +125,7 @@ class Question extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <h2 className="question">{question.question}</h2>
                     { this.getAnswers() }
-                    <button type="submit">Valider la réponse</button>
+                    <AjaxButton app={app}></AjaxButton>
                 </form>
             );
         }
