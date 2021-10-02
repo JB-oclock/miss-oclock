@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { toastr } from 'react-redux-toastr';
-
+import store from 'src/store';
+import { stopWaitingAjax, waitingAjax } from '../../store/reducer';
+import Ajaxbutton from '../../containers/AjaxButton';
 
 class Code extends Component {
     constructor(props) {
@@ -11,6 +13,7 @@ class Code extends Component {
      }    
    
     checkCode = (event) => {
+        store.dispatch(waitingAjax());
         event.preventDefault();
         const {nextStep} = this.props;
         Axios.post(process.env.API_DOMAIN + "check-code", {
@@ -22,6 +25,8 @@ class Code extends Component {
             } else {
                toastr.error('Erreur', "Ce code n'existe pas !");
             } 
+        }).finally(() => {
+          store.dispatch(stopWaitingAjax());
         });
     }
     render() {
@@ -30,7 +35,7 @@ class Code extends Component {
             <form autoComplete='off' onSubmit={this.checkCode}>
                 <label htmlFor="code">Code de jeu</label>
                 <input autoComplete="off" onChange={handleChange} autoFocus defaultValue={ code } name="code" id="code" type="text"/>
-                <input disabled={!(code.length == 5)} type="submit" value="Envoyer" />
+                <Ajaxbutton disabled={!(code.length == 5)} textContent="Envoyer"></Ajaxbutton>
             </form>
         );
     }

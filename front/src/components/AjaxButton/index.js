@@ -18,12 +18,17 @@ class AjaxButton extends Component {
   }
 
   render() {
-    const { app } = this.props;
+    const { app, disabled, textContent } = this.props;
     return (
-      <button type="submit" className={(app.waiting_ajax) ? "waiting-button" : ""} disabled={app.waiting_ajax}>{ !app.waiting_ajax ? "Valider la réponse" : this.sendingMessage("Envoi en cours") }</button>
+      <button type="submit" className={(app.waiting_ajax) ? "waiting-button" : ""} disabled={app.waiting_ajax || disabled}>{ !app.waiting_ajax ? textContent : this.sendingMessage("Envoi en cours") }</button>
     )
   }
 
+}
+
+AjaxButton.defaultProps = {
+  disabled: false,
+  textContent: "Valider la réponse"
 }
 
 export default AjaxButton;

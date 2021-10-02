@@ -1,5 +1,6 @@
 // == Import : npm
 import React, { Component } from 'react';
+import AjaxButton from '../../containers/AjaxButton';
 
 
 class Player extends Component {
@@ -11,7 +12,7 @@ class Player extends Component {
                 <label htmlFor="code">Mon prénom, nom ou autre chaîne de caractères servant à m'identifier</label>
                 <input type="hidden" name="code" value={code}></input>
                 <input autoComplete="off" onChange={handleChange} autoFocus defaultValue={ name } name="name" id="name" type="text"/>
-                <input disabled={!(name.length > 1)} type="submit" value="Envoyer" />
+                <AjaxButton disabled={!(name.length > 1)} textContent="Envoyer"></AjaxButton>
             </form>
         );
     }

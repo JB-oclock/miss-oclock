@@ -1,7 +1,8 @@
 // == Import : npm
 import React, { Component } from 'react';
 import { mercureSubscribe } from 'src/helpers';
-import AjaxButton from '../AjaxButton';
+import AjaxButton from '../../containers/AjaxButton';
+
 
 class Votes extends Component {
 

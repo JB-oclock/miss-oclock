@@ -5,7 +5,7 @@ import Axios from 'axios';
 import Code from './code';
 import Player from './player';
 import store from 'src/store';
-import { setPlayer, mercureSubscribeSteps, setGameId, waiting, getGameData } from 'src/store/reducer';
+import { setPlayer, mercureSubscribeSteps, setGameId, waitingAjax, stopWaitingAjax, getGameData } from 'src/store/reducer';
 
 class FirstTimeForm extends Component {
     state = {
@@ -32,6 +32,7 @@ class FirstTimeForm extends Component {
     submitForm = (event) => {
       event.preventDefault();
       const { code, name } = this.state;
+      store.dispatch(waitingAjax());
       Axios.post(process.env.API_DOMAIN + "login", {
         code: code,
         name: name
@@ -64,6 +65,8 @@ class FirstTimeForm extends Component {
             }
           }
 
+        }).finally(() => {
+          store.dispatch(stopWaitingAjax());
         });
     }
 
