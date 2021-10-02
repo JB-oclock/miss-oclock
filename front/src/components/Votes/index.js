@@ -85,7 +85,7 @@ class Votes extends Component {
 
   render() {
 
-    const {votes} = this.props;
+    const {votes, app} = this.props;
     if(votes.ended) {
       return (
         <div className="vote-message message">

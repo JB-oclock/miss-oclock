@@ -125,6 +125,9 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         performance: state.performances.performanceId
       };
       
+      store.dispatch(waitingAjax());
+
+
       Axios.post(`${process.env.API_DOMAIN}answer-performance`,data, {
         headers: {
           Authorization: token,
@@ -140,6 +143,9 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           }
         }
 
+      }).finally(() => {
+      store.dispatch(stopWaitingAjax());
+
       });
       break;
     case SEND_VOTE:
@@ -147,6 +153,9 @@ const ajaxMiddleware = (store) => (next) => (action) => {
         answer: action.vote,
       };
       
+      store.dispatch(waitingAjax());
+
+
       Axios.post(`${process.env.API_DOMAIN}send-vote`,data, {
         headers: {
           Authorization: token,
@@ -165,6 +174,8 @@ const ajaxMiddleware = (store) => (next) => (action) => {
           }
         }
 
+      }).finally(() => {
+        store.dispatch(stopWaitingAjax());
       });
       break;
     default:

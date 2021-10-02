@@ -96,7 +96,7 @@ class Voter extends Component {
 
   render() {
 
-    const {performance} = this.props;
+    const {performance, app} = this.props;
     if(performance.ended) {
       return (
         <div className="voter-message message">
