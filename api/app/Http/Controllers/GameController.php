@@ -393,7 +393,7 @@ class GameController extends Controller
         $subjects = [
             'Lait puis céréales vs céréales puis lait',
             'Crocs vs claquettes-chaussettes',
-            'Crêpe roulée vs crèpe triangle',
+            'Crêpe roulée vs crêpe triangle',
             'Frites mayo vs frites ketchup',
         ];
 
