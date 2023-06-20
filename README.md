@@ -8,4 +8,4 @@ donné au back et front
 aller dans le backoffice du back
 créer une partie, des questions des rpéonses, limite par étape ...
 
-URL pour grand écran : 
+URL pour grand écran : /view/:code_partie
